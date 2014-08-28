@@ -18,6 +18,11 @@
 		6009D67E19AC77D4006F568F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6009D65D19AC77D3006F568F /* Cocoa.framework */; };
 		6009D68619AC77D4006F568F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6009D68419AC77D4006F568F /* InfoPlist.strings */; };
 		6009D68819AC77D4006F568F /* CalendarViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D68719AC77D4006F568F /* CalendarViewTests.m */; };
+		6009D69419AC7D5A006F568F /* CCLCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D69319AC7D5A006F568F /* CCLCalendarViewController.m */; };
+		6009D69719AC8107006F568F /* CCLDayCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D69619AC8107006F568F /* CCLDayCellView.m */; };
+		6009D69A19ACC0CC006F568F /* CCLCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D69919ACC0CC006F568F /* CCLCalendarView.m */; };
+		6009D69D19ACC4CE006F568F /* CCLWeekRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D69C19ACC4CE006F568F /* CCLWeekRowView.m */; };
+		6009D6A119ACDAC0006F568F /* CCLDayDetailRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +55,17 @@
 		6009D68319AC77D4006F568F /* CalendarViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CalendarViewTests-Info.plist"; sourceTree = "<group>"; };
 		6009D68519AC77D4006F568F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6009D68719AC77D4006F568F /* CalendarViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarViewTests.m; sourceTree = "<group>"; };
+		6009D69219AC7D59006F568F /* CCLCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarViewController.h; sourceTree = "<group>"; };
+		6009D69319AC7D5A006F568F /* CCLCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarViewController.m; sourceTree = "<group>"; };
+		6009D69519AC8107006F568F /* CCLDayCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLDayCellView.h; sourceTree = "<group>"; };
+		6009D69619AC8107006F568F /* CCLDayCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLDayCellView.m; sourceTree = "<group>"; };
+		6009D69819ACC0CB006F568F /* CCLCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarView.h; sourceTree = "<group>"; };
+		6009D69919ACC0CC006F568F /* CCLCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarView.m; sourceTree = "<group>"; };
+		6009D69B19ACC4CE006F568F /* CCLWeekRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLWeekRowView.h; sourceTree = "<group>"; };
+		6009D69C19ACC4CE006F568F /* CCLWeekRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLWeekRowView.m; sourceTree = "<group>"; };
+		6009D69E19ACC868006F568F /* CCLCalendarViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLCalendarViewDelegate.h; sourceTree = "<group>"; };
+		6009D69F19ACDAC0006F568F /* CCLDayDetailRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLDayDetailRowView.h; sourceTree = "<group>"; };
+		6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLDayDetailRowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				6009D66319AC77D3006F568F /* CalendarView */,
+				6009D69119AC77DE006F568F /* Resources */,
 				6009D68119AC77D4006F568F /* CalendarViewTests */,
 				6009D65C19AC77D3006F568F /* Frameworks */,
 				6009D65B19AC77D3006F568F /* Products */,
@@ -117,8 +134,17 @@
 			children = (
 				6009D66F19AC77D3006F568F /* CCLAppDelegate.h */,
 				6009D67019AC77D3006F568F /* CCLAppDelegate.m */,
-				6009D67219AC77D3006F568F /* MainMenu.xib */,
-				6009D67519AC77D3006F568F /* Images.xcassets */,
+				6009D69219AC7D59006F568F /* CCLCalendarViewController.h */,
+				6009D69319AC7D5A006F568F /* CCLCalendarViewController.m */,
+				6009D69819ACC0CB006F568F /* CCLCalendarView.h */,
+				6009D69919ACC0CC006F568F /* CCLCalendarView.m */,
+				6009D69E19ACC868006F568F /* CCLCalendarViewDelegate.h */,
+				6009D69B19ACC4CE006F568F /* CCLWeekRowView.h */,
+				6009D69C19ACC4CE006F568F /* CCLWeekRowView.m */,
+				6009D69F19ACDAC0006F568F /* CCLDayDetailRowView.h */,
+				6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */,
+				6009D69519AC8107006F568F /* CCLDayCellView.h */,
+				6009D69619AC8107006F568F /* CCLDayCellView.m */,
 				6009D66419AC77D3006F568F /* Supporting Files */,
 			);
 			path = CalendarView;
@@ -152,6 +178,16 @@
 				6009D68419AC77D4006F568F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6009D69119AC77DE006F568F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6009D67219AC77D3006F568F /* MainMenu.xib */,
+				6009D67519AC77D3006F568F /* Images.xcassets */,
+			);
+			name = Resources;
+			path = CalendarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,8 +289,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6009D69419AC7D5A006F568F /* CCLCalendarViewController.m in Sources */,
 				6009D66A19AC77D3006F568F /* main.m in Sources */,
+				6009D69719AC8107006F568F /* CCLDayCellView.m in Sources */,
 				6009D67119AC77D3006F568F /* CCLAppDelegate.m in Sources */,
+				6009D69D19ACC4CE006F568F /* CCLWeekRowView.m in Sources */,
+				6009D6A119ACDAC0006F568F /* CCLDayDetailRowView.m in Sources */,
+				6009D69A19ACC0CC006F568F /* CCLCalendarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +508,7 @@
 				6009D68D19AC77D4006F568F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6009D68E19AC77D4006F568F /* Build configuration list for PBXNativeTarget "CalendarViewTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +517,7 @@
 				6009D69019AC77D4006F568F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
