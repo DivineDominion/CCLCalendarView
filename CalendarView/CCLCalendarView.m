@@ -8,6 +8,7 @@
 
 #import "CCLCalendarView.h"
 #import "CCLCalendarViewDelegate.h"
+#import "CCLDayDetailRowView.h"
 
 @implementation CCLCalendarView
 

@@ -11,6 +11,7 @@
 
 #import "CCLDayCellView.h"
 #import "CCLWeekRowView.h"
+#import "CCLDayCellSelection.h"
 
 @interface CellObject : NSObject
 @property (copy) NSNumber *day;
@@ -29,6 +30,7 @@
 }
 @end
 
+
 @interface CCLCalendarViewController ()
 
 @end
@@ -37,39 +39,51 @@
 
 - (BOOL)hasSelectedDayCell
 {
-    return self.selectedView != nil;
+    return self.cellSelection != nil;
+}
+
+- (BOOL)hasSelectedDayCellInRowAbove:(NSInteger)row
+{
+    NSInteger rowAbove = row - 1;
+    return [self hasSelectedDayCell] && self.cellSelection.row == rowAbove;
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    NSInteger numberOfRows = 20;
+    
+    if ([self hasSelectedDayCell])
+    {
+        numberOfRows++;
+    }
+    
+    return numberOfRows;
 }
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
-    CCLWeekRowView *week = [tableView makeViewWithIdentifier:@"WeekRow" owner:self];
-    
-    if (row == 5)
+    if ([self hasSelectedDayCellInRowAbove:row])
     {
-        week = [tableView makeViewWithIdentifier:@"DayDetailRow" owner:self];
+        return [tableView makeViewWithIdentifier:@"DayDetailRow" owner:self];
     }
     
-    return week;
+    return [tableView makeViewWithIdentifier:@"WeekRow" owner:self];
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    NSTableCellView *cell;
-    
-    if (row == 0)
+    BOOL isGroupRow = row == 0;
+    if (isGroupRow)
     {
-         cell = [tableView makeViewWithIdentifier:@"GroupCell" owner:self];
-    }
-    else if (row == 5)
-    {
-        cell = nil;
-    }
-    else
-    {
-         cell = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+         return [tableView makeViewWithIdentifier:@"MonthRow" owner:self];
     }
     
-    return cell;
+    if ([self hasSelectedDayCellInRowAbove:row])
+    {
+        return nil;
+    }
+    
+    return [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
@@ -77,6 +91,11 @@
     if (row == 0)
     {
         return 20.;
+    }
+    
+    if ([self hasSelectedDayCellInRowAbove:row])
+    {
+        return 120.;
     }
     
     return 80.;
@@ -87,11 +106,6 @@
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     NSInteger counter = ((row-1) * 7) + columnIndex + 1;
     return [CellObject cellObjectForDay:counter total:678];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
-{
-    return 20;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
@@ -106,20 +120,73 @@
 
 - (void)tableView:(NSTableView *)tableView didSelectCellViewAtRow:(NSInteger)row column:(NSInteger)column
 {
-    CCLWeekRowView *week = [tableView rowViewAtRow:row makeIfNecessary:YES];
-    // TODO select column -> display gap in grid line
-    
-    CCLDayCellView *view = [self.calendarTableView viewAtColumn:column row:row makeIfNecessary:YES];
-    CellObject *object = view.objectValue;
-    NSLog(@"%@", object.day);
-    
-    if ([self hasSelectedDayCell])
+    NSTableRowView *selectedRow = [tableView rowViewAtRow:row makeIfNecessary:YES];
+    if ([selectedRow.identifier isEqualToString:@"DayDetailRow"]
+        || [selectedRow.identifier isEqualToString:@"MonthRow"]
+        || selectedRow.isGroupRowStyle)
     {
-        [self.selectedView deselect];
+        return;
     }
     
-    self.selectedView = view;
-    [view select];
+    CCLWeekRowView *week = (CCLWeekRowView *)selectedRow;
+    // TODO select column -> display gap in grid line
+    
+    BOOL newSelectionIsOnSameRow = NO;
+    if ([self hasSelectedDayCell])
+    {
+        NSInteger oldSelectionRow = self.cellSelection.row;
+        if (oldSelectionRow == row)
+        {
+            newSelectionIsOnSameRow = YES;
+        }
+        
+        if (!newSelectionIsOnSameRow)
+        {
+            [self removeDetailRow];
+        }
+        
+        [self deselectDayCell];
+        
+        if (oldSelectionRow < row)
+        {
+            row--;
+        }
+    }
+    
+    CCLDayCellView *dayCellView = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
+    [self selectDayCell:dayCellView row:row column:column];
+    
+    if (!newSelectionIsOnSameRow)
+    {
+        [self insertDetailRow];
+    }
+}
+
+- (void)deselectDayCell
+{
+    [self.cellSelection deselectCell];
+}
+
+- (void)removeDetailRow
+{
+    NSInteger rowBelow = self.cellSelection.row + 1;
+    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
+    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
+}
+
+- (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column
+{
+    CellObject *object = selectedView.objectValue;
+    NSLog(@"%@", object.day);
+    
+    self.cellSelection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
+}
+
+- (void)insertDetailRow
+{
+    NSInteger rowBelow = self.cellSelection.row + 1;
+    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
+    [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
 }
 
 @end
