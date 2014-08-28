@@ -11,8 +11,10 @@
 #import "CCLCalendarViewDelegate.h"
 
 @class CCLDayCellSelection;
+@class CCLDayDetailRowView;
 
 @interface CCLCalendarViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
 @property (weak) IBOutlet NSTableView *calendarTableView;
+@property (weak) CCLDayDetailRowView *dayDetailRowView;
 @property (strong) CCLDayCellSelection *cellSelection;
 @end

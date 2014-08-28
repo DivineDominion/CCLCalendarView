@@ -12,6 +12,7 @@
 #import "CCLDayCellView.h"
 #import "CCLWeekRowView.h"
 #import "CCLDayCellSelection.h"
+#import "CCLDayDetailRowView.h"
 
 @interface CellObject : NSObject
 @property (copy) NSNumber *day;
@@ -62,6 +63,11 @@
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
+    if (row == 0)
+    {
+        return [tableView makeViewWithIdentifier:@"MonthRow" owner:self];
+    }
+    
     if ([self hasSelectedDayCellInRowAbove:row])
     {
         return [tableView makeViewWithIdentifier:@"DayDetailRow" owner:self];
@@ -75,12 +81,22 @@
     BOOL isGroupRow = row == 0;
     if (isGroupRow)
     {
-         return [tableView makeViewWithIdentifier:@"MonthRow" owner:self];
+         return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
     }
     
     if ([self hasSelectedDayCellInRowAbove:row])
     {
         return nil;
+    }
+    
+    NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+    
+    if (isLastColumn)
+    {
+        NSTableRowView *row = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
+        row.backgroundColor = [NSColor grayColor];
+        return row;
     }
     
     return [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
@@ -95,7 +111,7 @@
     
     if ([self hasSelectedDayCellInRowAbove:row])
     {
-        return 120.;
+        return 140.;
     }
     
     return 80.;
@@ -104,6 +120,13 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+    
+    if (isLastColumn)
+    {
+        return nil;
+    }
+    
     NSInteger counter = ((row-1) * 7) + columnIndex + 1;
     return [CellObject cellObjectForDay:counter total:678];
 }
@@ -121,9 +144,7 @@
 - (void)tableView:(NSTableView *)tableView didSelectCellViewAtRow:(NSInteger)row column:(NSInteger)column
 {
     NSTableRowView *selectedRow = [tableView rowViewAtRow:row makeIfNecessary:YES];
-    if ([selectedRow.identifier isEqualToString:@"DayDetailRow"]
-        || [selectedRow.identifier isEqualToString:@"MonthRow"]
-        || selectedRow.isGroupRowStyle)
+    if (![selectedRow.identifier isEqualToString:@"WeekRow"])
     {
         return;
     }
@@ -131,6 +152,7 @@
     CCLWeekRowView *week = (CCLWeekRowView *)selectedRow;
     // TODO select column -> display gap in grid line
     
+    NSTableCellView *selectedCell = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
     BOOL newSelectionIsOnSameRow = NO;
     if ([self hasSelectedDayCell])
     {
@@ -140,7 +162,7 @@
             newSelectionIsOnSameRow = YES;
         }
         
-        if (!newSelectionIsOnSameRow)
+        if (!newSelectionIsOnSameRow || [selectedCell.identifier isEqualToString:@"WeekTotalCell"])
         {
             [self removeDetailRow];
         }
@@ -153,23 +175,36 @@
         }
     }
     
-    CCLDayCellView *dayCellView = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
+    if ([selectedCell.identifier isEqualToString:@"WeekTotalCell"])
+    {
+        return;
+    }
+    
+    CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
     [self selectDayCell:dayCellView row:row column:column];
     
-    if (!newSelectionIsOnSameRow)
+    if (newSelectionIsOnSameRow)
     {
-        [self insertDetailRow];
+        return;
     }
+    
+    [self insertDetailRow];
 }
 
 - (void)deselectDayCell
 {
     [self.cellSelection deselectCell];
+    self.cellSelection = nil;
 }
 
 - (void)removeDetailRow
 {
-    NSInteger rowBelow = self.cellSelection.row + 1;
+    if (self.dayDetailRowView == nil)
+    {
+        return;
+    }
+    
+    NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
 }
@@ -177,7 +212,7 @@
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column
 {
     CellObject *object = selectedView.objectValue;
-    NSLog(@"%@", object.day);
+    // TODO pass cell object to adapter
     
     self.cellSelection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
 }
@@ -187,6 +222,16 @@
     NSInteger rowBelow = self.cellSelection.row + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+}
+
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+    if (![rowView.identifier isEqualToString:@"DayDetailRow"])
+    {
+        return;
+    }
+    
+    self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
 }
 
 @end

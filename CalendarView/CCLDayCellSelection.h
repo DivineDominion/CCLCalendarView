@@ -11,7 +11,7 @@
 @class CCLDayCellView;
 
 @interface CCLDayCellSelection : NSObject
-@property (strong) CCLDayCellView *selectedView;
+@property (strong, readonly) CCLDayCellView *selectedView;
 @property (assign, readonly) NSInteger row;
 @property (assign, readonly) NSInteger column;
 
