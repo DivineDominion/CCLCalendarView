@@ -8,8 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class CCLDisplayCalendar;
+
 @interface CCLAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (strong) CCLDisplayCalendar *displayCalendar;
 
 @end

@@ -31,12 +31,17 @@
 }
 @end
 
-
-@interface CCLCalendarViewController ()
-
-@end
+NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
 
 @implementation CCLCalendarViewController
+
++ (instancetype)calendarViewController
+{
+    return [[self alloc] initWithNibName:kCCLCalendarViewControllerNibName
+                                  bundle:[NSBundle mainBundle]];
+}
+
+#pragma mark -
 
 - (void)awakeFromNib
 {
@@ -146,6 +151,21 @@
     return NO;
 }
 
+
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+    if (![rowView.identifier isEqualToString:@"DayDetailRow"])
+    {
+        return;
+    }
+    
+    self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
+}
+
+
+#pragma mark -
+#pragma mark Cell Selection
+
 - (void)tableView:(NSTableView *)tableView didSelectCellViewAtRow:(NSInteger)row column:(NSInteger)column
 {
     NSTableRowView *selectedRow = [tableView rowViewAtRow:row makeIfNecessary:YES];
@@ -227,16 +247,6 @@
     NSInteger rowBelow = self.cellSelection.row + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
-}
-
-- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-    if (![rowView.identifier isEqualToString:@"DayDetailRow"])
-    {
-        return;
-    }
-    
-    self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
 }
 
 @end

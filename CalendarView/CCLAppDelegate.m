@@ -7,12 +7,14 @@
 //
 
 #import "CCLAppDelegate.h"
+#import "CCLDisplayCalendar.h"
 
 @implementation CCLAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    self.displayCalendar = [CCLDisplayCalendar displayCalendar];
+    [self.displayCalendar displayInView:self.window.contentView];
 }
 
 @end
