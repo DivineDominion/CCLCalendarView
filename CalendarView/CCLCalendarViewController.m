@@ -174,9 +174,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return;
     }
     
-    CCLWeekRowView *week = (CCLWeekRowView *)selectedRow;
-    // TODO select column -> display gap in grid line
-    
     NSTableCellView *selectedCell = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
     BOOL newSelectionIsOnSameRow = NO;
     if ([self hasSelectedDayCell])
