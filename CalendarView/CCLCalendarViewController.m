@@ -7,31 +7,23 @@
 //
 
 #import "CCLCalendarViewController.h"
-#import "CCLCalendarView.h"
 
-#import "CCLDayCellView.h"
-#import "CCLWeekRowView.h"
+// Collaborators
+#import "CCLHandleDaySelection.h"
+#import "CCLProvidesCalendarObjects.h"
+
+// Components
 #import "CCLDayCellSelection.h"
+#import "CCLCalendarView.h"
+#import "CCLWeekRowView.h"
 #import "CCLDayDetailRowView.h"
-
-@interface CellObject : NSObject
-@property (copy) NSNumber *day;
-@property (copy) NSNumber *total;
-
-+ (instancetype)cellObjectForDay:(NSUInteger)day total:(NSUInteger)total;
-@end
-
-@implementation CellObject
-+ (instancetype)cellObjectForDay:(NSUInteger)day total:(NSUInteger)total
-{
-    CellObject *result = [[self alloc] init];
-    result.day = @(day);
-    result.total = @(total);
-    return result;
-}
-@end
+#import "CCLDayCellView.h"
 
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
+
+@interface CCLCalendarViewController ()
+@property (strong, readwrite) CCLDayCellSelection *cellSelection;
+@end
 
 @implementation CCLCalendarViewController
 
@@ -137,8 +129,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return nil;
     }
     
-    NSInteger counter = ((row-1) * 7) + columnIndex + 1;
-    return [CellObject cellObjectForDay:counter total:678];
+    id objectValue = [self.objectProvider objectValueForYear:2000 month:12 day:24];
+    return objectValue;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
@@ -233,10 +225,14 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column
 {
-    CellObject *object = selectedView.objectValue;
-    // TODO pass cell object to adapter
-    
     self.cellSelection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
+    
+    id objectValue = selectedView.objectValue;
+    NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
+    // TODO display view in detail row
+    
+    [self.eventHandler calendarViewController:self
+                 didSelectCellWithObjectValue:objectValue];
 }
 
 - (void)insertDetailRow

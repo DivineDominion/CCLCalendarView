@@ -12,13 +12,19 @@
 
 @class CCLDayCellSelection;
 @class CCLDayDetailRowView;
+@protocol CCLHandlesDaySelection;
+@protocol CCLProvidesCalendarObjects;
 
 extern NSString * const kCCLCalendarViewControllerNibName;
 
 @interface CCLCalendarViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
+@property (weak) id<CCLHandlesDaySelection> eventHandler;
+@property (weak) id<CCLProvidesCalendarObjects> objectProvider;
+
 @property (weak) IBOutlet NSTableView *calendarTableView;
 @property (weak) CCLDayDetailRowView *dayDetailRowView;
-@property (strong) CCLDayCellSelection *cellSelection;
+
+@property (strong, readonly) CCLDayCellSelection *cellSelection;
 
 + (instancetype)calendarViewController;
 @end

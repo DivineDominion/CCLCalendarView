@@ -9,10 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 @class CCLDisplayCalendar;
+@protocol CCLHandlesDaySelection;
+@protocol CCLProvidesCalendarObjects;
 
 @interface CCLAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (strong) id<CCLHandlesDaySelection, CCLProvidesCalendarObjects> calendarDelegate;
 @property (strong) CCLDisplayCalendar *displayCalendar;
 
 @end

@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @class CCLCalendarViewController;
+@protocol CCLHandlesDaySelection;
+@protocol CCLProvidesCalendarObjects;
 
 @interface CCLDisplayCalendar : NSObject
-@property (nonatomic, strong) CCLCalendarViewController *calendarViewController;
+@property (strong, readonly) CCLCalendarViewController *calendarViewController;
 
-+ (instancetype)displayCalendar;
++ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
 
 - (void)displayInView:(NSView *)containerView;
 @end

@@ -10,20 +10,27 @@
 #import "CCLCalendarViewController.h"
 
 @implementation CCLDisplayCalendar
-+ (instancetype)displayCalendar
+
++ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
-    return [[self alloc] init];
+    return [[self alloc] initWithObjectProvider:objectProvider selectionHandler:selectionHandler];
 }
 
-- (CCLCalendarViewController *)calendarViewController
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
-    if (!_calendarViewController)
+    self = [super init];
+    
+    if (self)
     {
         _calendarViewController = [CCLCalendarViewController calendarViewController];
+        _calendarViewController.objectProvider = objectProvider;
+        _calendarViewController.eventHandler = selectionHandler;
     }
     
-    return _calendarViewController;
+    return self;
 }
+
+#pragma mark -
 
 - (void)displayInView:(NSView *)containerView
 {
