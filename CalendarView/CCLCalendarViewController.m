@@ -38,6 +38,11 @@
 
 @implementation CCLCalendarViewController
 
+- (void)awakeFromNib
+{
+    [self.calendarTableView setIntercellSpacing:NSMakeSize(0, 0)];
+}
+
 - (BOOL)hasSelectedDayCell
 {
     return self.cellSelection != nil;

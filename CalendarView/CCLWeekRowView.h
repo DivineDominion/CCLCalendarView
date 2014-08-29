@@ -9,4 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface CCLWeekRowView : NSTableRowView
+@property (nonatomic, copy) NSColor *gridColor;
 @end

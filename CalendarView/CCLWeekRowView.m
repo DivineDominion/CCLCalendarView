@@ -22,8 +22,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
-    
-    // Drawing code here.
+}
+
+- (void)drawBackgroundInRect:(NSRect)dirtyRect
+{
+    [super drawBackgroundInRect:dirtyRect];
 }
 
 - (void)drawSeparatorInRect:(NSRect)dirtyRect
@@ -33,12 +36,27 @@
         return;
     }
     
+    [self drawGridLine];
+}
+
+- (void)drawGridLine
+{
     NSRect separatorRect = self.bounds;
     separatorRect.origin.y = NSMaxY(separatorRect) - 1;
     separatorRect.size.height = 2;
     
-    [[NSColor lightGrayColor] set];
+    [self.gridColor set];
     NSRectFill(separatorRect);
+}
+
+- (NSColor *)gridColor
+{
+    if (!_gridColor)
+    {
+        _gridColor = [NSColor gridColor];
+    }
+    
+    return _gridColor;
 }
 
 @end

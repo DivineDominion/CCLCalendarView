@@ -738,6 +738,11 @@
                                                             </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                                            <color key="value" red="0.63787260270685608" green="0.7029441730815742" blue="0.92810921717171713" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </tableCellView>
                                                 <customView identifier="WeekRow" id="MFH-Tu-sIy" customClass="CCLWeekRowView">
                                                     <rect key="frame" x="1" y="74" width="50" height="44"/>
