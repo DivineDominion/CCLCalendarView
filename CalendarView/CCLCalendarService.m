@@ -7,11 +7,11 @@
 //
 
 #import "CCLCalendarService.h"
+#import "CCLDateRange.h"
 
 @interface CellObject : NSObject
 @property (copy) NSNumber *day;
 @property (copy) NSNumber *total;
-
 + (instancetype)cellObjectForDay:(NSUInteger)day total:(NSUInteger)total;
 @end
 
@@ -25,10 +25,20 @@
 }
 @end
 
+
+
 @implementation CCLCalendarService
 - (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
 {
     return [CellObject cellObjectForDay:day total:1234];
+}
+
+- (CCLDateRange *)dateRange
+{
+    NSDate *startDate = [NSDate dateWithString:@"2014-07-04 14:00:00 +0200"];
+    NSDate *endDate = [NSDate dateWithString:@"2014-09-12 23:00:00 +0200"];
+
+    return [CCLDateRange dateRangeFrom:startDate until:endDate];
 }
 
 - (void)calendarViewController:(CCLCalendarViewController *)calendarViewController didSelectCellWithObjectValue:(id)objectValue

@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class CCLDateRange;
+
 @protocol CCLProvidesCalendarObjects <NSObject>
+@required
+- (CCLDateRange *)dateRange;
 - (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day;
+
+@optional
+- (id)objectValueForYear:(NSUInteger)year week:(NSUInteger)week;
 @end

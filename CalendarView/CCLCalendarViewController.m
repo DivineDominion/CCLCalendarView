@@ -11,6 +11,7 @@
 // Collaborators
 #import "CCLHandleDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
+#import "CCLCalendarTableModelTranslator.h"
 
 // Components
 #import "CCLDayCellSelection.h"
@@ -33,11 +34,14 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
                                   bundle:[NSBundle mainBundle]];
 }
 
-#pragma mark -
-
-- (void)awakeFromNib
+- (CCLCalendarTableModelTranslator *)tableModelTranslator
 {
-    [self.calendarTableView setIntercellSpacing:NSMakeSize(0, 0)];
+    if (!_tableModelTranslator)
+    {
+        _tableModelTranslator = [CCLCalendarTableModelTranslator calendarTableModelTranslator];
+    }
+    
+    return _tableModelTranslator;
 }
 
 - (BOOL)hasSelectedDayCell
@@ -51,9 +55,19 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [self hasSelectedDayCell] && self.cellSelection.row == rowAbove;
 }
 
+
+#pragma mark -
+#pragma mark View Setup
+
+- (void)awakeFromNib
+{
+    [self.calendarTableView setIntercellSpacing:NSMakeSize(0, 0)];
+}
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     NSInteger numberOfRows = 20;
+    [self.objectProvider dateRange];
     
     if ([self hasSelectedDayCell])
     {
@@ -119,18 +133,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return 80.;
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
-    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
     
-    if (isLastColumn)
-    {
-        return nil;
-    }
-    
-    id objectValue = [self.objectProvider objectValueForYear:2000 month:12 day:24];
-    return objectValue;
+    return [self.tableModelTranslator objectValueForTableView:self.calendarTableView objectProvider:self.objectProvider column:columnIndex row:rowIndex];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
@@ -143,6 +150,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return NO;
 }
 
+
+#pragma mark Table Change Callbacks
 
 - (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
