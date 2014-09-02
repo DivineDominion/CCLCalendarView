@@ -676,6 +676,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="1yt-AF-CQc"/>
+            </connections>
         </window>
         <textFieldCell scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="WEY-mA-C5h">
             <font key="font" metaFont="system"/>

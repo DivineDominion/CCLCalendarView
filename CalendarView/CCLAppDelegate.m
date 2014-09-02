@@ -19,4 +19,8 @@
     [self.displayCalendar displayInView:self.window.contentView];
 }
 
+- (void)windowWillClose:(NSNotification *)notification
+{
+    [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
+}
 @end

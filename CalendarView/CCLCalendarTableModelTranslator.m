@@ -10,6 +10,8 @@
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLDateRange.h"
 
+#import "CTWCalendarSupplier.h"
+
 @implementation CCLCalendarTableModelTranslator
 + (instancetype)calendarTableModelTranslator
 {
@@ -41,4 +43,21 @@
     
     return [objectProvider objectValueForYear:year month:month day:day];
 }
+
+- (NSUInteger)weeksOfMonthFromDateComponents:(NSDateComponents *)monthComponents
+{
+    NSCalendar *calendar = [self calendar];
+    NSDate *date = [calendar dateFromComponents:monthComponents];
+    NSAssert(date, @"month components not a valid date: %@", monthComponents);
+    NSRange weekRange = [calendar rangeOfUnit:NSWeekCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
+    NSUInteger weeksCount = weekRange.length;
+    
+    return weeksCount;
+}
+
+- (NSCalendar *)calendar
+{
+    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+}
+
 @end
