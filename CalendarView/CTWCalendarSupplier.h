@@ -10,5 +10,10 @@
 
 @interface CTWCalendarSupplier : NSObject
 + (instancetype)calendarSupplier;
++ (instancetype)sharedInstance;
++ (void)setSharedInstance:(CTWCalendarSupplier *)instance;
++ (void)resetSharedInstance;
+
 - (NSCalendar *)autoupdatingCalendar;
+- (NSLocale *)autoupdatingLocale;
 @end

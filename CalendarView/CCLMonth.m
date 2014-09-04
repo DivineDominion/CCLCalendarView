@@ -40,6 +40,11 @@
     return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
+- (NSLocale *)locale
+{
+    return [[CTWCalendarSupplier calendarSupplier] autoupdatingLocale];
+}
+
 #pragma mark -
 
 - (NSUInteger)year
@@ -58,4 +63,73 @@
     return components.month;
 }
 
+- (NSString *)name
+{
+    NSLocale *locale = [self locale];
+    NSDate *date = self.date;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"MMMM";
+    dateFormatter.locale = locale;
+    NSString *monthName = [dateFormatter stringFromDate:date];
+    
+    return [monthName capitalizedString];
+}
+
+- (NSUInteger)firstWeekday
+{
+    NSCalendar *calendar = [self calendar];
+    NSDate *firstOfMonth = [self firstOfMonth:self.date];
+    NSInteger component = [calendar component:NSWeekdayCalendarUnit fromDate:firstOfMonth];
+    
+    return component;
+}
+
+- (NSDate *)firstOfMonth:(NSDate *)date
+{
+    NSCalendar *calendar = [self calendar];
+    NSRange daysOfMonth = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
+    NSDateComponents *dateComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    dateComponents.day = daysOfMonth.location;
+    NSDate *normalizedDate = [calendar dateFromComponents:dateComponents];
+    
+    return normalizedDate;
+}
+
+- (NSUInteger)lastWeekday
+{
+    NSCalendar *calendar = [self calendar];
+    NSDate *lastOfMonth = [self lastOfMonth:self.date];
+    NSInteger component = [calendar component:NSWeekdayCalendarUnit fromDate:lastOfMonth];
+    
+    return component;
+}
+
+- (NSDate *)lastOfMonth:(NSDate *)date
+{
+    NSCalendar *calendar = [self calendar];
+    NSRange daysOfMonth = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
+    NSDateComponents *dateComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    dateComponents.day = daysOfMonth.length;
+    NSDate *normalizedDate = [calendar dateFromComponents:dateComponents];
+    
+    return normalizedDate;
+}
+
+- (NSUInteger)weekCount
+{
+    NSCalendar *calendar = [self calendar];
+    NSRange weekRange = [calendar rangeOfUnit:NSWeekCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.date];
+    NSUInteger weekCount = weekRange.length;
+    
+    return weekCount;
+}
+
+- (NSUInteger)firstCalenderWeek
+{
+    NSCalendar *calendar = [self calendar];
+    NSDate *firstOfMonth = [self firstOfMonth:self.date];
+    NSInteger component = [calendar component:NSWeekOfYearCalendarUnit fromDate:firstOfMonth];
+    
+    return component;
+}
 @end
