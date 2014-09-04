@@ -29,7 +29,7 @@
     
     if (self)
     {
-        
+        _date = [date copy];
     }
     
     return self;
@@ -41,5 +41,21 @@
 }
 
 #pragma mark -
+
+- (NSUInteger)year
+{
+    NSCalendar *calendar = [self calendar];
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit fromDate:self.date];
+    
+    return components.year;
+}
+
+- (NSUInteger)month
+{
+    NSCalendar *calendar = [self calendar];
+    NSDateComponents *components = [calendar components:NSMonthCalendarUnit fromDate:self.date];
+    
+    return components.month;
+}
 
 @end

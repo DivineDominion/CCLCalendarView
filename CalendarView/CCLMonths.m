@@ -8,6 +8,8 @@
 
 #import "CCLMonths.h"
 
+#import "CTWCalendarSupplier.h"
+
 #import "CCLMonth.h"
 
 @interface CCLMonths ()
@@ -57,15 +59,41 @@
 
 + (void)guardMonthConsecutivity:(NSArray *)array
 {
-    [array enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+    NSCalendar *calendar = [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    NSDateComponents *monthInterval = [[NSDateComponents alloc] init];
+    monthInterval.month = 1;
+    
+    __block NSDate *expectedMonthDate;
+    
+    [array enumerateObjectsUsingBlock:^(CCLMonth *month, NSUInteger index, BOOL *stop) {
         
-        if (![object isKindOfClass:[self memberType]])
+        if (![month isKindOfClass:[self memberType]])
         {
-            NSString *reason = [NSString stringWithFormat:@"array element %lu is not a month object but a %@", index, [object class]];
+            NSString *reason = [NSString stringWithFormat:@"array element %lu is not a month object but a %@", index, [month class]];
             @throw [NSException exceptionWithName:NSInvalidArgumentException reason:reason userInfo:nil];
         }
         
-#warning test consecutivity missing
+        NSDate *thisDate = month.date;
+        NSDate *nextMonthDate = [calendar dateByAddingComponents:monthInterval toDate:thisDate options:0];
+        
+        // Skip first entry
+        if (index == 0)
+        {
+            expectedMonthDate = nextMonthDate;
+            return;
+        }
+        
+        NSDateComponents *thisComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:thisDate];
+        NSDateComponents *expectedComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:expectedMonthDate];
+        
+        if ([thisComponents isEqualTo:expectedComponents])
+        {
+            expectedMonthDate = nextMonthDate;
+            return;
+        }
+
+        NSString *reason = [NSString stringWithFormat:@"expected next month to be around %@ but was off instead: %@", expectedMonthDate, thisDate];
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:reason userInfo:nil];
     }];
 }
 
@@ -73,7 +101,6 @@
 {
     return [CCLMonth class];
 }
-
 
 #pragma mark -
 #pragma mark Accessing Months

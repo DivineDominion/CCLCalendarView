@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CCLMonth : NSObject
+@property (copy, readonly) NSDate *date;
 
 + (instancetype)monthFromDate:(NSDate *)date;
 - (instancetype)initWithDate:(NSDate *)date;
@@ -17,6 +18,7 @@
 - (NSUInteger)firstWeekday;
 - (NSUInteger)lastWeekday;
 - (NSUInteger)year;
+- (NSUInteger)month;
 - (NSUInteger)weekCount;
 - (NSUInteger)firstCalenderWeek;
 @end

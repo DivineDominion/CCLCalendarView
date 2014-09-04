@@ -26,9 +26,20 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testYear_ReturnsTheYear
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSDate *date = [NSDate dateWithString:@"1997-08-12 16:08:34 +0200"];
+    CCLMonth *month = [CCLMonth monthFromDate:date];
+    
+    XCTAssertEqual(month.year, 1997, @"should expose year of date");
+}
+
+- (void)testMonth_ReturnsTheMonth
+{
+    NSDate *date = [NSDate dateWithString:@"1951-07-04 02:33:05 +0100"];
+    CCLMonth *month = [CCLMonth monthFromDate:date];
+    
+    XCTAssertEqual(month.month, 7, @"should expose month of date");
 }
 
 @end
