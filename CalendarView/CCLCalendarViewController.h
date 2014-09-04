@@ -20,8 +20,8 @@ extern NSString * const kCCLCalendarViewControllerNibName;
 
 @interface CCLCalendarViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
 @property (weak) id<CCLHandlesDaySelection> eventHandler;
-@property (weak) id<CCLProvidesCalendarObjects> objectProvider;
-@property (nonatomic, strong) CCLCalendarTableModelTranslator *tableModelTranslator;
+@property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (nonatomic, strong, readonly) CCLCalendarTableModelTranslator *tableModelTranslator;
 
 @property (weak) IBOutlet NSTableView *calendarTableView;
 @property (weak) CCLDayDetailRowView *dayDetailRowView;

@@ -24,6 +24,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 @interface CCLCalendarViewController ()
 @property (strong, readwrite) CCLDayCellSelection *cellSelection;
+@property (nonatomic, strong, readwrite) CCLCalendarTableModelTranslator *tableModelTranslator;
 @end
 
 @implementation CCLCalendarViewController
@@ -34,14 +35,29 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
                                   bundle:[NSBundle mainBundle]];
 }
 
-- (CCLCalendarTableModelTranslator *)tableModelTranslator
+- (void)setObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider
 {
-    if (!_tableModelTranslator)
+    if (_objectProvider == objectProvider)
     {
-        _tableModelTranslator = [CCLCalendarTableModelTranslator calendarTableModelTranslator];
+        return;
     }
     
-    return _tableModelTranslator;
+    _objectProvider = objectProvider;
+    
+    [self updateTableModelTranslator];
+}
+
+- (void)updateTableModelTranslator
+{
+    id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
+    
+    if (objectProvider == nil)
+    {
+        self.tableModelTranslator = nil;
+        return;
+    }
+    
+    self.tableModelTranslator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
 }
 
 - (BOOL)hasSelectedDayCell
@@ -137,7 +153,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     
-    return [self.tableModelTranslator objectValueForTableView:self.calendarTableView objectProvider:self.objectProvider column:columnIndex row:rowIndex];
+    return [self.tableModelTranslator objectValueForTableView:self.calendarTableView column:columnIndex row:rowIndex];
 }
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row

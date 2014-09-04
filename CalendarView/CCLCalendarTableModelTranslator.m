@@ -12,17 +12,63 @@
 
 #import "CTWCalendarSupplier.h"
 
+@interface CCLCalendarTableModelTranslator ()
+@property (strong, readwrite) CCLMonths *months;
+@end
+
 @implementation CCLCalendarTableModelTranslator
-+ (instancetype)calendarTableModelTranslator
++ (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider
 {
-    return [[self alloc] init];
+    return [[self alloc] initWithObjectProvider:objectProvider];
 }
 
-- (id)objectValueForTableView:(NSTableView *)tableView objectProvider:(id<CCLProvidesCalendarObjects>)objectProvider column:(NSInteger)column row:(NSInteger)row
+- (instancetype)init
+{
+    return [self initWithObjectProvider:nil];
+}
+
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider
+{
+    NSParameterAssert(objectProvider);
+    
+    self = [super init];
+    
+    if (self)
+    {
+        _objectProvider = objectProvider;
+    }
+    
+    return self;
+}
+
+- (void)setObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider
+{
+    if (_objectProvider == objectProvider)
+    {
+        return;
+    }
+    
+    _objectProvider = objectProvider;
+    
+    [self updateMonths];
+}
+
+- (void)updateMonths
+{
+    CCLDateRange *dateRange = self.objectProvider.dateRange;
+    CCLMonths *months = [dateRange months];
+    self.months = months;
+}
+
+#pragma mark -
+#pragma mark Translation
+
+- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
 {
     NSInteger lastColumnIndex = tableView.tableColumns.count - 1;
     BOOL isLastColumn = (column == lastColumnIndex);
     
+    id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
     CCLDateRange *dateRange = objectProvider.dateRange;
     NSDateComponents *startDateComponents = [dateRange startDateCalendarComponents];
     NSUInteger year = startDateComponents.year;

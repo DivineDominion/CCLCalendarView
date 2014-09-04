@@ -10,12 +10,16 @@
 
 @protocol CCLProvidesCalendarObjects;
 @class CCLDateRange;
+@class CCLMonths;
 
 @interface CCLCalendarTableModelTranslator : NSObject
-+ (instancetype)calendarTableModelTranslator;
+@property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (strong, readonly) CCLMonths *months;
 
-- (id)objectValueForTableView:(NSTableView *)tableView objectProvider:(id<CCLProvidesCalendarObjects>)objectProvider column:(NSInteger)column row:(NSInteger)row;
++ (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider;
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider;
 
+- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row;
 - (NSUInteger)weeksOfMonthFromDateComponents:(NSDateComponents *)monthComponents;
 
 @end

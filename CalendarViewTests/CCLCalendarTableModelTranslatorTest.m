@@ -22,6 +22,12 @@
 }
 @end
 
+@interface TestDateRange : CCLDateRange
+@property (strong) CCLMonths *months;
+@end
+@implementation TestDateRange
+@end
+
 @interface CCLCalendarTableModelTranslatorTest : XCTestCase
 
 @end
@@ -29,19 +35,36 @@
 @implementation CCLCalendarTableModelTranslatorTest
 {
     CCLCalendarTableModelTranslator *translator;
+    id<CCLProvidesCalendarObjects> testObjectProvider;
 }
 
 - (void)setUp
 {
     [super setUp];
-    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslator];
+    testObjectProvider = [[TestObjectProvider alloc] init];
+    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:testObjectProvider];
 }
 
 - (void)tearDown
 {
+    testObjectProvider = nil;
     translator = nil;
     [super tearDown];
 }
+
+
+- (void)testSettingObjectProvider_UpdatesMonths
+{
+    TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
+    TestDateRange *dateRange = [[TestDateRange alloc] initWithStartDate:[NSDate date] endDate:[NSDate dateWithTimeIntervalSinceNow:1000]];
+    dateRange.months = (id)[[NSObject alloc] init];
+    objectProvider.dateRange = dateRange;
+    
+    [translator setObjectProvider:objectProvider];
+    
+    XCTAssertEqual(translator.months, dateRange.months, @"should retrieve months from dateRange");
+}
+
 
 - (void)testWeekRange_OfSep2014_Returns5
 {
