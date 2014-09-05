@@ -36,6 +36,9 @@
 		6017337619B5BAAF00FDE187 /* CCLMonthsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */; };
 		60C354EF19B5BBD0000C14E8 /* CCLMonths.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C354EE19B5BBD0000C14E8 /* CCLMonths.m */; };
 		60C354F319B843B2000C14E8 /* CCLCalendarViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C354F119B84371000C14E8 /* CCLCalendarViewControllerTest.m */; };
+		60C354F619B99EE7000C14E8 /* CCLMonthsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C354F519B99EE7000C14E8 /* CCLMonthsFactory.m */; };
+		60C354F819B99EF9000C14E8 /* CCLMonthsFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C354F719B99EF9000C14E8 /* CCLMonthsFactoryTest.m */; };
+		60C354FC19B9A43D000C14E8 /* TestCalendarSupplier.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C354FB19B9A43D000C14E8 /* TestCalendarSupplier.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,11 @@
 		60C354ED19B5BBD0000C14E8 /* CCLMonths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLMonths.h; sourceTree = "<group>"; };
 		60C354EE19B5BBD0000C14E8 /* CCLMonths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonths.m; sourceTree = "<group>"; };
 		60C354F119B84371000C14E8 /* CCLCalendarViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLCalendarViewControllerTest.m; path = CalendarViewTests/CCLCalendarViewControllerTest.m; sourceTree = SOURCE_ROOT; };
+		60C354F419B99EE7000C14E8 /* CCLMonthsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLMonthsFactory.h; sourceTree = "<group>"; };
+		60C354F519B99EE7000C14E8 /* CCLMonthsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthsFactory.m; sourceTree = "<group>"; };
+		60C354F719B99EF9000C14E8 /* CCLMonthsFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthsFactoryTest.m; sourceTree = "<group>"; };
+		60C354FA19B9A43D000C14E8 /* TestCalendarSupplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCalendarSupplier.h; sourceTree = "<group>"; };
+		60C354FB19B9A43D000C14E8 /* TestCalendarSupplier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCalendarSupplier.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,8 +258,10 @@
 				600BA9D119B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m */,
 				60C354F119B84371000C14E8 /* CCLCalendarViewControllerTest.m */,
 				6017336319B5A77F00FDE187 /* CCLDateRangeTest.m */,
+				60C354F719B99EF9000C14E8 /* CCLMonthsFactoryTest.m */,
 				6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */,
 				6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */,
+				60C354F919B9A42C000C14E8 /* Helpers */,
 			);
 			path = CalendarViewTests;
 			sourceTree = "<group>";
@@ -289,12 +299,23 @@
 			children = (
 				600BA9C919B4581100A9ED9B /* CCLDateRange.h */,
 				600BA9CA19B4581100A9ED9B /* CCLDateRange.m */,
+				60C354F419B99EE7000C14E8 /* CCLMonthsFactory.h */,
+				60C354F519B99EE7000C14E8 /* CCLMonthsFactory.m */,
 				60C354ED19B5BBD0000C14E8 /* CCLMonths.h */,
 				60C354EE19B5BBD0000C14E8 /* CCLMonths.m */,
 				6017336C19B5B8F000FDE187 /* CCLMonth.h */,
 				6017336D19B5B8F000FDE187 /* CCLMonth.m */,
 			);
 			name = "Calendar Model";
+			sourceTree = "<group>";
+		};
+		60C354F919B9A42C000C14E8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				60C354FA19B9A43D000C14E8 /* TestCalendarSupplier.h */,
+				60C354FB19B9A43D000C14E8 /* TestCalendarSupplier.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60C354F619B99EE7000C14E8 /* CCLMonthsFactory.m in Sources */,
 				60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */,
 				600BA9CE19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m in Sources */,
 				6009D69419AC7D5A006F568F /* CCLCalendarViewController.m in Sources */,
@@ -421,6 +443,8 @@
 			files = (
 				6017336419B5A77F00FDE187 /* CCLDateRangeTest.m in Sources */,
 				6017337619B5BAAF00FDE187 /* CCLMonthsTest.m in Sources */,
+				60C354F819B99EF9000C14E8 /* CCLMonthsFactoryTest.m in Sources */,
+				60C354FC19B9A43D000C14E8 /* TestCalendarSupplier.m in Sources */,
 				6017337019B5B8FB00FDE187 /* CCLMonthTest.m in Sources */,
 				600BA9D219B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m in Sources */,
 				60C354F319B843B2000C14E8 /* CCLCalendarViewControllerTest.m in Sources */,

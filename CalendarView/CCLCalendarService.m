@@ -43,7 +43,7 @@
 
 - (void)calendarViewController:(CCLCalendarViewController *)calendarViewController didSelectCellWithObjectValue:(id)objectValue
 {
-    
+#warning stub: did select cell
 }
 
 - (NSView *)detailViewForObjectValue:(id)objectValue

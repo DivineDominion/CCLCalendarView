@@ -68,6 +68,37 @@
 
 #pragma mark -enumerateMonthsUsingBlock:
 
+- (void)testMonthEnumeration_ForThreeMonthsInTwoYears_CallsBlockThreeTimesWithEachMonthsDate
+{
+    // Given
+    NSDate *startDate = [NSDate dateWithString:@"2014-11-04 09:00:00 +0200"];
+    NSDate *endDate = [NSDate dateWithString:@"2015-01-23 12:00:00 +0200"];
+    dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
+    
+    __block NSMutableArray *calls = [NSMutableArray array];
+    CCLMonthEnumerationBlock block = ^void(NSDate *date)
+    {
+        [calls addObject:date];
+    };
+    
+    
+    // When
+    [dateRange enumerateMonthsUsingBlock:block];
+    
+    
+    // Then
+    XCTAssertEqual([calls count], 3, @"block not called as many times as there are months");
+    
+    NSString *expectedMonth = @"2014-11";
+    XCTAssert([[calls[0] isoYearAndMonth] isEqualToString:expectedMonth], @"first added date is wrong");
+    
+    expectedMonth = @"2014-12";
+    XCTAssert([[calls[1] isoYearAndMonth] isEqualToString:expectedMonth], @"second added date is wrong");
+    
+    expectedMonth = @"2015-01";
+    XCTAssert([[calls[2] isoYearAndMonth] isEqualToString:expectedMonth], @"second added date is wrong");
+}
+
 - (void)testMonthEnumeration_ForTwoMonths_CallsBlockTwiceWithEachMonthsDate
 {
     // Given

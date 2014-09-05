@@ -9,47 +9,20 @@
 #import <XCTest/XCTest.h>
 #import "CCLMonth.h"
 #import "CTWCalendarSupplier.h"
-
-@interface TestCalenderSupplier : CTWCalendarSupplier
-@property (strong) NSCalendar *testCalender;
-@property (strong) NSLocale *testLocale;
-@end
-
-@implementation TestCalenderSupplier
-- (NSCalendar *)autoupdatingCalendar
-{
-    if (self.testCalender)
-    {
-        return self.testCalender;
-    }
-    
-    return [super autoupdatingCalendar];
-}
-
-- (NSLocale *)autoupdatingLocale
-{
-    if (self.testLocale)
-    {
-        return self.testLocale;
-    }
-    
-    return [super autoupdatingLocale];
-}
-@end
-
+#import "TestCalendarSupplier.h"
 
 @interface CCLMonthTest : XCTestCase
 @end
 
 @implementation CCLMonthTest
 {
-    TestCalenderSupplier *testCalendarSupplier;
+    TestCalendarSupplier *testCalendarSupplier;
 }
 
 - (void)setUp
 {
     [super setUp];
-    testCalendarSupplier = [[TestCalenderSupplier alloc] init];
+    testCalendarSupplier = [[TestCalendarSupplier alloc] init];
     testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
@@ -57,6 +30,7 @@
 - (void)tearDown
 {
     [CTWCalendarSupplier resetSharedInstance];
+    testCalendarSupplier = nil;
     [super tearDown];
 }
 

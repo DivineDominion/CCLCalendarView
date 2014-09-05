@@ -11,9 +11,11 @@
 @protocol CCLProvidesCalendarObjects;
 @class CCLDateRange;
 @class CCLMonths;
+@class CCLMonthsFactory;
 
 @interface CCLCalendarTableModelTranslator : NSObject
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (nonatomic, strong) CCLMonthsFactory *monthsFactory;
 @property (strong, readonly) CCLMonths *months;
 
 + (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider;

@@ -9,6 +9,7 @@
 #import "CCLCalendarTableModelTranslator.h"
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLDateRange.h"
+#import "CCLMonthsFactory.h"
 
 #import "CTWCalendarSupplier.h"
 
@@ -56,8 +57,19 @@
 - (void)updateMonths
 {
     CCLDateRange *dateRange = self.objectProvider.dateRange;
-    CCLMonths *months = [dateRange months];
+    CCLMonthsFactory *monthsFactory = self.monthsFactory;
+    CCLMonths *months = [monthsFactory monthsInDateRange:dateRange];
     self.months = months;
+}
+
+- (CCLMonthsFactory *)monthsFactory
+{
+    if (!_monthsFactory)
+    {
+        _monthsFactory = [CCLMonthsFactory monthsFactory];
+    }
+    
+    return _monthsFactory;
 }
 
 #pragma mark -

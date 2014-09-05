@@ -11,8 +11,13 @@
 @class CCLMonth;
 
 @interface CCLMonths : NSObject
+@property (readonly) NSUInteger count;
+
 + (instancetype)monthsFromArray:(NSArray *)array;
 - (instancetype)initWithArray:(NSArray *)array;
 
+- (CCLMonth *)firstMonth;
 - (CCLMonth *)monthAtIndex:(NSUInteger)index;
+- (CCLMonth *)lastMonth;
+
 @end

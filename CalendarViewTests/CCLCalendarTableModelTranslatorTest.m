@@ -10,7 +10,7 @@
 #import "CCLCalendarTableModelTranslator.h"
 
 #import "CCLProvidesCalendarObjects.h"
-#import "CCLDateRange.h"
+#import "CCLMonthsFactory.h"
 
 @interface TestObjectProvider : NSObject <CCLProvidesCalendarObjects>
 @property (strong) CCLDateRange *dateRange;
@@ -22,14 +22,18 @@
 }
 @end
 
-@interface TestDateRange : CCLDateRange
-@property (strong) CCLMonths *months;
+@interface TestMonthsFactory : CCLMonthsFactory
+@property (strong) CCLDateRange *dateRangeProvided;
 @end
-@implementation TestDateRange
+@implementation TestMonthsFactory
+- (CCLMonths *)monthsInDateRange:(CCLDateRange *)dateRange
+{
+    self.dateRangeProvided = dateRange;
+    return nil;
+}
 @end
 
 @interface CCLCalendarTableModelTranslatorTest : XCTestCase
-
 @end
 
 @implementation CCLCalendarTableModelTranslatorTest
@@ -52,19 +56,24 @@
     [super tearDown];
 }
 
+- (void)testInitially_ComesWithAMonthsFactory
+{
+    XCTAssertNotNil(translator.monthsFactory, @"should have a default MonthsFactory");
+}
 
 - (void)testSettingObjectProvider_UpdatesMonths
 {
+    TestMonthsFactory *factory = [[TestMonthsFactory alloc] init];
+    translator.monthsFactory = factory;
+    
     TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
-    TestDateRange *dateRange = [[TestDateRange alloc] initWithStartDate:[NSDate date] endDate:[NSDate dateWithTimeIntervalSinceNow:1000]];
-    dateRange.months = (id)[[NSObject alloc] init];
-    objectProvider.dateRange = dateRange;
+    id dateRangeDouble = [[NSObject alloc] init];
+    objectProvider.dateRange = dateRangeDouble;
     
     [translator setObjectProvider:objectProvider];
     
-    XCTAssertEqual(translator.months, dateRange.months, @"should retrieve months from dateRange");
+    XCTAssertEqual(factory.dateRangeProvided, dateRangeDouble, @"should delegate creation of months from dateRange");
 }
-
 
 - (void)testWeekRange_OfSep2014_Returns5
 {

@@ -92,7 +92,7 @@
             return;
         }
 
-        NSString *reason = [NSString stringWithFormat:@"expected next month to be around %@ but was off instead: %@", expectedMonthDate, thisDate];
+        NSString *reason = [NSString stringWithFormat:@"expected consecutive month to be around %@ but was off instead: %@", expectedMonthDate, thisDate];
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:reason userInfo:nil];
     }];
 }
@@ -108,5 +108,20 @@
 - (CCLMonth *)monthAtIndex:(NSUInteger)index
 {
     return self.months[index];
+}
+
+- (NSUInteger)count
+{
+    return self.months.count;
+}
+
+- (CCLMonth *)firstMonth
+{
+    return [self.months firstObject];
+}
+
+- (CCLMonth *)lastMonth
+{
+    return [self.months lastObject];
 }
 @end
