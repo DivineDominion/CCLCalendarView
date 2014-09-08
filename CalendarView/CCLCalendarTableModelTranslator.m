@@ -10,11 +10,13 @@
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLDateRange.h"
 #import "CCLMonthsFactory.h"
+#import "CCLTitleRows.h"
 
 #import "CTWCalendarSupplier.h"
 
 @interface CCLCalendarTableModelTranslator ()
-@property (strong, readwrite) CCLMonths *months;
+@property (nonatomic, strong, readwrite) CCLMonths *months;
+@property (nonatomic, strong, readwrite) CCLTitleRows *titleRows;
 @end
 
 @implementation CCLCalendarTableModelTranslator
@@ -60,6 +62,7 @@
     CCLMonthsFactory *monthsFactory = self.monthsFactory;
     CCLMonths *months = [monthsFactory monthsInDateRange:dateRange];
     self.months = months;
+    self.titleRows = [CCLTitleRows titleRowsForMonths:months];
 }
 
 - (CCLMonthsFactory *)monthsFactory

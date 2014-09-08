@@ -115,6 +115,11 @@
     return self.months.count;
 }
 
+- (void)enumerateMonthsUsingBlock:(void (^)(CCLMonth *, NSUInteger, BOOL *))block
+{
+    [self.months enumerateObjectsUsingBlock:block];
+}
+
 - (CCLMonth *)firstMonth
 {
     return [self.months firstObject];

@@ -94,7 +94,7 @@
 
 - (void)testNumberOfWeeks_OfFeb2010_Returns4
 {
-    [testCalendarSupplier.testCalender setFirstWeekday:2]; // Start on Monday so it is more compact
+    [testCalendarSupplier.testCalender setFirstWeekday:2]; // Start on Monday so Feb 2014 is more compact
     NSDate *date = [NSDate dateWithString:@"2010-02-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     

@@ -10,7 +10,9 @@
 #import "CCLCalendarTableModelTranslator.h"
 
 #import "CCLProvidesCalendarObjects.h"
+#import "CCLMonths.h"
 #import "CCLMonthsFactory.h"
+
 
 @interface TestObjectProvider : NSObject <CCLProvidesCalendarObjects>
 @property (strong) CCLDateRange *dateRange;
@@ -22,16 +24,30 @@
 }
 @end
 
+
+@interface TestMonths : NSObject
+@property (assign) NSUInteger count;
+- (void)enumerateMonthsUsingBlock:(void (^)(id month, NSUInteger index, BOOL *stop))block;
+@end
+@implementation TestMonths
+- (void)enumerateMonthsUsingBlock:(void (^)(id, NSUInteger, BOOL *))block
+{
+    // no-op
+}
+@end
+
+
 @interface TestMonthsFactory : CCLMonthsFactory
 @property (strong) CCLDateRange *dateRangeProvided;
 @end
 @implementation TestMonthsFactory
-- (CCLMonths *)monthsInDateRange:(CCLDateRange *)dateRange
+- (id)monthsInDateRange:(CCLDateRange *)dateRange
 {
     self.dateRangeProvided = dateRange;
-    return nil;
+    return [[TestMonths alloc] init];
 }
 @end
+
 
 @interface CCLCalendarTableModelTranslatorTest : XCTestCase
 @end
@@ -73,6 +89,7 @@
     [translator setObjectProvider:objectProvider];
     
     XCTAssertEqual(factory.dateRangeProvided, dateRangeDouble, @"should delegate creation of months from dateRange");
+    XCTAssertNotNil(translator.titleRows, @"should have set up title rows");
 }
 
 - (void)testWeekRange_OfSep2014_Returns5

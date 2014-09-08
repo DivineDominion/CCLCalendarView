@@ -18,6 +18,7 @@
 
 - (CCLMonth *)firstMonth;
 - (CCLMonth *)monthAtIndex:(NSUInteger)index;
+- (void)enumerateMonthsUsingBlock:(void (^)(CCLMonth *month, NSUInteger index, BOOL *stop))block;
 - (CCLMonth *)lastMonth;
 
 @end

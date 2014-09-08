@@ -7,6 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "XCTest+MonthHelper.h"
+
 #import "CCLMonths.h"
 #import "CCLMonth.h"
 
@@ -93,23 +95,6 @@
     NSArray *entries = @[january, march];
     
     XCTAssertThrows([CCLMonths monthsFromArray:entries], @"non-consecutive array should throw exception");
-}
-
-#pragma mark -
-
-- (CCLMonth *)monthWithYear:(NSUInteger)year month:(NSUInteger)month
-{
-    NSUInteger irrelevantDay = 6;
-    return [self monthWithYear:year month:month day:irrelevantDay];
-}
-
-- (CCLMonth *)monthWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
-{
-    NSString *irrelevantTime = @"12:13:14 +0000";
-    NSString *dateString =[NSString stringWithFormat:@"%lu-%02lu-%02lu %@", (unsigned long)year, (unsigned long)month, (unsigned long)day, irrelevantTime];
-    NSDate *date = [NSDate dateWithString:dateString];
-    NSAssert(date, @"date components invalid");
-    return [CCLMonth monthFromDate:date];
 }
 
 @end

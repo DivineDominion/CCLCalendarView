@@ -123,6 +123,12 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+
+    // TODO if outside of month range, return something else
+//    if (row == 1 && columnIndex < 3)
+//    {
+//        return nil;
+//    }
     
     if (isLastColumn)
     {
