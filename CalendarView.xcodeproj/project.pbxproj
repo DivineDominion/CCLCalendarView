@@ -29,6 +29,9 @@
 		600BA9CE19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */; };
 		600BA9D219B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9D119B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m */; };
 		600BA9D619B46D1500A9ED9B /* CTWCalendarSupplier.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */; };
+		601627EB19BEED21006B7505 /* CCLCalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627EA19BEED21006B7505 /* CCLCalendarData.m */; };
+		601627ED19BEF7E0006B7505 /* CCLCalendarDataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627EC19BEF7E0006B7505 /* CCLCalendarDataTest.m */; };
+		601627F119BEFED1006B7505 /* TestObjectProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627F019BEFED1006B7505 /* TestObjectProvider.m */; };
 		6017336419B5A77F00FDE187 /* CCLDateRangeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017336319B5A77F00FDE187 /* CCLDateRangeTest.m */; };
 		6017336E19B5B8F000FDE187 /* CCLMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017336D19B5B8F000FDE187 /* CCLMonth.m */; };
 		6017337019B5B8FB00FDE187 /* CCLMonthTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */; };
@@ -98,7 +101,11 @@
 		600BA9D119B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarTableModelTranslatorTest.m; sourceTree = "<group>"; };
 		600BA9D419B46D1500A9ED9B /* CTWCalendarSupplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTWCalendarSupplier.h; sourceTree = "<group>"; };
 		600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTWCalendarSupplier.m; sourceTree = "<group>"; };
-		601627E819BED88C006B7505 /* CCLSelectsDayCells.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLSelectsDayCells.h; sourceTree = "<group>"; };
+		601627E919BEED21006B7505 /* CCLCalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarData.h; sourceTree = "<group>"; };
+		601627EA19BEED21006B7505 /* CCLCalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarData.m; sourceTree = "<group>"; };
+		601627EC19BEF7E0006B7505 /* CCLCalendarDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarDataTest.m; sourceTree = "<group>"; };
+		601627EF19BEFED1006B7505 /* TestObjectProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObjectProvider.h; sourceTree = "<group>"; };
+		601627F019BEFED1006B7505 /* TestObjectProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObjectProvider.m; sourceTree = "<group>"; };
 		6017336319B5A77F00FDE187 /* CCLDateRangeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLDateRangeTest.m; sourceTree = "<group>"; };
 		6017336C19B5B8F000FDE187 /* CCLMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLMonth.h; sourceTree = "<group>"; };
 		6017336D19B5B8F000FDE187 /* CCLMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonth.m; sourceTree = "<group>"; };
@@ -152,7 +159,6 @@
 				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
 				600BA9CC19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.h */,
 				600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */,
-				601627E819BED88C006B7505 /* CCLSelectsDayCells.h */,
 				60035BAC19B0D2B8009CADE0 /* Calendar Table View */,
 			);
 			name = "Calendar View";
@@ -272,6 +278,7 @@
 				6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */,
 				6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */,
 				60C3550319BDA13D000C14E8 /* CCLTitleRowsTest.m */,
+				601627EC19BEF7E0006B7505 /* CCLCalendarDataTest.m */,
 				60C354F919B9A42C000C14E8 /* Helpers */,
 			);
 			path = CalendarViewTests;
@@ -318,6 +325,8 @@
 				6017336D19B5B8F000FDE187 /* CCLMonth.m */,
 				60C3550019BD9F86000C14E8 /* CCLTitleRows.h */,
 				60C3550119BD9F86000C14E8 /* CCLTitleRows.m */,
+				601627E919BEED21006B7505 /* CCLCalendarData.h */,
+				601627EA19BEED21006B7505 /* CCLCalendarData.m */,
 			);
 			name = "Calendar Model";
 			sourceTree = "<group>";
@@ -329,6 +338,8 @@
 				60C3550619BDFA5D000C14E8 /* XCTest+MonthHelper.m */,
 				60C354FA19B9A43D000C14E8 /* TestCalendarSupplier.h */,
 				60C354FB19B9A43D000C14E8 /* TestCalendarSupplier.m */,
+				601627EF19BEFED1006B7505 /* TestObjectProvider.h */,
+				601627F019BEFED1006B7505 /* TestObjectProvider.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -437,6 +448,7 @@
 				60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */,
 				600BA9CE19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m in Sources */,
 				6009D69419AC7D5A006F568F /* CCLCalendarViewController.m in Sources */,
+				601627EB19BEED21006B7505 /* CCLCalendarData.m in Sources */,
 				60035BAF19B0D2D6009CADE0 /* CCLDayCellSelection.m in Sources */,
 				60C354EF19B5BBD0000C14E8 /* CCLMonths.m in Sources */,
 				6009D66A19AC77D3006F568F /* main.m in Sources */,
@@ -459,8 +471,10 @@
 			files = (
 				6017336419B5A77F00FDE187 /* CCLDateRangeTest.m in Sources */,
 				6017337619B5BAAF00FDE187 /* CCLMonthsTest.m in Sources */,
+				601627ED19BEF7E0006B7505 /* CCLCalendarDataTest.m in Sources */,
 				60C354F819B99EF9000C14E8 /* CCLMonthsFactoryTest.m in Sources */,
 				60C3550719BDFA5D000C14E8 /* XCTest+MonthHelper.m in Sources */,
+				601627F119BEFED1006B7505 /* TestObjectProvider.m in Sources */,
 				60C354FC19B9A43D000C14E8 /* TestCalendarSupplier.m in Sources */,
 				60C3550419BDA13D000C14E8 /* CCLTitleRowsTest.m in Sources */,
 				6017337019B5B8FB00FDE187 /* CCLMonthTest.m in Sources */,

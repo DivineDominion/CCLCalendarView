@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "CCLCalendarViewDelegate.h"
-#import "CCLSelectsDayCells.h"
 
 @class CCLDayCellSelection;
 @class CCLDayDetailRowView;
@@ -19,7 +18,7 @@
 
 extern NSString * const kCCLCalendarViewControllerNibName;
 
-@interface CCLCalendarViewController : NSViewController <CCLSelectsDayCells, NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
+@interface CCLCalendarViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
 @property (weak) id<CCLHandlesDaySelection> eventHandler;
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
 @property (nonatomic, strong, readonly) CCLCalendarTableModelTranslator *tableModelTranslator;

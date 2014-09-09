@@ -8,7 +8,6 @@
 
 #import "CCLCalendarTableModelTranslator.h"
 #import "CCLProvidesCalendarObjects.h"
-#import "CCLSelectsDayCells.h"
 #import "CCLDateRange.h"
 #import "CCLMonthsFactory.h"
 #import "CCLTitleRows.h"
@@ -67,6 +66,7 @@
     CCLMonths *months = [monthsFactory monthsInDateRange:dateRange];
     self.months = months;
     self.titleRows = [CCLTitleRows titleRowsForMonths:months];
+    self.calendarData = [CCLCalendarData calendarDataForMonths:months];
 }
 
 - (CCLMonthsFactory *)monthsFactory
@@ -111,67 +111,7 @@
 
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
 {
-    if (row == 0)
-    {
-        return CCLRowViewTypeMonth;
-    }
-    
-    if ([self hasSelectedDayCellInRowAbove:row])
-    {
-        return CCLRowViewTypeDayDetail;
-    }
-    
-    CCLMonth *lastMonth = [self.months lastMonth];
-    NSUInteger lastWeekCount = lastMonth.weekCount;
-    NSUInteger lastTitleRow = [self.titleRows lastRow];
-    NSUInteger maximumRows = lastTitleRow + lastWeekCount;
-//  TODO insert detail row into the volatile 'model'
-//    if ([self hasSelectedDayCell])
-//    {
-//        maximumRows += 1;
-//    }
-    
-    if (row > maximumRows)
-    {
-        NSString *reason = [NSString stringWithFormat:@"row %lu is out of bounds (max: %lu)", row, maximumRows];
-        @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
-    }
-    
-    return CCLRowViewTypeWeek;
-}
-
-- (BOOL)hasSelectedDayCell
-{
-    id<CCLSelectsDayCells> delegate = self.selectionDelegate;
-    
-    if (!delegate || ![delegate respondsToSelector:@selector(hasSelectedDayCell)])
-    {
-        return NO;
-    }
-    
-    return [delegate hasSelectedDayCell];
-}
-
-- (BOOL)hasSelectedDayCellInRowAbove:(NSUInteger)row
-{
-    NSInteger rowAbove = row - 1;
-    id<CCLSelectsDayCells> delegate = self.selectionDelegate;
-    
-    if (!delegate
-        || ![delegate respondsToSelector:@selector(cellSelectionRow)]
-        || rowAbove < 0)
-    {
-        return NO;
-    }
-    
-    NSInteger selectedRow = [delegate cellSelectionRow];
-    
-    if (selectedRow != rowAbove)
-    {
-        return NO;
-    }
-    
-    return YES;
+    return [self.calendarData rowViewTypeForRow:row];
 }
 
 - (NSCalendar *)calendar

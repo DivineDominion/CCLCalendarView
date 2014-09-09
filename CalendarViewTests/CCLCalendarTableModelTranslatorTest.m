@@ -8,34 +8,13 @@
 
 #import <XCTest/XCTest.h>
 #import "CCLCalendarTableModelTranslator.h"
+#import "TestObjectProvider.h"
 
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLMonths.h"
 #import "CCLMonth.h"
 #import "CCLMonthsFactory.h"
-#import "CCLSelectsDayCells.h"
 #import "CCLDateRange.h"
-
-@interface TestObjectProvider : NSObject <CCLProvidesCalendarObjects>
-@property (strong) CCLDateRange *dateRange;
-- (instancetype)initWithDateRange:(CCLDateRange *)dateRange;
-@end
-@implementation TestObjectProvider
-- (instancetype)initWithDateRange:(CCLDateRange *)dateRange
-{
-    self = [super init];
-    if (self)
-    {
-        _dateRange = dateRange;
-    }
-    return self;
-}
-
-- (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
-{
-    return nil;
-}
-@end
 
 
 @interface TestMonths : NSObject
@@ -61,18 +40,6 @@
 }
 @end
 
-
-@interface TestSelectionDelegate : NSObject <CCLSelectsDayCells>
-@property (assign) NSInteger cellSelectionRow;
-@end
-@implementation TestSelectionDelegate
-- (BOOL)hasSelectedDayCell
-{
-    return NO;
-}
-@end
-
-
 @interface CCLCalendarTableModelTranslatorTest : XCTestCase
 @end
 
@@ -85,7 +52,7 @@
 {
     [super setUp];
     // Initialize with dumb object provider to satisfy checks
-    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:[[TestObjectProvider alloc] initWithDateRange:[self dateRange]]];
+    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:[[TestObjectProvider alloc] init]];
 }
 
 - (void)tearDown
@@ -107,7 +74,6 @@
     translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
 
     XCTAssertNotNil(translator.months, @"should have set up months");
-    XCTAssertNotNil(translator.titleRows, @"should have set up title rows");
     XCTAssertEqual(translator.months.firstMonth.year, 1970, @"should have adopted the month");
 }
 
@@ -123,53 +89,8 @@
     [translator setObjectProvider:objectProvider];
     
     XCTAssertEqual(factory.dateRangeProvided, dateRangeDouble, @"should delegate creation of months from dateRange");
-    XCTAssertNotNil(translator.titleRows, @"should have set up title rows");
 }
 
-#pragma mark -
-#pragma mark Translating Row View Types
-
-- (void)testRowViewType_FirstRow_ReturnsMonth
-{
-    TestSelectionDelegate *testDelegate = [[TestSelectionDelegate alloc] init];
-    testDelegate.cellSelectionRow = 5;
-    translator.selectionDelegate = testDelegate;
-    
-    CCLRowViewType returnedType = [translator rowViewTypeForRow:0];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeMonth, @"first row should be Month type");
-}
-
-- (void)testRowViewType_ForRowAboveSelection_ReturnsDayDetail
-{
-    TestSelectionDelegate *testDelegate = [[TestSelectionDelegate alloc] init];
-    testDelegate.cellSelectionRow = 5;
-    translator.selectionDelegate = testDelegate;
-    
-    CCLRowViewType returnedType = [translator rowViewTypeForRow:6];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeDayDetail, @"row below selection should be DayDetail type");
-}
-
-- (void)testRowViewType_ForSelectionRow_ReturnsWeek
-{
-    [self setupObjectProviderFor1970];
-    
-    TestSelectionDelegate *testDelegate = [[TestSelectionDelegate alloc] init];
-    testDelegate.cellSelectionRow = 4;
-    translator.selectionDelegate = testDelegate;
-    
-    CCLRowViewType returnedType = [translator rowViewTypeForRow:4];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeWeek, @"usual row should be Week type");
-}
-
-- (void)testRowViewType_RowOutOfBounds_Throws
-{
-    [self setupObjectProviderFor1970];
-    
-    XCTAssertThrows([translator rowViewTypeForRow:100], @"waaaay to high a row index should throw");
-}
 
 - (void)setupObjectProviderFor1970
 {
@@ -177,11 +98,6 @@
     CCLDateRange *sometimeIn1970 = [self dateRangeWithAMonthIn1970];
     objectProvider.dateRange = sometimeIn1970;
     translator.objectProvider = objectProvider;
-}
-
-- (CCLDateRange *)dateRange
-{
-    return [CCLDateRange dateRangeFrom:[NSDate dateWithTimeIntervalSinceNow:-1] until:[NSDate date]];
 }
 
 - (CCLDateRange *)dateRangeWithAMonthIn1970

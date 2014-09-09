@@ -27,8 +27,9 @@
 {
     [super setUp];
     testCalendarSupplier = [[TestCalendarSupplier alloc] init];
+    // Unify test results across platforms
     testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    [testCalendarSupplier.testCalender setFirstWeekday:1]; // Start on Sunday to unify test results across platforms
+    [testCalendarSupplier.testCalender setFirstWeekday:2];
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 

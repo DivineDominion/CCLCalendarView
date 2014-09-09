@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "TestObjectProvider.h"
 
 #import "CCLCalendarViewController.h"
 #import "CCLCalendarTableModelTranslator.h"
@@ -45,12 +46,12 @@
 
 - (void)testSettingObjectProvider_UpdatesTranslator
 {
-    id objectProviderReplacement = [[NSObject alloc] init];
+    TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
     
-    [viewController setObjectProvider:objectProviderReplacement];
+    [viewController setObjectProvider:objectProvider];
     
     XCTAssertNotNil(viewController.tableModelTranslator, @"should have set a translator");
-    XCTAssertEqual(viewController.tableModelTranslator.objectProvider, objectProviderReplacement, @"translator should obtain object provider");
+    XCTAssertEqual(viewController.tableModelTranslator.objectProvider, objectProvider, @"translator should obtain object provider");
 }
 
 @end

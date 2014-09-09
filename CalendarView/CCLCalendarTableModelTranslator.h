@@ -7,22 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCLCalendarData.h"
 
-@protocol CCLSelectsDayCells;
 @protocol CCLProvidesCalendarObjects;
 @class CCLDateRange;
 @class CCLMonths;
 @class CCLMonthsFactory;
-@class CCLTitleRows;
-
-typedef NS_ENUM(NSInteger, CCLRowViewType) {
-    /// Denotes a missing calculation, really. Should never appear in production.
-    CCLRowViewTypeUndefined = -1,
-    
-    CCLRowViewTypeMonth = 0,
-    CCLRowViewTypeWeek,
-    CCLRowViewTypeDayDetail
-};
 
 typedef NS_ENUM(NSInteger, CCLCellType) {
     /// Denotes a missing calculation, really. Should never appear in production.
@@ -43,11 +33,10 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
 
 @interface CCLCalendarTableModelTranslator : NSObject
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
-@property (weak) id<CCLSelectsDayCells> selectionDelegate;
 
+@property (strong) CCLCalendarData *calendarData;
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;
 @property (nonatomic, strong, readonly) CCLMonths *months;
-@property (strong, readonly) CCLTitleRows *titleRows;
 
 + (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider;
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider;

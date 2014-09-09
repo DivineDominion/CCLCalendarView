@@ -58,7 +58,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     CCLCalendarTableModelTranslator *translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
-    translator.selectionDelegate = self;
     self.tableModelTranslator = translator;
 }
 

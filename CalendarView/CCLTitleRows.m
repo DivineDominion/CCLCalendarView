@@ -88,7 +88,12 @@
 
 - (NSUInteger)lastRow
 {
-    return [[self.titleRows lastObject] unsignedIntegerValue];
+    return [self.titleRows.lastObject unsignedIntegerValue];
 }
 
+- (NSUInteger)monthIndexOfRow:(NSUInteger)row
+{
+#warning stub TODO next
+    return 0;
+}
 @end
