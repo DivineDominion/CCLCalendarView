@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol CCLSelectsDayCells;
 @protocol CCLProvidesCalendarObjects;
 @class CCLDateRange;
 @class CCLMonths;
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
 
 @interface CCLCalendarTableModelTranslator : NSObject
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (weak) id<CCLSelectsDayCells> selectionDelegate;
 
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;
 @property (nonatomic, strong, readonly) CCLMonths *months;
@@ -51,6 +53,7 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider;
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row;
+- (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
 - (NSUInteger)weeksOfMonthFromDateComponents:(NSDateComponents *)monthComponents;
 
 @end

@@ -86,4 +86,9 @@
     return containsRow;
 }
 
+- (NSUInteger)lastRow
+{
+    return [[self.titleRows lastObject] unsignedIntegerValue];
+}
+
 @end

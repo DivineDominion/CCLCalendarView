@@ -17,4 +17,5 @@
 - (instancetype)initWithMonths:(CCLMonths *)months;
 
 - (BOOL)containsRow:(NSUInteger)row;
+- (NSUInteger)lastRow;
 @end

@@ -8,9 +8,12 @@
 
 #import "CCLCalendarTableModelTranslator.h"
 #import "CCLProvidesCalendarObjects.h"
+#import "CCLSelectsDayCells.h"
 #import "CCLDateRange.h"
 #import "CCLMonthsFactory.h"
 #import "CCLTitleRows.h"
+#import "CCLMonths.h"
+#import "CCLMonth.h"
 
 #import "CTWCalendarSupplier.h"
 
@@ -39,6 +42,7 @@
     if (self)
     {
         _objectProvider = objectProvider;
+        [self updateMonths];
     }
     
     return self;
@@ -105,15 +109,69 @@
     return [objectProvider objectValueForYear:year month:month day:day];
 }
 
-- (NSUInteger)weeksOfMonthFromDateComponents:(NSDateComponents *)monthComponents
+- (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
 {
-    NSCalendar *calendar = [self calendar];
-    NSDate *date = [calendar dateFromComponents:monthComponents];
-    NSAssert(date, @"month components not a valid date: %@", monthComponents);
-    NSRange weekRange = [calendar rangeOfUnit:NSWeekCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
-    NSUInteger weeksCount = weekRange.length;
+    if (row == 0)
+    {
+        return CCLRowViewTypeMonth;
+    }
     
-    return weeksCount;
+    if ([self hasSelectedDayCellInRowAbove:row])
+    {
+        return CCLRowViewTypeDayDetail;
+    }
+    
+    CCLMonth *lastMonth = [self.months lastMonth];
+    NSUInteger lastWeekCount = lastMonth.weekCount;
+    NSUInteger lastTitleRow = [self.titleRows lastRow];
+    NSUInteger maximumRows = lastTitleRow + lastWeekCount;
+//  TODO insert detail row into the volatile 'model'
+//    if ([self hasSelectedDayCell])
+//    {
+//        maximumRows += 1;
+//    }
+    
+    if (row > maximumRows)
+    {
+        NSString *reason = [NSString stringWithFormat:@"row %lu is out of bounds (max: %lu)", row, maximumRows];
+        @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
+    }
+    
+    return CCLRowViewTypeWeek;
+}
+
+- (BOOL)hasSelectedDayCell
+{
+    id<CCLSelectsDayCells> delegate = self.selectionDelegate;
+    
+    if (!delegate || ![delegate respondsToSelector:@selector(hasSelectedDayCell)])
+    {
+        return NO;
+    }
+    
+    return [delegate hasSelectedDayCell];
+}
+
+- (BOOL)hasSelectedDayCellInRowAbove:(NSUInteger)row
+{
+    NSInteger rowAbove = row - 1;
+    id<CCLSelectsDayCells> delegate = self.selectionDelegate;
+    
+    if (!delegate
+        || ![delegate respondsToSelector:@selector(cellSelectionRow)]
+        || rowAbove < 0)
+    {
+        return NO;
+    }
+    
+    NSInteger selectedRow = [delegate cellSelectionRow];
+    
+    if (selectedRow != rowAbove)
+    {
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (NSCalendar *)calendar

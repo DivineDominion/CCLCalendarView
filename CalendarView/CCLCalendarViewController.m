@@ -57,7 +57,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return;
     }
     
-    self.tableModelTranslator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
+    CCLCalendarTableModelTranslator *translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
+    translator.selectionDelegate = self;
+    self.tableModelTranslator = translator;
 }
 
 - (BOOL)hasSelectedDayCell
@@ -69,6 +71,16 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 {
     NSInteger rowAbove = row - 1;
     return [self hasSelectedDayCell] && self.cellSelection.row == rowAbove;
+}
+
+- (NSInteger)cellSelectionRow
+{
+    if (![self hasSelectedDayCell])
+    {
+        return -1;
+    }
+    
+    return self.cellSelection.row;
 }
 
 
@@ -95,17 +107,33 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
-    if (row == 0)
+    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    NSTableRowView *rowView = [self tableView:tableView rowViewForRowViewType:rowViewType];
+    
+    return rowView;
+}
+
+/// @returns Returns @p nil when @p rowViewType is not supported.
+- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRowViewType:(CCLRowViewType)rowViewType
+{
+    NSAssert(rowViewType != CCLRowViewTypeUndefined, @"rowViewType should never become Undefined");
+    
+    if (rowViewType == CCLRowViewTypeMonth)
     {
         return [tableView makeViewWithIdentifier:@"MonthRow" owner:self];
     }
     
-    if ([self hasSelectedDayCellInRowAbove:row])
+    if (rowViewType == CCLRowViewTypeDayDetail)
     {
         return [tableView makeViewWithIdentifier:@"DayDetailRow" owner:self];
     }
     
-    return [tableView makeViewWithIdentifier:@"WeekRow" owner:self];
+    if (rowViewType == CCLRowViewTypeWeek)
+    {
+        return [tableView makeViewWithIdentifier:@"WeekRow" owner:self];
+    }
+    
+    return nil;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row

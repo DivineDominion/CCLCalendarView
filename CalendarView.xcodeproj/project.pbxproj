@@ -98,6 +98,7 @@
 		600BA9D119B4669F00A9ED9B /* CCLCalendarTableModelTranslatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarTableModelTranslatorTest.m; sourceTree = "<group>"; };
 		600BA9D419B46D1500A9ED9B /* CTWCalendarSupplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTWCalendarSupplier.h; sourceTree = "<group>"; };
 		600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTWCalendarSupplier.m; sourceTree = "<group>"; };
+		601627E819BED88C006B7505 /* CCLSelectsDayCells.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLSelectsDayCells.h; sourceTree = "<group>"; };
 		6017336319B5A77F00FDE187 /* CCLDateRangeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLDateRangeTest.m; sourceTree = "<group>"; };
 		6017336C19B5B8F000FDE187 /* CCLMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLMonth.h; sourceTree = "<group>"; };
 		6017336D19B5B8F000FDE187 /* CCLMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonth.m; sourceTree = "<group>"; };
@@ -151,6 +152,7 @@
 				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
 				600BA9CC19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.h */,
 				600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */,
+				601627E819BED88C006B7505 /* CCLSelectsDayCells.h */,
 				60035BAC19B0D2B8009CADE0 /* Calendar Table View */,
 			);
 			name = "Calendar View";
