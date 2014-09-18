@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class CCLDayCellSelection;
+
 @protocol CCLHandlesCellSelection <NSObject>
-- (void)controllerDidSelectCellInRow:(NSUInteger)row;
+- (void)controllerDidSelectCell:(CCLDayCellSelection *)selection;
 - (void)controllerDidDeselectCell;
+- (CCLDayCellSelection *)cellSelection;
+- (BOOL)hasCellSelection;
+- (NSUInteger)cellSelectionRow;
 @end

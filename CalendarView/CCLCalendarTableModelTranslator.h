@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
 
 @interface CCLCalendarTableModelTranslator : NSObject <CCLHandlesCellSelection>
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (strong, readonly) CCLDayCellSelection *cellSelection;
 
 @property (strong) CCLCalendarData *calendarData;
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;

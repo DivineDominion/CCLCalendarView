@@ -29,7 +29,5 @@ extern NSString * const kCCLCalendarViewControllerNibName;
 @property (weak) IBOutlet NSTableView *calendarTableView;
 @property (weak) CCLDayDetailRowView *dayDetailRowView;
 
-@property (strong, readonly) CCLDayCellSelection *cellSelection;
-
 + (instancetype)calendarViewController;
 @end

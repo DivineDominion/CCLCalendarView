@@ -13,10 +13,12 @@
 #import "CCLTitleRows.h"
 #import "CCLMonths.h"
 #import "CCLMonth.h"
+#import "CCLDayCellSelection.h"
 
 #import "CTWCalendarSupplier.h"
 
 @interface CCLCalendarTableModelTranslator ()
+@property (strong, readwrite) CCLDayCellSelection *cellSelection;
 @end
 
 @implementation CCLCalendarTableModelTranslator
@@ -124,13 +126,31 @@
 #pragma mark -
 #pragma mark Cell Selection
 
-- (void)controllerDidSelectCellInRow:(NSUInteger)row
+- (void)controllerDidSelectCell:(CCLDayCellSelection *)selection
 {
-    [self.calendarData insertDayDetailRowBelow:row];
+    NSParameterAssert(selection);
+    
+    self.cellSelection = selection;
+    NSUInteger selectedRow = selection.row;
+    [self.calendarData insertDayDetailRowBelow:selectedRow];
 }
 
 - (void)controllerDidDeselectCell
 {
+    [self.cellSelection deselectCell];
+    self.cellSelection = nil;
+    
     [self.calendarData removeDayDetailRow];
 }
+
+- (BOOL)hasCellSelection
+{
+    return self.cellSelection != nil;
+}
+
+- (NSUInteger)cellSelectionRow
+{
+    return self.cellSelection.row;
+}
+
 @end

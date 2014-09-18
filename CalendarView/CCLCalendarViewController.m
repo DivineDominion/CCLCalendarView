@@ -23,7 +23,6 @@
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
 
 @interface CCLCalendarViewController ()
-@property (strong, readwrite) CCLDayCellSelection *cellSelection;
 @property (nonatomic, strong, readwrite) CCLCalendarTableModelTranslator *tableModelTranslator;
 @end
 
@@ -62,28 +61,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     self.selectionDelegate = translator;
 }
 
-- (BOOL)hasSelectedDayCell
-{
-    return self.cellSelection != nil;
-}
-
-- (BOOL)hasSelectedDayCellInRowAbove:(NSInteger)row
-{
-    NSInteger rowAbove = row - 1;
-    return [self hasSelectedDayCell] && self.cellSelection.row == rowAbove;
-}
-
-- (NSInteger)cellSelectionRow
-{
-    if (![self hasSelectedDayCell])
-    {
-        return -1;
-    }
-    
-    return self.cellSelection.row;
-}
-
-
 #pragma mark -
 #pragma mark View Setup
 
@@ -97,6 +74,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [self.tableModelTranslator numberOfRows];
 }
 
+
+#pragma mark Row Views
+
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
     CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
@@ -108,7 +88,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 /// @returns Returns @p nil when @p rowViewType is not supported.
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRowViewType:(CCLRowViewType)rowViewType
 {
-    NSAssert(rowViewType != CCLRowViewTypeUndefined, @"rowViewType should never become Undefined");
+    [self guardRowViewTypeValidity:rowViewType];
     
     if (rowViewType == CCLRowViewTypeMonth)
     {
@@ -128,15 +108,67 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return nil;
 }
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+- (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
 {
-    BOOL isGroupRow = row == 0;
-    if (isGroupRow)
+    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
     {
-         return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
+        return YES;
     }
     
-    if ([self hasSelectedDayCellInRowAbove:row])
+    return NO;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    CGFloat height = [self tableView:tableView heightOfRowViewType:rowViewType];
+    
+    return height;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableview heightOfRowViewType:(CCLRowViewType)rowViewType
+{
+    [self guardRowViewTypeValidity:rowViewType];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
+    {
+        return 20.;
+    }
+    
+    if (rowViewType == CCLRowViewTypeDayDetail)
+    {
+        return 140.;
+    }
+    
+    return 80.;
+}
+
+- (void)guardRowViewTypeValidity:(CCLRowViewType)rowViewType
+{
+    NSAssert(rowViewType != CCLRowViewTypeUndefined, @"rowViewType should never become Undefined");
+}
+
+
+#pragma mark Cell Views
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    [self guardRowViewTypeValidity:rowViewType];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
+    {
+        return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
+    }
+    
+    if (rowViewType == CCLRowViewTypeDayDetail)
+    {
+        return nil;
+    }
+    
+    if (rowViewType != CCLRowViewTypeWeek)
     {
         return nil;
     }
@@ -144,7 +176,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
 
-    // TODO if outside of month range, return something else
+    // TODO if outside of month day range, return something else
 //    if (row == 1 && columnIndex < 3)
 //    {
 //        return nil;
@@ -160,38 +192,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
 }
 
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
-{
-    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
-    
-    if (rowViewType == CCLRowViewTypeMonth)
-    {
-        return 20.;
-    }
-    
-    if (rowViewType == CCLRowViewTypeDayDetail)
-    {
-        return 140.;
-    }
-    
-    return 80.;
-}
-
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     
     return [self.tableModelTranslator objectValueForTableView:self.calendarTableView column:columnIndex row:rowIndex];
-}
-
-- (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
-{
-    if (row == 0)
-    {
-        return YES;
-    }
-    
-    return NO;
 }
 
 
@@ -223,7 +228,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     BOOL newSelectionIsOnSameRow = NO;
     if ([self hasSelectedDayCell])
     {
-        NSInteger oldSelectionRow = self.cellSelection.row;
+        NSInteger oldSelectionRow = [self cellSelectionRow];
         if (oldSelectionRow == row)
         {
             newSelectionIsOnSameRow = YES;
@@ -258,11 +263,18 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [self insertDetailRow];
 }
 
+- (BOOL)hasSelectedDayCell
+{
+    return [self.selectionDelegate hasCellSelection];
+}
+
+- (NSUInteger)cellSelectionRow
+{
+    return [self.selectionDelegate cellSelectionRow];
+}
+
 - (void)deselectDayCell
 {
-    [self.cellSelection deselectCell];
-    self.cellSelection = nil;
-
     [self.selectionDelegate controllerDidDeselectCell];
 }
 
@@ -280,8 +292,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSUInteger)row column:(NSUInteger)column
 {
-    self.cellSelection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
-    [self.selectionDelegate controllerDidSelectCellInRow:row];
+    CCLDayCellSelection *selection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
+    [self.selectionDelegate controllerDidSelectCell:selection];
     
     id objectValue = selectedView.objectValue;
     NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
@@ -293,7 +305,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)insertDetailRow
 {
-    NSInteger rowBelow = self.cellSelection.row + 1;
+    NSUInteger selectionRow = [self.selectionDelegate cellSelectionRow];
+    NSInteger rowBelow = selectionRow + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
 }
