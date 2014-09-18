@@ -156,40 +156,65 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
-    [self guardRowViewTypeValidity:rowViewType];
+    NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
     
-    if (rowViewType == CCLRowViewTypeMonth)
+    if (isLastColumn && rowViewType != CCLRowViewTypeDayDetail)
+    {
+        NSTableRowView *cell = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
+        cell.backgroundColor = [NSColor grayColor];
+        return cell;
+    }
+
+    CCLCellType cellType = [self.tableModelTranslator cellTypeForColumn:columnIndex row:row];
+    NSView *cellView = [self tableView:tableView viewForCellType:cellType];
+    
+    return cellView;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForCellType:(CCLCellType)cellType
+{
+//    [self guardRowViewTypeValidity:rowViewType];
+    
+    if (cellType == CCLCellTypeMonth)
     {
         return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
     }
     
-    if (rowViewType == CCLRowViewTypeDayDetail)
+    if (cellType == CCLCellTypeDayDetail)
+    {
+//        CCLDayCellView *selectedView = [self.selectionDelegate cellSelectionView];
+//        id objectValue = selectedView.objectValue;
+//        NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
+//        return detailView;
+        return nil;
+    }
+    
+    if (cellType == CCLCellTypeBlank)
+    {
+#warning stub
+        return nil;
+    }
+    
+    if (cellType == CCLCellTypeBlankLast)
+    {
+#warning stub
+        return nil;
+    }
+    
+    if (cellType != CCLCellTypeWeekend && cellType != CCLCellTypeDay)
     {
         return nil;
     }
     
-    if (rowViewType != CCLRowViewTypeWeek)
+    NSTableRowView *view = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+    
+    if (cellType == CCLCellTypeWeekend)
     {
-        return nil;
+        view.backgroundColor = [NSColor yellowColor];
     }
     
-    NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
-    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
-
-    // TODO if outside of month day range, return something else
-//    if (row == 1 && columnIndex < 3)
-//    {
-//        return nil;
-//    }
-    
-    if (isLastColumn)
-    {
-        NSTableRowView *row = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
-        row.backgroundColor = [NSColor grayColor];
-        return row;
-    }
-    
-    return [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+    return view;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
@@ -296,9 +321,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [self.selectionDelegate controllerDidSelectCell:selection];
     
     id objectValue = selectedView.objectValue;
-    NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
-    // TODO display view in detail row
-    
     [self.eventHandler calendarViewController:self
                  didSelectCellWithObjectValue:objectValue];
 }

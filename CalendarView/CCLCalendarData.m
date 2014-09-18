@@ -39,6 +39,8 @@ NSInteger const kCLLNoDetailRow = -1;
     return self;
 }
 
+#pragma mark Row calculation
+
 - (CCLMonth *)monthForRow:(NSUInteger)row
 {
     [self adjustRowAccordingToDetailRow:&row];
@@ -106,6 +108,45 @@ NSInteger const kCLLNoDetailRow = -1;
     }
     
     return rowCount;
+}
+
+#pragma mark Cell Calculation
+
+- (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row
+{
+    CCLRowViewType rowViewType = [self rowViewTypeForRow:row];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
+    {
+        return CCLCellTypeMonth;
+    }
+    
+    if (rowViewType == CCLRowViewTypeDayDetail)
+    {
+        return CCLCellTypeDayDetail;
+    }
+    
+    if (rowViewType != CCLRowViewTypeWeek)
+    {
+        return CCLCellTypeUndefined;
+    }
+    
+    if ([self containsDayForColumn:column row:row])
+    {
+        return CCLCellTypeDay;
+    }
+    
+    //    CCLCellTypeBlank
+    //    CCLCellTypeBlankLast
+    //    CCLCellTypeWeekend
+    
+    return CCLCellTypeUndefined;
+}
+
+- (BOOL)containsDayForColumn:(NSUInteger)column row:(NSUInteger)row
+{
+#warning stub
+    return YES;
 }
 
 #pragma mark -

@@ -85,6 +85,21 @@
 #pragma mark -
 #pragma mark Translation
 
+- (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
+{
+    return [self.calendarData rowViewTypeForRow:row];
+}
+
+- (NSUInteger)numberOfRows
+{
+    return [self.calendarData numberOfRows];
+}
+
+- (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row
+{
+    return [self.calendarData cellTypeForColumn:column row:row];
+}
+
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
 {
     NSInteger lastColumnIndex = tableView.tableColumns.count - 1;
@@ -111,17 +126,6 @@
     
     return [objectProvider objectValueForYear:year month:month day:day];
 }
-
-- (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
-{
-    return [self.calendarData rowViewTypeForRow:row];
-}
-
-- (NSUInteger)numberOfRows
-{
-    return [self.calendarData numberOfRows];
-}
-
 
 #pragma mark -
 #pragma mark Cell Selection
@@ -151,6 +155,11 @@
 - (NSUInteger)cellSelectionRow
 {
     return self.cellSelection.row;
+}
+
+- (CCLDayCellView *)cellSelectionView
+{
+    return self.cellSelection.selectedView;
 }
 
 @end

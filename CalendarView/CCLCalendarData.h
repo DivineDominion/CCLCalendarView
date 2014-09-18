@@ -17,6 +17,23 @@ typedef NS_ENUM(NSInteger, CCLRowViewType) {
     CCLRowViewTypeDayDetail
 };
 
+typedef NS_ENUM(NSInteger, CCLCellType) {
+    /// Denotes a missing calculation, really. Should never appear in production.
+    CCLCellTypeUndefined = -1,
+    
+    CCLCellTypeMonth = 0,
+    CCLCellTypeDay,
+    CCLCellTypeWeekend,
+    
+    CCLCellTypeDayDetail,
+    
+    /// Used when a weekday in a week is out of the calendar bounds.
+    CCLCellTypeBlank,
+    /// Same as @p CCLCellTypeBlank, only this denotes it's coming before the first,
+    /// so you can draw it differently, i.e. with a right border.
+    CCLCellTypeBlankLast
+};
+
 @class CCLMonth;
 @class CCLMonths;
 @class CCLTitleRows;
@@ -36,5 +53,6 @@ extern NSInteger const kCLLNoDetailRow;
 
 - (CCLMonth *)monthForRow:(NSUInteger)row;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
+- (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row;
 - (NSUInteger)numberOfRows;
 @end
