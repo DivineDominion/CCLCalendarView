@@ -19,6 +19,7 @@
 
 @interface TestMonths : NSObject
 @property (assign) NSUInteger count;
+@property (strong) CCLMonth *lastMonth;
 - (void)enumerateMonthsUsingBlock:(void (^)(id month, NSUInteger index, BOOL *stop))block;
 @end
 @implementation TestMonths
@@ -73,8 +74,8 @@
     
     translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
 
-    XCTAssertNotNil(translator.months, @"should have set up months");
-    XCTAssertEqual(translator.months.firstMonth.year, 1970, @"should have adopted the month");
+    XCTAssertNotNil(translator.calendarData, @"should have set up data");
+    XCTAssertEqual(translator.calendarData.months.firstMonth.year, 1970, @"should have adopted the month");
 }
 
 - (void)testSettingObjectProvider_UpdatesMonths
@@ -90,7 +91,6 @@
     
     XCTAssertEqual(factory.dateRangeProvided, dateRangeDouble, @"should delegate creation of months from dateRange");
 }
-
 
 - (void)setupObjectProviderFor1970
 {

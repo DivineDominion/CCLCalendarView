@@ -79,6 +79,7 @@ NSInteger const kCLLNoDetailRow = -1;
     @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
 }
 
+// TODO move adjustment of row indexes out to make CalendarData stateless
 - (void)adjustRowAccordingToDetailRow:(NSUInteger *)row
 {
     if ([self hasDayDetailRow])
@@ -92,14 +93,20 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (NSUInteger)rowCount
 {
-    CCLMonth *lastMonth = [self.months lastMonth];
-    NSUInteger lastWeekCount = lastMonth.weekCount;
-    NSUInteger lastTitleRow = [self.titleRows lastRow];
-    NSUInteger maximumRows = lastTitleRow + lastWeekCount;
-    
-    return maximumRows;
+    return [self.titleRows rowLimit];
 }
 
+- (NSUInteger)numberOfRows
+{
+    NSUInteger rowCount = [self rowCount];
+    
+    if ([self hasDayDetailRow])
+    {
+        rowCount++;
+    }
+    
+    return rowCount;
+}
 
 #pragma mark -
 #pragma mark Toggle Detail Row

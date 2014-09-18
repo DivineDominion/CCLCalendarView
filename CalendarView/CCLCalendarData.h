@@ -36,4 +36,5 @@ extern NSInteger const kCLLNoDetailRow;
 
 - (CCLMonth *)monthForRow:(NSUInteger)row;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
+- (NSUInteger)numberOfRows;
 @end

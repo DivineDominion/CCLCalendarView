@@ -17,6 +17,7 @@
 
 - (instancetype)init
 {
+    // TODO remove possibility to use negative values
     return [self initWithDayCellView:nil row:-1 column:-1];
 }
 

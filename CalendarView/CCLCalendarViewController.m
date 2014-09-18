@@ -9,7 +9,7 @@
 #import "CCLCalendarViewController.h"
 
 // Collaborators
-#import "CCLHandleDaySelection.h"
+#import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLCalendarTableModelTranslator.h"
 
@@ -59,6 +59,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     CCLCalendarTableModelTranslator *translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
     self.tableModelTranslator = translator;
+    self.selectionDelegate = translator;
 }
 
 - (BOOL)hasSelectedDayCell
@@ -93,16 +94,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    NSInteger numberOfRows = 20;
-#warning stub numberOfRows
-    CCLDateRange *dateRange = [self.objectProvider dateRange];
-    
-    if ([self hasSelectedDayCell])
-    {
-        numberOfRows++;
-    }
-    
-    return numberOfRows;
+    return [self.tableModelTranslator numberOfRows];
 }
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
@@ -170,12 +162,14 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-    if (row == 0)
+    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
     {
         return 20.;
     }
     
-    if ([self hasSelectedDayCellInRowAbove:row])
+    if (rowViewType == CCLRowViewTypeDayDetail)
     {
         return 140.;
     }
@@ -268,6 +262,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 {
     [self.cellSelection deselectCell];
     self.cellSelection = nil;
+
+    [self.selectionDelegate controllerDidDeselectCell];
 }
 
 - (void)removeDetailRow
@@ -282,9 +278,10 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
 }
 
-- (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column
+- (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSUInteger)row column:(NSUInteger)column
 {
     self.cellSelection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
+    [self.selectionDelegate controllerDidSelectCellInRow:row];
     
     id objectValue = selectedView.objectValue;
     NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];

@@ -17,8 +17,6 @@
 #import "CTWCalendarSupplier.h"
 
 @interface CCLCalendarTableModelTranslator ()
-@property (nonatomic, strong, readwrite) CCLMonths *months;
-@property (nonatomic, strong, readwrite) CCLTitleRows *titleRows;
 @end
 
 @implementation CCLCalendarTableModelTranslator
@@ -64,8 +62,6 @@
     CCLDateRange *dateRange = self.objectProvider.dateRange;
     CCLMonthsFactory *monthsFactory = self.monthsFactory;
     CCLMonths *months = [monthsFactory monthsInDateRange:dateRange];
-    self.months = months;
-    self.titleRows = [CCLTitleRows titleRowsForMonths:months];
     self.calendarData = [CCLCalendarData calendarDataForMonths:months];
 }
 
@@ -77,6 +73,11 @@
     }
     
     return _monthsFactory;
+}
+
+- (NSCalendar *)calendar
+{
+    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 #pragma mark -
@@ -114,9 +115,22 @@
     return [self.calendarData rowViewTypeForRow:row];
 }
 
-- (NSCalendar *)calendar
+- (NSUInteger)numberOfRows
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [self.calendarData numberOfRows];
 }
 
+
+#pragma mark -
+#pragma mark Cell Selection
+
+- (void)controllerDidSelectCellInRow:(NSUInteger)row
+{
+    [self.calendarData insertDayDetailRowBelow:row];
+}
+
+- (void)controllerDidDeselectCell
+{
+    [self.calendarData removeDayDetailRow];
+}
 @end

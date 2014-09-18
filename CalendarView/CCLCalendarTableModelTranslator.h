@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCLHandlesCellSelection.h"
+
 #import "CCLCalendarData.h"
 
 @protocol CCLProvidesCalendarObjects;
@@ -31,18 +33,17 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
     CCLCellTypeBlankLast
 };
 
-@interface CCLCalendarTableModelTranslator : NSObject
+@interface CCLCalendarTableModelTranslator : NSObject <CCLHandlesCellSelection>
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
 
 @property (strong) CCLCalendarData *calendarData;
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;
-@property (nonatomic, strong, readonly) CCLMonths *months;
 
 + (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider;
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider;
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
-- (NSUInteger)weeksOfMonthFromDateComponents:(NSDateComponents *)monthComponents;
+- (NSUInteger)numberOfRows;
 
 @end

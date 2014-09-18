@@ -90,11 +90,6 @@
     return containsRow;
 }
 
-- (NSUInteger)lastRow
-{
-    return [self.titleRows.lastObject unsignedIntegerValue];
-}
-
 - (NSUInteger)monthIndexOfRow:(NSUInteger)aRow
 {
     [self guardRowInsideMonthBounds:aRow];
@@ -117,16 +112,28 @@
 
 - (void)guardRowInsideMonthBounds:(NSUInteger)row
 {
-    NSUInteger lastMonthRow = [self.titleRows.lastObject unsignedIntegerValue];
-    NSUInteger weekCount = self.lastMonthBounds;
-    NSUInteger maximum = lastMonthRow + weekCount;
+    NSUInteger maximum = [self rowLimit];
     
     if (row <= maximum)
     {
         return;
     }
     
-    NSString *reason = [NSString stringWithFormat:@"row %lu is out of bounds for month index %lu + week count %lu (= %lu)", row, lastMonthRow, weekCount, maximum];
+    NSString *reason = [NSString stringWithFormat:@"row %lu is out of bounds %lu", row, maximum];
     @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
+}
+
+- (NSUInteger)rowLimit
+{
+    NSUInteger lastMonthRow = [self lastRow];
+    NSUInteger lastWeekCount = self.lastMonthBounds;
+    NSUInteger maximumRows = lastMonthRow + lastWeekCount;
+    
+    return maximumRows;
+}
+
+- (NSUInteger)lastRow
+{
+    return [self.titleRows.lastObject unsignedIntegerValue];
 }
 @end

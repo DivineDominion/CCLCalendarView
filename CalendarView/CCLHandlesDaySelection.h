@@ -1,5 +1,5 @@
 //
-//  CCLHandleDaySelection.h
+//  CCLHandlesDaySelection.h
 //  CalendarView
 //
 //  Created by Christian Tietze on 29.08.14.

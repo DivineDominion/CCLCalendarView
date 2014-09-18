@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CCLHandleDaySelection.h"
+#import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
 
 @interface CCLCalendarService : NSObject <CCLHandlesDaySelection, CCLProvidesCalendarObjects>

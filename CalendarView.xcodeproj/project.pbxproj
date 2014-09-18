@@ -59,7 +59,7 @@
 
 /* Begin PBXFileReference section */
 		60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CCLCalendarViewController.xib; sourceTree = "<group>"; };
-		60035BA219B0D226009CADE0 /* CCLHandleDaySelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandleDaySelection.h; sourceTree = "<group>"; };
+		60035BA219B0D226009CADE0 /* CCLHandlesDaySelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesDaySelection.h; sourceTree = "<group>"; };
 		60035BA319B0D226009CADE0 /* CCLProvidesCalendarObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLProvidesCalendarObjects.h; sourceTree = "<group>"; };
 		60035BA419B0D235009CADE0 /* CCLCalendarService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarService.h; sourceTree = "<group>"; };
 		60035BA519B0D235009CADE0 /* CCLCalendarService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarService.m; sourceTree = "<group>"; };
@@ -111,6 +111,7 @@
 		6017336D19B5B8F000FDE187 /* CCLMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonth.m; sourceTree = "<group>"; };
 		6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthTest.m; sourceTree = "<group>"; };
 		6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthsTest.m; sourceTree = "<group>"; };
+		6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesCellSelection.h; sourceTree = "<group>"; };
 		60C354ED19B5BBD0000C14E8 /* CCLMonths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLMonths.h; sourceTree = "<group>"; };
 		60C354EE19B5BBD0000C14E8 /* CCLMonths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonths.m; sourceTree = "<group>"; };
 		60C354F119B84371000C14E8 /* CCLCalendarViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLCalendarViewControllerTest.m; path = CalendarViewTests/CCLCalendarViewControllerTest.m; sourceTree = SOURCE_ROOT; };
@@ -157,6 +158,7 @@
 				60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */,
 				60035BAD19B0D2D6009CADE0 /* CCLDayCellSelection.h */,
 				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
+				6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */,
 				600BA9CC19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.h */,
 				600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */,
 				60035BAC19B0D2B8009CADE0 /* Calendar Table View */,
@@ -178,7 +180,7 @@
 			children = (
 				60035BA619B0D235009CADE0 /* CCLDisplayCalendar.h */,
 				60035BA719B0D235009CADE0 /* CCLDisplayCalendar.m */,
-				60035BA219B0D226009CADE0 /* CCLHandleDaySelection.h */,
+				60035BA219B0D226009CADE0 /* CCLHandlesDaySelection.h */,
 				60035BA319B0D226009CADE0 /* CCLProvidesCalendarObjects.h */,
 				60C354F019B84142000C14E8 /* Calendar Model */,
 				60035BA119B0D218009CADE0 /* Calendar View */,
