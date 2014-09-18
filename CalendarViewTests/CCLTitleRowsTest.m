@@ -40,6 +40,10 @@
     [super tearDown];
 }
 
+
+#pragma mark -
+#pragma mark Creation
+
 - (void)testCreation_WithNil_Throws
 {
     XCTAssertThrows([CCLTitleRows titleRowsForMonths:nil], @"parameter should be required");
@@ -73,6 +77,66 @@
     
     XCTAssert([titleRows.titleRows[2] isEqualToNumber:@12], @"should include 12th row, includes %lu instead", [titleRows.titleRows[2] unsignedIntegerValue]);
     XCTAssert([titleRows containsRow:12], @"should report it contains 12th row");
+}
+
+
+#pragma mark -
+#pragma mark Determining Month Indexes
+
+- (CCLTitleRows *)titleRows
+{
+    // Expected month rows: 0, 6, 12
+    NSArray *monthArray = @[[self monthWithYear:2014 month:9],   // 5 weeks + 1
+                            [self monthWithYear:2014 month:10],  // 5 weeks + 1
+                            [self monthWithYear:2014 month:11]]; // 5 weeks + 1
+    CCLMonths *months = [CCLMonths monthsFromArray:monthArray];
+    CCLTitleRows *titleRows = [CCLTitleRows titleRowsForMonths:months];
+    return titleRows;
+}
+
+- (void)testMonthIndex_ForFirstMonthRow_Returns1stMonth
+{
+    CCLTitleRows *titleRows = [self titleRows];
+    
+    NSUInteger monthIndex = [titleRows monthIndexOfRow:0];
+    
+    XCTAssertEqual(monthIndex, 0, @"1st month row should return itself");
+}
+
+- (void)testMonthIndex_ForWeek1_OfMonth1_Returns1stMonth
+{
+    CCLTitleRows *titleRows = [self titleRows];
+    
+    NSUInteger monthIndex = [titleRows monthIndexOfRow:1];
+    
+    XCTAssertEqual(monthIndex, 0, @"1st week row of 1st month row should return 1st month");
+}
+
+- (void)testMonthIndex_ForWeek1_OfMonth2_Returns2ndMonth
+{
+    CCLTitleRows *titleRows = [self titleRows];
+    
+    NSUInteger monthIndex = [titleRows monthIndexOfRow:7];
+    
+    XCTAssertEqual(monthIndex, 1, @"1st week row of 2nd month row should return 2nd month");
+}
+
+- (void)testMonthIndex_ForTitleRow_OfMonth3_Returns3rdMonth
+{
+    CCLTitleRows *titleRows = [self titleRows];
+    
+    NSUInteger monthIndex = [titleRows monthIndexOfRow:12];
+    
+    XCTAssertEqual(monthIndex, 2, @"title row of 3rd month row should return 3rd month");
+}
+
+- (void)testMonthIndex_ForSomethingOutOfBounds_Throws
+{
+    NSArray *monthArray = @[[self monthWithYear:2014 month:9]]; // 5 weeks + 1
+    CCLMonths *months = [CCLMonths monthsFromArray:monthArray];
+    CCLTitleRows *titleRows = [CCLTitleRows titleRowsForMonths:months];
+    
+    XCTAssertThrows([titleRows monthIndexOfRow:6], @"should be out of bounds");
 }
 
 @end

@@ -94,7 +94,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     NSInteger numberOfRows = 20;
-    [self.objectProvider dateRange];
+#warning stub numberOfRows
+    CCLDateRange *dateRange = [self.objectProvider dateRange];
     
     if ([self hasSelectedDayCell])
     {

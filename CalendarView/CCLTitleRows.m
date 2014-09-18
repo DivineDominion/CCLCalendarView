@@ -12,6 +12,7 @@
 
 @interface CCLTitleRows ()
 @property (copy, readwrite) NSArray *titleRows;
+@property (assign) NSUInteger lastMonthBounds;
 @end
 
 @implementation CCLTitleRows
@@ -42,6 +43,7 @@
 {
     __block NSUInteger row = 0;
     NSMutableArray *titleRows = [NSMutableArray arrayWithCapacity:months.count];
+    
     [months enumerateMonthsUsingBlock:^(CCLMonth *month, NSUInteger idx, BOOL *stop) {
         
         [titleRows addObject:@(row)];
@@ -49,7 +51,9 @@
         row += [month weekCount]; // Amount of weeks in the month
         row++;                    // Next free title row
     }];
+    
     self.titleRows = titleRows;
+    self.lastMonthBounds = months.lastMonth.weekCount;
 }
 
 - (BOOL)containsRow:(NSUInteger)aRow
@@ -91,9 +95,38 @@
     return [self.titleRows.lastObject unsignedIntegerValue];
 }
 
-- (NSUInteger)monthIndexOfRow:(NSUInteger)row
+- (NSUInteger)monthIndexOfRow:(NSUInteger)aRow
 {
-#warning stub TODO next
-    return 0;
+    [self guardRowInsideMonthBounds:aRow];
+    
+    NSUInteger returnedIndex = 0;
+    NSArray *rows = self.titleRows;
+    
+    for (NSUInteger index = 0; index < rows.count; index++)
+    {
+        NSUInteger titleRow = [rows[index] unsignedIntegerValue];
+        
+        if (titleRow <= aRow)
+        {
+            returnedIndex = index;
+        }
+    }
+    
+    return returnedIndex;
+}
+
+- (void)guardRowInsideMonthBounds:(NSUInteger)row
+{
+    NSUInteger lastMonthRow = [self.titleRows.lastObject unsignedIntegerValue];
+    NSUInteger weekCount = self.lastMonthBounds;
+    NSUInteger maximum = lastMonthRow + weekCount;
+    
+    if (row <= maximum)
+    {
+        return;
+    }
+    
+    NSString *reason = [NSString stringWithFormat:@"row %lu is out of bounds for month index %lu + week count %lu (= %lu)", row, lastMonthRow, weekCount, maximum];
+    @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
 }
 @end
