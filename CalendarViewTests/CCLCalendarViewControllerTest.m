@@ -39,9 +39,9 @@
     XCTAssertNotNil(viewController.view, @"view should be loaded");
 }
 
-- (void)testInitially_DoesntHaveATranslator
+- (void)testInitially_DoesntHaveADataProvider
 {
-    XCTAssertNil(viewController.tableModelTranslator, @"should not have a translator first");
+    XCTAssertNil(viewController.tableDataProvider, @"should not have a translator first");
 }
 
 - (void)testSettingObjectProvider_UpdatesTranslator
@@ -50,8 +50,8 @@
     
     [viewController setObjectProvider:objectProvider];
     
-    XCTAssertNotNil(viewController.tableModelTranslator, @"should have set a translator");
-    XCTAssertEqual(viewController.tableModelTranslator.objectProvider, objectProvider, @"translator should obtain object provider");
+    XCTAssertNotNil(viewController.tableDataProvider, @"should have set a translator");
+    XCTAssertEqual([[(id)viewController.tableDataProvider delegate] objectProvider], objectProvider, @"translator should obtain object provider");
 }
 
 @end

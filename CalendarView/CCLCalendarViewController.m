@@ -12,6 +12,7 @@
 #import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLCalendarTableModelTranslator.h"
+#import "CCLRowAdjustment.h"
 
 // Components
 #import "CCLDayCellSelection.h"
@@ -23,7 +24,7 @@
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
 
 @interface CCLCalendarViewController ()
-@property (nonatomic, strong, readwrite) CCLCalendarTableModelTranslator *tableModelTranslator;
+@property (nonatomic, strong, readwrite) id<CCLProvidesTableData> tableDataProvider;
 @end
 
 @implementation CCLCalendarViewController
@@ -52,13 +53,14 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     if (objectProvider == nil)
     {
-        self.tableModelTranslator = nil;
+        self.tableDataProvider = nil;
         return;
     }
     
     CCLCalendarTableModelTranslator *translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
-    self.tableModelTranslator = translator;
-    self.selectionDelegate = translator;
+    CCLRowAdjustment *rowAdjustment = [CCLRowAdjustment rowAdjustmentForDelegate:translator];
+    self.tableDataProvider = rowAdjustment;
+    self.selectionDelegate = rowAdjustment;
 }
 
 #pragma mark -
@@ -71,7 +73,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [self.tableModelTranslator numberOfRows];
+    return [self.tableDataProvider numberOfRows];
 }
 
 
@@ -79,7 +81,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
-    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
     NSTableRowView *rowView = [self tableView:tableView rowViewForRowViewType:rowViewType];
     
     return rowView;
@@ -110,7 +112,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row
 {
-    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
     
     if (rowViewType == CCLRowViewTypeMonth)
     {
@@ -122,7 +124,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
     CGFloat height = [self tableView:tableView heightOfRowViewType:rowViewType];
     
     return height;
@@ -155,7 +157,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    CCLRowViewType rowViewType = [self.tableModelTranslator rowViewTypeForRow:row];
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
     BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
     
@@ -166,7 +168,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return cell;
     }
 
-    CCLCellType cellType = [self.tableModelTranslator cellTypeForColumn:columnIndex row:row];
+    CCLCellType cellType = [self.tableDataProvider cellTypeForColumn:columnIndex row:row];
     NSView *cellView = [self tableView:tableView viewForCellType:cellType];
     
     return cellView;
@@ -220,8 +222,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
-    
-    return [self.tableModelTranslator objectValueForTableView:self.calendarTableView column:columnIndex row:rowIndex];
+    return [self.tableDataProvider objectValueForTableView:self.calendarTableView column:columnIndex row:rowIndex];
 }
 
 
@@ -327,7 +328,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)insertDetailRow
 {
-    NSUInteger selectionRow = [self.selectionDelegate cellSelectionRow];
+    NSUInteger selectionRow = [self cellSelectionRow];
     NSInteger rowBelow = selectionRow + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];

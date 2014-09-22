@@ -10,6 +10,8 @@
 #import "CCLTableDataTypes.h"
 
 @protocol CCLProvidesTableData <NSObject>
+- (NSUInteger)numberOfRows;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
 - (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row;
+- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row;
 @end

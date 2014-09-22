@@ -166,11 +166,6 @@
 				6009D69219AC7D59006F568F /* CCLCalendarViewController.h */,
 				6009D69319AC7D5A006F568F /* CCLCalendarViewController.m */,
 				60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */,
-				60035BAD19B0D2D6009CADE0 /* CCLDayCellSelection.h */,
-				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
-				6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */,
-				600BA9CC19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.h */,
-				600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */,
 				60035BAC19B0D2B8009CADE0 /* Calendar Table View */,
 			);
 			name = "Calendar View";
@@ -331,10 +326,15 @@
 			children = (
 				60BEC0F319D0644A000B5DE0 /* CCLRowAdjustment.h */,
 				60BEC0F419D0644A000B5DE0 /* CCLRowAdjustment.m */,
+				6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */,
 				60BEC0F919D065EB000B5DE0 /* CCLProvidesTableData.h */,
 				60BEC0FA19D06810000B5DE0 /* CCLTableDataTypes.h */,
 				60BEC0F619D064D2000B5DE0 /* CCLRow.h */,
 				60BEC0F719D064D2000B5DE0 /* CCLRow.m */,
+				600BA9CC19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.h */,
+				600BA9CD19B45EC000A9ED9B /* CCLCalendarTableModelTranslator.m */,
+				60035BAD19B0D2D6009CADE0 /* CCLDayCellSelection.h */,
+				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
 			);
 			name = "Table Model";
 			sourceTree = "<group>";

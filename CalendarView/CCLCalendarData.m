@@ -43,7 +43,6 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (CCLMonth *)monthForRow:(NSUInteger)row
 {
-    [self adjustRowAccordingToDetailRow:&row];
     [self guardRowBoundsForRow:row];
     
     NSUInteger monthIndex = [self.titleRows monthIndexOfRow:row];
@@ -53,16 +52,9 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
 {
-    if ([self hasDayDetailRowInRow:row])
-    {
-        return CCLRowViewTypeDayDetail;
-    }
+    [self guardRowBoundsForRow:row];
     
-    NSUInteger adjustedRow = row;
-    [self adjustRowAccordingToDetailRow:&adjustedRow];
-    [self guardRowBoundsForRow:adjustedRow];
-    
-    if ([self.titleRows containsRow:adjustedRow])
+    if ([self.titleRows containsRow:row])
     {
         return CCLRowViewTypeMonth;
     }
@@ -72,7 +64,7 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (void)guardRowBoundsForRow:(NSUInteger)row
 {
-    NSUInteger rowCount = [self rowCount];
+    NSUInteger rowCount = [self numberOfRows];
     if (row <= rowCount)
     {
         return;
@@ -82,33 +74,9 @@ NSInteger const kCLLNoDetailRow = -1;
     @throw [NSException exceptionWithName:NSRangeException reason:reason userInfo:nil];
 }
 
-// TODO move adjustment of row indexes out to make CalendarData stateless
-- (void)adjustRowAccordingToDetailRow:(NSUInteger *)row
-{
-    if ([self hasDayDetailRow])
-    {
-        if (self.detailRow < *row)
-        {
-            *row = *row - 1;
-        }
-    }
-}
-
-- (NSUInteger)rowCount
-{
-    return [self.titleRows rowLimit];
-}
-
 - (NSUInteger)numberOfRows
 {
-    NSUInteger rowCount = [self rowCount];
-    
-    if ([self hasDayDetailRow])
-    {
-        rowCount++;
-    }
-    
-    return rowCount;
+    return [self.titleRows rowLimit];
 }
 
 #pragma mark Cell Calculation
@@ -122,11 +90,6 @@ NSInteger const kCLLNoDetailRow = -1;
         return CCLCellTypeMonth;
     }
     
-    if (rowViewType == CCLRowViewTypeDayDetail)
-    {
-        return CCLCellTypeDayDetail;
-    }
-    
 //    if (rowViewType != CCLRowViewTypeWeek)
 //    {
 //        return CCLCellTypeUndefined;
@@ -137,13 +100,10 @@ NSInteger const kCLLNoDetailRow = -1;
 //        return CCLCellTypeDay;
 //    }
     
-    NSUInteger adjustedRow = row;
-    [self adjustRowAccordingToDetailRow:&adjustedRow];
-    
-    NSUInteger monthTitleRow = [self.titleRows monthIndexOfRow:adjustedRow];
+    NSUInteger monthTitleRow = [self.titleRows monthIndexOfRow:row];
     CCLMonth *month = [self.months monthAtIndex:monthTitleRow];
     NSUInteger firstWeekRow = monthTitleRow + 1;
-    NSUInteger week = adjustedRow - firstWeekRow;
+    NSUInteger week = row - firstWeekRow;
     
     if (week == 0)
     {
@@ -165,38 +125,7 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (BOOL)containsDayForColumn:(NSUInteger)column row:(NSUInteger)row
 {
-
 #warning stub
     return YES;
-}
-
-#pragma mark -
-#pragma mark Toggle Detail Row
-
-- (void)insertDayDetailRowBelow:(NSUInteger)row
-{
-    [self guardRowBoundsForRow:row];
-    
-    self.detailRow = row + 1;
-}
-
-- (void)removeDayDetailRow
-{
-    self.detailRow = kCLLNoDetailRow;
-}
-
-- (BOOL)hasDayDetailRow
-{
-    return self.detailRow != kCLLNoDetailRow;
-}
-
-- (BOOL)hasDayDetailRowInRow:(NSUInteger)row
-{
-    if (![self hasDayDetailRow])
-    {
-        return NO;
-    }
-    
-    return self.detailRow == row;
 }
 @end

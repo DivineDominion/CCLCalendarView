@@ -127,39 +127,4 @@
     return [objectProvider objectValueForYear:year month:month day:day];
 }
 
-#pragma mark -
-#pragma mark Cell Selection
-
-- (void)controllerDidSelectCell:(CCLDayCellSelection *)selection
-{
-    NSParameterAssert(selection);
-    
-    self.cellSelection = selection;
-    NSUInteger selectedRow = selection.row;
-    [self.calendarData insertDayDetailRowBelow:selectedRow];
-}
-
-- (void)controllerDidDeselectCell
-{
-    [self.cellSelection deselectCell];
-    self.cellSelection = nil;
-    
-    [self.calendarData removeDayDetailRow];
-}
-
-- (BOOL)hasCellSelection
-{
-    return self.cellSelection != nil;
-}
-
-- (NSUInteger)cellSelectionRow
-{
-    return self.cellSelection.row;
-}
-
-- (CCLDayCellView *)cellSelectionView
-{
-    return self.cellSelection.selectedView;
-}
-
 @end

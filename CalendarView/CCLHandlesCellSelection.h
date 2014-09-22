@@ -14,6 +14,7 @@
 @protocol CCLHandlesCellSelection <NSObject>
 - (void)controllerDidSelectCell:(CCLDayCellSelection *)selection;
 - (void)controllerDidDeselectCell;
+
 - (CCLDayCellSelection *)cellSelection;
 - (CCLDayCellView *)cellSelectionView;
 - (BOOL)hasCellSelection;

@@ -18,13 +18,9 @@ extern NSInteger const kCLLNoDetailRow;
 @interface CCLCalendarData : NSObject
 @property (strong, readonly) CCLMonths *months;
 @property (strong, readonly) CCLTitleRows *titleRows;
-@property (assign, readonly) NSInteger detailRow;
 
 + (instancetype)calendarDataForMonths:(CCLMonths *)months;
 - (instancetype)initWithMonths:(CCLMonths *)months;
-
-- (void)insertDayDetailRowBelow:(NSUInteger)row;
-- (void)removeDayDetailRow;
 
 - (CCLMonth *)monthForRow:(NSUInteger)row;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;

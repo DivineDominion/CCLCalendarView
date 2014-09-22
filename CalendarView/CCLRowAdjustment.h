@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "CCLProvidesTableData.h"
+#import "CCLHandlesCellSelection.h"
 
 @class CCLDayCellSelection;
 
-@interface CCLRowAdjustment : NSObject <CCLProvidesTableData>
+@interface CCLRowAdjustment : NSObject <CCLProvidesTableData, CCLHandlesCellSelection>
 @property (strong, readonly) CCLDayCellSelection *dayCellSelection;
-@property (weak, readonly) id<CCLProvidesTableData> delegate;
+@property (strong, readonly) id<CCLProvidesTableData> delegate;
 
-+ (instancetype)rowAdjustmentWithDelegate:(id<CCLProvidesTableData>)delegate;
-+ (instancetype)rowAdjustmentForSelection:(CCLDayCellSelection *)selection delegate:(id<CCLProvidesTableData>)delegate;
-
-- (instancetype)initWithSelection:(CCLDayCellSelection *)selection delegate:(id<CCLProvidesTableData>)delegate;
++ (instancetype)rowAdjustmentForDelegate:(id<CCLProvidesTableData>)delegate;
+- (instancetype)initWithDelegate:(id<CCLProvidesTableData>)delegate;
 @end

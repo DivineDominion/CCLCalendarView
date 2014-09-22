@@ -45,18 +45,6 @@
     [super tearDown];
 }
 
-- (void)testInsertDetailRow_BelowRow3_ChangesSelectionTo4
-{
-    [data insertDayDetailRowBelow:3];
-    
-    XCTAssertEqual(data.detailRow, 4, @"detail row should be row + 1");
-}
-
-- (void)testInsertDetailRow_OutOfBounds_Throws
-{
-    XCTAssertThrows([data insertDayDetailRowBelow:1000], @"inserting out of bounds should throw");
-}
-
 #pragma mark -
 #pragma mark Translating Row View Types
 
@@ -72,24 +60,6 @@
     CCLRowViewType returnedType = [data rowViewTypeForRow:6];
     
     XCTAssertEqual(returnedType, CCLRowViewTypeMonth, @"6th row should be Month type");
-}
-
-- (void)testRowViewType_ForRowBelowSelection_ReturnsDayDetail
-{
-    [data insertDayDetailRowBelow:2];
-    
-    CCLRowViewType returnedType = [data rowViewTypeForRow:3];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeDayDetail, @"row below selection should be DayDetail type");
-}
-
-- (void)testRowViewType_ForSelectionRow_ReturnsWeek
-{
-    [data insertDayDetailRowBelow:2];
-    
-    CCLRowViewType returnedType = [data rowViewTypeForRow:2];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeWeek, @"usual row should be Week type");
 }
 
 - (void)testRowViewType_ForUsualRow_ReturnsWeek
@@ -113,15 +83,6 @@
     CCLCellType returnedType = [data cellTypeForColumn:4 row:6];
     
     XCTAssertEqual(returnedType, CCLCellTypeMonth, @"6th row should be Month type");
-}
-
-- (void)testCellType_ForRowBelowSelection_AnyColumn_ReturnsDayDetail
-{
-    [data insertDayDetailRowBelow:2];
-    
-    CCLCellType returnedType = [data cellTypeForColumn:3 row:3];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeDayDetail, @"row below selection should be DayDetail type");
 }
 
 - (void)testCellType_FirstRowOfAugust_1stColumn_ReturnsBlankCell

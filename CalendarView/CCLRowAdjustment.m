@@ -9,23 +9,22 @@
 #import "CCLRowAdjustment.h"
 #import "CCLDayCellSelection.h"
 
-@implementation CCLRowAdjustment
-+ (instancetype)rowAdjustmentWithDelegate:(id<CCLProvidesTableData>)delegate
-{
-    return [[self alloc] initWithSelection:nil delegate:delegate];
-}
+@interface CCLRowAdjustment ()
+@property (strong, readwrite) CCLDayCellSelection *dayCellSelection;
+@end
 
-+ (instancetype)rowAdjustmentForSelection:(CCLDayCellSelection *)selection delegate:(id<CCLProvidesTableData>)delegate
+@implementation CCLRowAdjustment
++ (instancetype)rowAdjustmentForDelegate:(id<CCLProvidesTableData>)delegate
 {
-    return [[self alloc] initWithSelection:selection delegate:delegate];
+    return [[self alloc] initWithDelegate:delegate];
 }
 
 - (instancetype)init
 {
-    return [self initWithSelection:nil delegate:nil];
+    return [self initWithDelegate:nil];
 }
 
-- (instancetype)initWithSelection:(CCLDayCellSelection *)selection delegate:(id<CCLProvidesTableData>)delegate
+- (instancetype)initWithDelegate:(id<CCLProvidesTableData>)delegate
 {
     NSParameterAssert(delegate);
     
@@ -33,15 +32,46 @@
     
     if (self)
     {
-        _dayCellSelection = selection;
         _delegate = delegate;
     }
     
     return self;
 }
 
+#pragma mark -
+#pragma mark Cell Selection
+
+- (void)controllerDidSelectCell:(CCLDayCellSelection *)selection
+{
+    NSParameterAssert(selection);
+    
+    self.dayCellSelection = selection;
+}
+
+- (void)controllerDidDeselectCell
+{
+    [self.dayCellSelection deselectCell];
+    self.dayCellSelection = nil;
+}
+
+- (BOOL)hasCellSelection
+{
+    return self.dayCellSelection != nil;
+}
+
+- (NSUInteger)cellSelectionRow
+{
+    return self.dayCellSelection.row;
+}
+
+- (CCLDayCellView *)cellSelectionView
+{
+    return self.dayCellSelection.selectedView;
+}
+
 
 #pragma mark -
+#pragma mark Adapting the data source
 
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
 {
@@ -53,6 +83,24 @@
 {
     row = [self rowAdjustedToSelectionWithRow:row];
     return [self.delegate cellTypeForColumn:column row:row];;
+}
+
+- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
+{
+    row = [self rowAdjustedToSelectionWithRow:row];
+    return [self.delegate objectValueForTableView:tableView column:column row:row];
+}
+
+- (NSUInteger)numberOfRows
+{
+    NSUInteger count = [self.delegate numberOfRows];
+    
+    if ([self hasSelection])
+    {
+        return count + 1;
+    }
+    
+    return count;
 }
 
 - (NSUInteger)rowAdjustedToSelectionWithRow:(NSUInteger)row
