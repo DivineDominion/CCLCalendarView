@@ -75,12 +75,22 @@
 
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row
 {
+    if ([self isDayDetailRow:row])
+    {
+        return CCLRowViewTypeDayDetail;
+    }
+    
     row = [self rowAdjustedToSelectionWithRow:row];
     return [self.delegate rowViewTypeForRow:row];
 }
 
 - (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row
 {
+    if ([self isDayDetailRow:row])
+    {
+        return CCLCellTypeDayDetail;
+    }
+    
     row = [self rowAdjustedToSelectionWithRow:row];
     return [self.delegate cellTypeForColumn:column row:row];;
 }
@@ -120,6 +130,17 @@
 - (BOOL)hasSelection
 {
     return self.dayCellSelection != nil;
+}
+
+- (BOOL)isDayDetailRow:(NSUInteger)row
+{
+    if (![self hasSelection])
+    {
+        return NO;
+    }
+    
+    NSUInteger dayDetailRow = [self cellSelectionRow] + 1;
+    return row == dayDetailRow;
 }
 
 @end

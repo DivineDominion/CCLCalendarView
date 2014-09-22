@@ -100,6 +100,15 @@
     XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index at the selected row");
 }
 
+- (void)testRowViewType_WithSelection_AtDetailRow_ReturnsDayDetailType
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row + 1;
+    
+    CCLRowViewType returnedType = [adjustment rowViewTypeForRow:row];
+    XCTAssertEqual(returnedType, CCLRowViewTypeDayDetail, @"intercept & return day detail");
+}
+
 - (void)testRowViewType_WithSelection_AfterSelectedRow_AdjustsRow
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
@@ -145,6 +154,15 @@
     
     [adjustment cellTypeForColumn:6 row:row];
     XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index at the selected row");
+}
+
+- (void)testCellType_WithSelection_AtDetailRow_ReturnsDayDetailType
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row + 1;
+    
+    CCLCellType returnedType = [adjustment cellTypeForColumn:6 row:row];
+    XCTAssertEqual(returnedType, CCLCellTypeDayDetail, @"intercept & return day detail");
 }
 
 - (void)testCellType_WithSelection_AfterSelectedRow_AdjustsRow
