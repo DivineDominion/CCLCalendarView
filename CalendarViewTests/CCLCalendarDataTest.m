@@ -74,14 +74,6 @@
     XCTAssertEqual(returnedType, CCLRowViewTypeMonth, @"6th row should be Month type");
 }
 
-- (void)testRowViewType_FirstRowOfSeptemberWithSelectionInAugust_ReturnsMonth
-{
-    [data insertDayDetailRowBelow:2];
-    CCLRowViewType returnedType = [data rowViewTypeForRow:6 + 1];
-    
-    XCTAssertEqual(returnedType, CCLRowViewTypeMonth, @"6th row should be Month type");
-}
-
 - (void)testRowViewType_ForRowBelowSelection_ReturnsDayDetail
 {
     [data insertDayDetailRowBelow:2];
