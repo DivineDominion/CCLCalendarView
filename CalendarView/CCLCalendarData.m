@@ -58,10 +58,11 @@ NSInteger const kCLLNoDetailRow = -1;
         return CCLRowViewTypeDayDetail;
     }
     
-    [self adjustRowAccordingToDetailRow:&row];
-    [self guardRowBoundsForRow:row];
+    NSUInteger adjustedRow = row;
+    [self adjustRowAccordingToDetailRow:&adjustedRow];
+    [self guardRowBoundsForRow:adjustedRow];
     
-    if ([self.titleRows containsRow:row])
+    if ([self.titleRows containsRow:adjustedRow])
     {
         return CCLRowViewTypeMonth;
     }
@@ -126,15 +127,34 @@ NSInteger const kCLLNoDetailRow = -1;
         return CCLCellTypeDayDetail;
     }
     
-    if (rowViewType != CCLRowViewTypeWeek)
+//    if (rowViewType != CCLRowViewTypeWeek)
+//    {
+//        return CCLCellTypeUndefined;
+//    }
+    
+//    if ([self containsDayForColumn:column row:row])
+//    {
+//        return CCLCellTypeDay;
+//    }
+    
+    NSUInteger adjustedRow = row;
+    [self adjustRowAccordingToDetailRow:&adjustedRow];
+    
+    NSUInteger monthTitleRow = [self.titleRows monthIndexOfRow:adjustedRow];
+    CCLMonth *month = [self.months monthAtIndex:monthTitleRow];
+    NSUInteger firstWeekRow = monthTitleRow + 1;
+    NSUInteger week = adjustedRow - firstWeekRow;
+    
+    if (week == 0)
     {
-        return CCLCellTypeUndefined;
+        NSUInteger firstWeekday = month.firstWeekday;
+        if (column < firstWeekday - 1)
+        {
+            return CCLCellTypeBlank;
+        }
     }
     
-    if ([self containsDayForColumn:column row:row])
-    {
-        return CCLCellTypeDay;
-    }
+    return CCLCellTypeDay;
     
     //    CCLCellTypeBlank
     //    CCLCellTypeBlankLast
@@ -145,6 +165,7 @@ NSInteger const kCLLNoDetailRow = -1;
 
 - (BOOL)containsDayForColumn:(NSUInteger)column row:(NSUInteger)row
 {
+
 #warning stub
     return YES;
 }
