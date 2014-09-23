@@ -1,5 +1,5 @@
 //
-//  CCLCalendarTableModelTranslator.h
+//  CCLCalendarViewModel.h
 //  CalendarView
 //
 //  Created by Christian Tietze on 01.09.14.
@@ -16,12 +16,12 @@
 @class CCLMonths;
 @class CCLMonthsFactory;
 
-@interface CCLCalendarTableModelTranslator : NSObject <CCLProvidesTableData>
+@interface CCLCalendarViewModel : NSObject <CCLProvidesTableData>
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
 
 @property (strong) CCLCalendarData *calendarData;
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;
 
-+ (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider;
++ (instancetype)calendarVieweModelFrom:(id<CCLProvidesCalendarObjects>)objectProvider;
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider;
 @end

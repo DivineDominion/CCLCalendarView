@@ -1,12 +1,12 @@
 //
-//  CCLCalendarTableModelTranslator.m
+//  CCLCalendarViewModel.m
 //  CalendarView
 //
 //  Created by Christian Tietze on 01.09.14.
 //  Copyright (c) 2014 Christian Tietze. All rights reserved.
 //
 
-#import "CCLCalendarTableModelTranslator.h"
+#import "CCLCalendarViewModel.h"
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLDateRange.h"
 #import "CCLMonthsFactory.h"
@@ -17,12 +17,12 @@
 
 #import "CTWCalendarSupplier.h"
 
-@interface CCLCalendarTableModelTranslator ()
+@interface CCLCalendarViewModel ()
 @property (strong, readwrite) CCLDayCellSelection *cellSelection;
 @end
 
-@implementation CCLCalendarTableModelTranslator
-+ (instancetype)calendarTableModelTranslatorFrom:(id<CCLProvidesCalendarObjects>)objectProvider
+@implementation CCLCalendarViewModel
++ (instancetype)calendarVieweModelFrom:(id<CCLProvidesCalendarObjects>)objectProvider
 {
     return [[self alloc] initWithObjectProvider:objectProvider];
 }

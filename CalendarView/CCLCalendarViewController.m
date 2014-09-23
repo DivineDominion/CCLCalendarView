@@ -11,7 +11,7 @@
 // Collaborators
 #import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
-#import "CCLCalendarTableModelTranslator.h"
+#import "CCLCalendarViewModel.h"
 #import "CCLRowAdjustment.h"
 
 // Components
@@ -57,8 +57,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return;
     }
     
-    CCLCalendarTableModelTranslator *translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
-    CCLRowAdjustment *rowAdjustment = [CCLRowAdjustment rowAdjustmentForDelegate:translator];
+    CCLCalendarViewModel *model = [CCLCalendarViewModel calendarVieweModelFrom:objectProvider];
+    CCLRowAdjustment *rowAdjustment = [CCLRowAdjustment rowAdjustmentForDelegate:model];
     self.tableDataProvider = rowAdjustment;
     self.selectionDelegate = rowAdjustment;
 }

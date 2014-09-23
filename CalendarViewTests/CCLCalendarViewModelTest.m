@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CCLCalendarTableModelTranslator.h"
+#import "CCLCalendarViewModel.h"
 #import "TestObjectProvider.h"
 
 #import "CCLProvidesCalendarObjects.h"
@@ -41,30 +41,30 @@
 }
 @end
 
-@interface CCLCalendarTableModelTranslatorTest : XCTestCase
+@interface CCLCalendarViewModelTest : XCTestCase
 @end
 
-@implementation CCLCalendarTableModelTranslatorTest
+@implementation CCLCalendarViewModelTest
 {
-    CCLCalendarTableModelTranslator *translator;
+    CCLCalendarViewModel *model;
 }
 
 - (void)setUp
 {
     [super setUp];
     // Initialize with dumb object provider to satisfy checks
-    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:[[TestObjectProvider alloc] init]];
+    model = [CCLCalendarViewModel calendarVieweModelFrom:[[TestObjectProvider alloc] init]];
 }
 
 - (void)tearDown
 {
-    translator = nil;
+    model = nil;
     [super tearDown];
 }
 
 - (void)testInitially_ComesWithAMonthsFactory
 {
-    XCTAssertNotNil(translator.monthsFactory, @"should have a default MonthsFactory");
+    XCTAssertNotNil(model.monthsFactory, @"should have a default MonthsFactory");
 }
 
 - (void)testInitialization_GenerateMonthsFromObjectProvider
@@ -72,22 +72,22 @@
     TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
     objectProvider.dateRange = [self dateRangeWithAMonthIn1970];
     
-    translator = [CCLCalendarTableModelTranslator calendarTableModelTranslatorFrom:objectProvider];
+    model = [CCLCalendarViewModel calendarVieweModelFrom:objectProvider];
 
-    XCTAssertNotNil(translator.calendarData, @"should have set up data");
-    XCTAssertEqual(translator.calendarData.months.firstMonth.year, 1970, @"should have adopted the month");
+    XCTAssertNotNil(model.calendarData, @"should have set up data");
+    XCTAssertEqual(model.calendarData.months.firstMonth.year, 1970, @"should have adopted the month");
 }
 
 - (void)testSettingObjectProvider_UpdatesMonths
 {
     TestMonthsFactory *factory = [[TestMonthsFactory alloc] init];
-    translator.monthsFactory = factory;
+    model.monthsFactory = factory;
     
     TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
     id dateRangeDouble = [[NSObject alloc] init];
     objectProvider.dateRange = dateRangeDouble;
     
-    [translator setObjectProvider:objectProvider];
+    [model setObjectProvider:objectProvider];
     
     XCTAssertEqual(factory.dateRangeProvided, dateRangeDouble, @"should delegate creation of months from dateRange");
 }
@@ -97,7 +97,7 @@
     TestObjectProvider *objectProvider = [[TestObjectProvider alloc] init];
     CCLDateRange *sometimeIn1970 = [self dateRangeWithAMonthIn1970];
     objectProvider.dateRange = sometimeIn1970;
-    translator.objectProvider = objectProvider;
+    model.objectProvider = objectProvider;
 }
 
 - (CCLDateRange *)dateRangeWithAMonthIn1970

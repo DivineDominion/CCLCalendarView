@@ -10,7 +10,6 @@
 #import "TestObjectProvider.h"
 
 #import "CCLCalendarViewController.h"
-#import "CCLCalendarTableModelTranslator.h"
 
 @interface CCLCalendarViewControllerTest : XCTestCase
 
