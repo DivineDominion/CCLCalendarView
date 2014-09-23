@@ -24,6 +24,5 @@ extern NSInteger const kCLLNoDetailRow;
 
 - (CCLMonth *)monthForRow:(NSUInteger)row;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
-- (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row;
 - (NSUInteger)numberOfRows;
 @end

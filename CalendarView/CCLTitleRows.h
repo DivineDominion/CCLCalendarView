@@ -18,6 +18,7 @@
 
 - (BOOL)containsRow:(NSUInteger)row;
 - (NSUInteger)monthIndexOfRow:(NSUInteger)row;
+- (NSUInteger)previousMonthRowOfRow:(NSUInteger)row;
 
 /// The amount of rows acceptable according to the month-related information.
 /// Is the sum of the last month's week count and its own row index.

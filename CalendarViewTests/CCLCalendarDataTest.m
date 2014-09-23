@@ -74,43 +74,4 @@
     XCTAssertThrows([data rowViewTypeForRow:100], @"waaaay to high a row index should throw");
 }
 
-
-#pragma mark -
-#pragma mark Translating Cell Types
-
-- (void)testCellType_FirstRowOfSeptember_AnyColumn_ReturnsMonthCell
-{
-    CCLCellType returnedType = [data cellTypeForColumn:4 row:6];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeMonth, @"6th row should be Month type");
-}
-
-- (void)testCellType_FirstRowOfAugust_1stColumn_ReturnsBlankCell
-{
-    CCLCellType returnedType = [data cellTypeForColumn:0 row:1];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeBlank, @"first 4 days of the first week of August should be outside of August");
-}
-
-- (void)testCellType_FirstRowOfAugust_4thColumn_ReturnsLastBlankCell
-{
-    CCLCellType returnedType = [data cellTypeForColumn:3 row:1];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeBlankLast, @"first 4 days of the first week of August should be outside of August");
-}
-
-- (void)testCellType_FirstRowOfAugust_5thColumn_ReturnsDayCell
-{
-    CCLCellType returnedType = [data cellTypeForColumn:4 row:1];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeDay, @"5th day of the first week of August should be a Friday 1st");
-}
-
-- (void)testCellType_FirstRowOfAugust_6thColumn_ReturnsWeekendCell
-{
-    CCLCellType returnedType = [data cellTypeForColumn:5 row:1];
-    
-    XCTAssertEqual(returnedType, CCLCellTypeWeekend, @"6th day of the first week of August should be a Saturday 2nd");
-}
-
 @end

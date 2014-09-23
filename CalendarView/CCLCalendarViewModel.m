@@ -13,12 +13,13 @@
 #import "CCLTitleRows.h"
 #import "CCLMonths.h"
 #import "CCLMonth.h"
-#import "CCLDayCellSelection.h"
+
+#import "CCLCellDayTranslation.h"
+#import "CCLDayLocator.h"
 
 #import "CTWCalendarSupplier.h"
 
 @interface CCLCalendarViewModel ()
-@property (strong, readwrite) CCLDayCellSelection *cellSelection;
 @end
 
 @implementation CCLCalendarViewModel
@@ -64,7 +65,10 @@
     CCLDateRange *dateRange = self.objectProvider.dateRange;
     CCLMonthsFactory *monthsFactory = self.monthsFactory;
     CCLMonths *months = [monthsFactory monthsInDateRange:dateRange];
-    self.calendarData = [CCLCalendarData calendarDataForMonths:months];
+    CCLCalendarData *calendarData = [CCLCalendarData calendarDataForMonths:months];
+    
+    self.calendarData = calendarData;
+    self.cellDayTranslation = [CCLCellDayTranslation cellDayTranslationFor:calendarData];
 }
 
 - (CCLMonthsFactory *)monthsFactory
@@ -97,7 +101,42 @@
 
 - (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row
 {
-    return [self.calendarData cellTypeForColumn:column row:row];
+    CCLRowViewType rowViewType = [self rowViewTypeForRow:row];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
+    {
+        return CCLCellTypeMonth;
+    }
+    
+    if (rowViewType == CCLRowViewTypeDayDetail)
+    {
+        return CCLCellTypeDayDetail;
+    }
+    
+    if (row == 7 && column != -1)
+    {
+        // no op
+    }
+    
+    CCLCellDayTranslation *translation = self.cellDayTranslation;
+    CCLDayLocator *dayLocator = [translation dayLocatorForColumn:column row:row];
+    
+    if ([dayLocator isOutsideDayRange])
+    {
+        if ([dayLocator nextDayIsOutsideDayRange])
+        {
+            return CCLCellTypeBlank;
+        }
+        
+        return CCLCellTypeBlankLast;
+    }
+    
+    if ([dayLocator isWeekend])
+    {
+        return CCLCellTypeWeekend;
+    }
+    
+    return CCLCellTypeDay;
 }
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row

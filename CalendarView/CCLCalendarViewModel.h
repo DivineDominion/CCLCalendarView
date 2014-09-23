@@ -16,8 +16,12 @@
 @class CCLMonths;
 @class CCLMonthsFactory;
 
+@class CCLCellDayTranslation;
+
 @interface CCLCalendarViewModel : NSObject <CCLProvidesTableData>
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+
+@property (strong) CCLCellDayTranslation *cellDayTranslation;
 
 @property (strong) CCLCalendarData *calendarData;
 @property (nonatomic, strong) CCLMonthsFactory *monthsFactory;

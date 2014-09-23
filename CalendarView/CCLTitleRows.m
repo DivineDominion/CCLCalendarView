@@ -110,6 +110,26 @@
     return returnedIndex;
 }
 
+- (NSUInteger)previousMonthRowOfRow:(NSUInteger)aRow
+{
+    [self guardRowInsideMonthBounds:aRow];
+    
+    NSUInteger previousMonthRow = 0;
+    NSArray *rows = self.titleRows;
+    
+    for (NSUInteger index = 0; index < rows.count; index++)
+    {
+        NSUInteger titleRow = [rows[index] unsignedIntegerValue];
+        
+        if (titleRow <= aRow)
+        {
+            previousMonthRow = titleRow;
+        }
+    }
+    
+    return previousMonthRow;
+}
+
 - (void)guardRowInsideMonthBounds:(NSUInteger)row
 {
     NSUInteger maximum = [self rowLimit];
