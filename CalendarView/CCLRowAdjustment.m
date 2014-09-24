@@ -93,7 +93,7 @@
 {
     if ([self isDayDetailRow:row])
     {
-        return CCLCellTypeDayDetail;
+        return CCLCellTypeUndefined;
     }
     
     row = [self rowAdjustedToSelectionWithRow:row];
@@ -109,6 +109,17 @@
     
     row = [self rowAdjustedToSelectionWithRow:row];
     return [self.delegate objectValueForTableView:tableView column:column row:row];
+}
+
+- (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
+{
+    if ([self isDayDetailRow:row])
+    {
+        return nil;
+    }
+    
+    row = [self rowAdjustedToSelectionWithRow:row];
+    return [self.delegate monthNameForTableView:tableView row:row];
 }
 
 - (NSUInteger)numberOfRows

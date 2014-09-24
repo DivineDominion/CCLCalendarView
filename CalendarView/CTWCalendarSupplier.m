@@ -50,6 +50,6 @@ static dispatch_once_t once_token = 0;
 
 - (NSLocale *)autoupdatingLocale
 {
-    return [NSCalendar autoupdatingCurrentCalendar];
+    return [NSLocale autoupdatingCurrentLocale];
 }
 @end

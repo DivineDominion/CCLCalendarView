@@ -66,10 +66,12 @@
 - (NSString *)name
 {
     NSLocale *locale = [self locale];
+    NSCalendar *calendar = [self calendar];
     NSDate *date = self.date;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"MMMM";
     dateFormatter.locale = locale;
+    dateFormatter.calendar = calendar;
     NSString *monthName = [dateFormatter stringFromDate:date];
     
     return [monthName capitalizedString];

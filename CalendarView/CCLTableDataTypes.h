@@ -22,11 +22,8 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
     /// Denotes a missing calculation, really. Should never appear in production.
     CCLCellTypeUndefined = -1,
     
-    CCLCellTypeMonth = 0,
-    CCLCellTypeDay,
+    CCLCellTypeDay = 0,
     CCLCellTypeWeekend,
-    
-    CCLCellTypeDayDetail,
     
     /// Used when a weekday in a week is out of the calendar bounds.
     CCLCellTypeBlank

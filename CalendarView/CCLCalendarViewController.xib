@@ -40,16 +40,16 @@
                                 </textFieldCell>
                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                 <prototypeCellViews>
-                                    <customView identifier="MonthRow" id="1xy-VJ-Eed" userLabel="Month Row View" customClass="CCLWeekRowView">
+                                    <customView identifier="WeekRow" id="d4B-za-IVD" customClass="CCLWeekRowView">
                                         <rect key="frame" x="1" y="1" width="53" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
-                                    <tableCellView identifier="MonthCell" id="V5f-sE-GhP" userLabel="Month Cell View">
+                                    <customView identifier="MonthRow" id="1xy-VJ-Eed" userLabel="Month Row View" customClass="CCLMonthRowView">
                                         <rect key="frame" x="1" y="47" width="53" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
-                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N3y-of-zMb">
-                                                <rect key="frame" x="0.0" y="0.0" width="53" height="17"/>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="N3y-of-zMb">
+                                                <rect key="frame" x="-2" y="0.0" width="57" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="August" id="PfW-0t-dQd">
                                                     <font key="font" metaFont="system"/>
@@ -58,16 +58,18 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="N3y-of-zMb" firstAttribute="top" secondItem="1xy-VJ-Eed" secondAttribute="top" id="7yr-pP-FrC"/>
+                                            <constraint firstItem="N3y-of-zMb" firstAttribute="leading" secondItem="1xy-VJ-Eed" secondAttribute="leading" id="b0T-RS-uvS"/>
+                                            <constraint firstAttribute="bottom" secondItem="N3y-of-zMb" secondAttribute="bottom" id="oP3-sh-Wo0"/>
+                                            <constraint firstAttribute="trailing" secondItem="N3y-of-zMb" secondAttribute="trailing" id="ocB-jQ-JGQ"/>
+                                        </constraints>
                                         <connections>
-                                            <outlet property="textField" destination="N3y-of-zMb" id="Una-MA-jFJ"/>
+                                            <outlet property="textField" destination="N3y-of-zMb" id="3Eq-8T-tsK"/>
                                         </connections>
-                                    </tableCellView>
-                                    <customView identifier="WeekRow" id="d4B-za-IVD" customClass="CCLWeekRowView">
-                                        <rect key="frame" x="1" y="66" width="53" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                     <tableCellView identifier="WeekdayCell" id="94z-Yw-YwY" customClass="CCLDayCellView">
-                                        <rect key="frame" x="1" y="112" width="53" height="71"/>
+                                        <rect key="frame" x="1" y="66" width="53" height="71"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4DK-49-Inu" userLabel="Day">
@@ -102,7 +104,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableCellView>
                                     <customView identifier="DayDetailRow" id="xar-IC-qAw" customClass="CCLDayDetailRowView">
-                                        <rect key="frame" x="1" y="185" width="53" height="96"/>
+                                        <rect key="frame" x="1" y="139" width="53" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                 </prototypeCellViews>
@@ -366,5 +368,6 @@
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
         </scrollView>
+        <userDefaultsController representsSharedInstance="YES" id="4M6-lK-hfQ"/>
     </objects>
 </document>

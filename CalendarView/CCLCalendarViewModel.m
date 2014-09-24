@@ -103,21 +103,11 @@
 {
     CCLRowViewType rowViewType = [self rowViewTypeForRow:row];
     
-    if (rowViewType == CCLRowViewTypeMonth)
+    if (rowViewType == CCLRowViewTypeMonth || rowViewType == CCLRowViewTypeDayDetail)
     {
-        return CCLCellTypeMonth;
+        return CCLCellTypeUndefined;
     }
-    
-    if (rowViewType == CCLRowViewTypeDayDetail)
-    {
-        if (column > 0)
-        {
-            return CCLCellTypeUndefined;
-        }
         
-        return CCLCellTypeDayDetail;
-    }
-    
     CCLCellDayTranslation *translation = self.cellDayTranslation;
     CCLDayLocator *dayLocator = [translation dayLocatorForColumn:column row:row];
     
@@ -166,6 +156,12 @@
     NSUInteger day = startDateComponents.day;
     
     return [objectProvider objectValueForYear:year month:month day:day];
+}
+
+- (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
+{
+    CCLMonth *month = [self.calendarData monthForRow:row];
+    return month.name;
 }
 
 @end

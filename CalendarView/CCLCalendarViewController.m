@@ -19,6 +19,7 @@
 #import "CCLCalendarView.h"
 #import "CCLWeekRowView.h"
 #import "CCLDayDetailRowView.h"
+#import "CCLMonthRowView.h"
 #import "CCLDayCellView.h"
 
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
@@ -176,16 +177,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSView *)tableView:(NSTableView *)tableView viewForCellType:(CCLCellType)cellType
 {
-    if (cellType == CCLCellTypeMonth)
-    {
-        return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
-    }
-    
-    if (cellType == CCLCellTypeDayDetail)
-    {
-        return nil;
-    }
-    
     if (cellType == CCLCellTypeBlank)
     {
 #warning stub
@@ -216,12 +207,20 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-    if (![rowView.identifier isEqualToString:@"DayDetailRow"])
+    if ([rowView.identifier isEqualToString:@"MonthRow"])
     {
+        CCLMonthRowView *monthView = (CCLMonthRowView *)rowView;
+        NSString *monthName = [self.tableDataProvider monthNameForTableView:tableView row:row];
+        monthView.monthName = monthName;
         return;
     }
     
-    self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
+    if ([rowView.identifier isEqualToString:@"DayDetailRow"])
+    {
+        // Set subview values in -displayDayDetail manually b/c the row may stay
+        // in place but the selection changes, so this method won't be called.
+        self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
+    }
 }
 
 

@@ -36,6 +36,12 @@
     self.lastRowIndex = row;
     return nil;
 }
+
+- (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
+{
+    self.lastRowIndex = row;
+    return nil;
+}
 @end
 
 
@@ -156,13 +162,13 @@
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
 }
 
-- (void)testCellType_WithSelection_AtDetailRow_ReturnsDayDetailType
+- (void)testCellType_WithSelection_AtDetailRow_ReturnsUndefined
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row + 1;
     
     CCLCellType returnedType = [adjustment cellTypeForColumn:6 row:row];
-    XCTAssertEqual(returnedType, CCLCellTypeDayDetail, @"intercept & return day detail");
+    XCTAssertEqual(returnedType, CCLCellTypeUndefined, @"intercept & return day detail");
 }
 
 - (void)testCellType_WithSelection_AfterSelectedRow_AdjustsRow
@@ -236,7 +242,54 @@
 }
 
 
-#pragma mark Wrapping Object Value
+#pragma mark Wrapping Month Name
+
+- (void)testMonthName_WithSelection_BeforeSelectedRow_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    
+    [adjustment monthNameForTableView:nil row:0];
+    XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index before selected row");
+    
+    NSUInteger row = selection.row - 1;
+    [adjustment monthNameForTableView:nil row:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
+}
+
+- (void)testMonthName_WithSelection_AtSelectedRow_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row;
+    
+    [adjustment monthNameForTableView:nil row:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
+}
+
+- (void)testMonthName_WithSelection_AfterSelectedRow_AdjustsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row + 10;
+    
+    [adjustment monthNameForTableView:nil row:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index after selected row");
+}
+
+- (void)testMonthName_WithoutAnySelection_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_NoSelection];
+    
+    [adjustment monthNameForTableView:nil row:0];
+    XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index");
+    
+    [adjustment monthNameForTableView:nil row:10];
+    XCTAssertEqual(testProvider.lastRowIndex, 10, @"shouldn't modify index");
+    
+    [adjustment monthNameForTableView:nil row:100];
+    XCTAssertEqual(testProvider.lastRowIndex, 100, @"shouldn't modify index");
+}
+
+
+#pragma mark Wrapping Row Count
 
 - (void)testNumberOfRows_WithSelection_IncreasesRowCount
 {
