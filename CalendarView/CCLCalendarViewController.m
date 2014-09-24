@@ -183,10 +183,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     if (cellType == CCLCellTypeDayDetail)
     {
-//        CCLDayCellView *selectedView = [self.selectionDelegate cellSelectionView];
-//        id objectValue = selectedView.objectValue;
-//        NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
-//        return detailView;
         return nil;
     }
     
@@ -247,6 +243,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
         [self selectDayCell:dayCellView row:row column:column];
         [self insertDetailRow];
+        [self displayDayDetail];
         return;
     }
     
@@ -280,6 +277,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     {
         [self insertDetailRow];
     }
+    
+    [self displayDayDetail];
 }
 
 - (BOOL)hasSelectedDayCell
@@ -330,6 +329,14 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     NSInteger rowBelow = selectionRow + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+}
+
+- (void)displayDayDetail
+{
+    id objectValue = [self.selectionDelegate dayCellSelectionObjectValue];
+    NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
+    CCLDayDetailRowView *rowView = self.dayDetailRowView;
+    [rowView displayDetailView:detailView];
 }
 
 @end

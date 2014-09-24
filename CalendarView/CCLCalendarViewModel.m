@@ -110,6 +110,11 @@
     
     if (rowViewType == CCLRowViewTypeDayDetail)
     {
+        if (column > 0)
+        {
+            return CCLCellTypeUndefined;
+        }
+        
         return CCLCellTypeDayDetail;
     }
     
@@ -131,6 +136,13 @@
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
 {
+    CCLRowViewType rowViewType = [self rowViewTypeForRow:row];
+    
+    if (rowViewType == CCLRowViewTypeMonth)
+    {
+        return nil;
+    }
+    
     NSInteger lastColumnIndex = tableView.tableColumns.count - 1;
     BOOL isLastColumn = (column == lastColumnIndex);
     

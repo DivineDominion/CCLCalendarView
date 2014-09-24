@@ -9,5 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface CCLDayDetailRowView : NSTableRowView
-
+- (void)displayDetailView:(NSView *)view;
 @end

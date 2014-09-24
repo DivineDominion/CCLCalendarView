@@ -16,7 +16,7 @@
 - (void)controllerDidDeselectDayCell;
 
 - (CCLDayCellSelection *)dayCellSelection;
-- (CCLDayCellView *)dayCellSelectionView;
+- (id)dayCellSelectionObjectValue;
 - (BOOL)hasDayCellSelection;
 - (NSUInteger)dayCellSelectionRow;
 - (NSUInteger)dayCellSelectionColumn;

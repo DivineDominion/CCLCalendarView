@@ -44,4 +44,8 @@
     [self.selectedView deselect];
 }
 
+- (id)objectValue
+{
+    return self.selectedView.objectValue;
+}
 @end

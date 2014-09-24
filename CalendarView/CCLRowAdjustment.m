@@ -69,9 +69,9 @@
     return self.dayCellSelection.column;
 }
 
-- (CCLDayCellView *)dayCellSelectionView
+- (id)dayCellSelectionObjectValue
 {
-    return self.dayCellSelection.selectedView;
+    return self.dayCellSelection.objectValue;
 }
 
 
@@ -102,6 +102,11 @@
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
 {
+    if ([self isDayDetailRow:row])
+    {
+        return nil;
+    }
+    
     row = [self rowAdjustedToSelectionWithRow:row];
     return [self.delegate objectValueForTableView:tableView column:column row:row];
 }

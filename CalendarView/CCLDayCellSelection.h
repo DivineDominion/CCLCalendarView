@@ -19,4 +19,5 @@
 - (instancetype)initWithDayCellView:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column;
 
 - (void)deselectCell;
+- (id)objectValue;
 @end
