@@ -169,4 +169,15 @@
 }
 
 
+#pragma mark Date Component
+
+- (NSDateComponents *)dateComponents
+{
+    NSDate *day = [self day];
+    NSCalendar *calendar = [self calendar];
+    NSCalendarUnit components = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekOfYearCalendarUnit;
+    
+    return [calendar components:components fromDate:day];
+}
+
 @end

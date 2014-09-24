@@ -126,20 +126,13 @@
 
 - (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
 {
-    CCLRowViewType rowViewType = [self rowViewTypeForRow:row];
-    
-    if (rowViewType == CCLRowViewTypeMonth)
-    {
-        return nil;
-    }
-    
     NSInteger lastColumnIndex = tableView.tableColumns.count - 1;
     BOOL isLastColumn = (column == lastColumnIndex);
-    
     id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
-    CCLDateRange *dateRange = objectProvider.dateRange;
-    NSDateComponents *startDateComponents = [dateRange startDateCalendarComponents];
-    NSUInteger year = startDateComponents.year;
+    CCLCellDayTranslation *translation = self.cellDayTranslation;
+    CCLDayLocator *dayLocator = [translation dayLocatorForColumn:column row:row];
+    NSDateComponents *dateComponents = [dayLocator dateComponents];
+    NSUInteger year = dateComponents.year;
     
     if (isLastColumn)
     {
@@ -147,13 +140,13 @@
         {
             return nil;
         }
-        NSUInteger week = startDateComponents.week;
         
+        NSUInteger week = dateComponents.weekOfYear;
         return [objectProvider objectValueForYear:year week:week];
     }
     
-    NSUInteger month = startDateComponents.month;
-    NSUInteger day = startDateComponents.day;
+    NSUInteger month = dateComponents.month;
+    NSUInteger day = dateComponents.day;
     
     return [objectProvider objectValueForYear:year month:month day:day];
 }

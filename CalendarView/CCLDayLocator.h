@@ -20,4 +20,6 @@
 
 - (BOOL)isOutsideDayRange;
 - (BOOL)isWeekend;
+
+- (NSDateComponents *)dateComponents;
 @end
