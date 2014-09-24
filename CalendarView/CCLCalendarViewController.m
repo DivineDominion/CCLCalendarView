@@ -237,9 +237,15 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     NSTableCellView *selectedCell = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
+    BOOL isUnselectableCell = (selectedCell == nil || [selectedCell.identifier isEqualToString:@"WeekTotalCell"]);
     
     if (![self hasSelectedDayCell])
     {
+        if (isUnselectableCell)
+        {
+            return;
+        }
+        
         CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
         [self selectDayCell:dayCellView row:row column:column];
         [self insertDetailRow];
@@ -249,7 +255,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     // Deselect on a second click into the same cell
     if (([self cellSelectionRow] == row && [self cellSelectionColumn] == column)
-        || [selectedCell.identifier isEqualToString:@"WeekTotalCell"])
+        || isUnselectableCell)
     {
         [self removeDetailRow];
         [self deselectDayCell];
