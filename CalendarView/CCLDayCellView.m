@@ -14,6 +14,12 @@
 {
     [super drawRect:dirtyRect];
     
+    if (self.backgroundColor)
+    {
+        [self.backgroundColor set];
+        NSRectFill(self.bounds);
+    }
+    
     if (self.isSelected)
     {
         [self.selectionColor set];

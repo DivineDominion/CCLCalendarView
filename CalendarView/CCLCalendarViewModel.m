@@ -113,11 +113,6 @@
         return CCLCellTypeDayDetail;
     }
     
-    if (row == 7 && column != -1)
-    {
-        // no op
-    }
-    
     CCLCellDayTranslation *translation = self.cellDayTranslation;
     CCLDayLocator *dayLocator = [translation dayLocatorForColumn:column row:row];
     

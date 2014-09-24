@@ -154,12 +154,19 @@
 {
     NSUInteger weekday = self.weekday;
     
-    if (weekday == 1 || weekday == 7)
+    if (weekday == 1  || weekday == 7)
+    {
+        return YES;
+    }
+    
+    // For locales starting on Monday, Sunday becomes 8
+    if (weekday > 7 && (weekday - 7) == 1)
     {
         return YES;
     }
     
     return NO;
 }
+
 
 @end

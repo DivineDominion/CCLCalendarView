@@ -176,8 +176,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSView *)tableView:(NSTableView *)tableView viewForCellType:(CCLCellType)cellType
 {
-//    [self guardRowViewTypeValidity:rowViewType];
-    
     if (cellType == CCLCellTypeMonth)
     {
         return [tableView makeViewWithIdentifier:@"MonthCell" owner:self];
@@ -203,7 +201,10 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return nil;
     }
     
-    NSTableRowView *view = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+    CCLDayCellView *view = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+    view.backgroundColor = nil;
+//    id object;
+//    view.objectValue = object;
     
     if (cellType == CCLCellTypeWeekend)
     {
