@@ -10,8 +10,9 @@
 
 @interface CCLDayCellView : NSTableCellView
 @property (assign) BOOL isSelected;
-@property (copy) NSColor *backgroundColor;
+@property (assign) BOOL isWeekend;
 @property (nonatomic, copy) NSColor *selectionColor;
+@property (nonatomic, copy) NSColor *weekendColor;
 @property (nonatomic, copy) NSColor *gridColor;
 @property (readonly) NSTableView *tableView;
 

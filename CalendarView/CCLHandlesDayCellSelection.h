@@ -19,4 +19,5 @@
 - (CCLDayCellView *)dayCellSelectionView;
 - (BOOL)hasDayCellSelection;
 - (NSUInteger)dayCellSelectionRow;
+- (NSUInteger)dayCellSelectionColumn;
 @end

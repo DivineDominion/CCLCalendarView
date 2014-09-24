@@ -91,13 +91,13 @@
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
 }
 
-- (void)testRowViewType_WithSelection_AtSelectedRow_AdjustsRow
+- (void)testRowViewType_WithSelection_AtSelectedRow_ForwardsRow
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row;
     
     [adjustment rowViewTypeForRow:row];
-    XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index at the selected row");
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
 }
 
 - (void)testRowViewType_WithSelection_AtDetailRow_ReturnsDayDetailType
@@ -147,13 +147,13 @@
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
 }
 
-- (void)testCellType_WithSelection_AtSelectedRow_AdjustsRow
+- (void)testCellType_WithSelection_AtSelectedRow_ForwardsRow
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row;
     
     [adjustment cellTypeForColumn:6 row:row];
-    XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index at the selected row");
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
 }
 
 - (void)testCellType_WithSelection_AtDetailRow_ReturnsDayDetailType
@@ -203,13 +203,13 @@
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
 }
 
-- (void)testObjectValue_WithSelection_AtSelectedRow_AdjustsRow
+- (void)testObjectValue_WithSelection_AtSelectedRow_ForwardsRow
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row;
     
     [adjustment objectValueForTableView:nil column:8 row:row];
-    XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index at the selected row");
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
 }
 
 - (void)testObjectValue_WithSelection_AfterSelectedRow_AdjustsRow

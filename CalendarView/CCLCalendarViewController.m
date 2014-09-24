@@ -202,14 +202,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     CCLDayCellView *view = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
-    view.backgroundColor = nil;
+    view.isWeekend = (cellType == CCLCellTypeWeekend);
 //    id object;
 //    view.objectValue = object;
-    
-    if (cellType == CCLCellTypeWeekend)
-    {
-        view.backgroundColor = [NSColor yellowColor];
-    }
     
     return view;
 }
@@ -239,49 +234,52 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)tableView:(NSTableView *)tableView didSelectCellViewAtRow:(NSInteger)row column:(NSInteger)column
 {
-    NSTableRowView *selectedRow = [tableView rowViewAtRow:row makeIfNecessary:YES];
-    if (![selectedRow.identifier isEqualToString:@"WeekRow"])
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
+    if (rowViewType != CCLRowViewTypeWeek)
     {
         return;
     }
     
     NSTableCellView *selectedCell = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
-    BOOL newSelectionIsOnSameRow = NO;
-    if ([self hasSelectedDayCell])
-    {
-        NSInteger oldSelectionRow = [self cellSelectionRow];
-        if (oldSelectionRow == row)
-        {
-            newSelectionIsOnSameRow = YES;
-        }
-        
-        if (!newSelectionIsOnSameRow || [selectedCell.identifier isEqualToString:@"WeekTotalCell"])
-        {
-            [self removeDetailRow];
-        }
-        
-        [self deselectDayCell];
-        
-        if (oldSelectionRow < row)
-        {
-            row--;
-        }
-    }
     
-    if ([selectedCell.identifier isEqualToString:@"WeekTotalCell"])
+    if (![self hasSelectedDayCell])
     {
+        CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
+        [self selectDayCell:dayCellView row:row column:column];
+        [self insertDetailRow];
         return;
     }
     
+    // Deselect on a second click into the same cell
+    if (([self cellSelectionRow] == row && [self cellSelectionColumn] == column)
+        || [selectedCell.identifier isEqualToString:@"WeekTotalCell"])
+    {
+        [self removeDetailRow];
+        [self deselectDayCell];
+        return;
+    }
+    
+    NSInteger oldSelectionRow = [self cellSelectionRow];
+    BOOL newSelectionIsOnSameRow = (oldSelectionRow == row);
+    
+    if (oldSelectionRow < row)
+    {
+        row--;
+    }
+    
+    if (!newSelectionIsOnSameRow)
+    {
+        [self removeDetailRow];
+    }
+    
+    [self deselectDayCell];
     CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
     [self selectDayCell:dayCellView row:row column:column];
     
-    if (newSelectionIsOnSameRow)
+    if (!newSelectionIsOnSameRow)
     {
-        return;
+        [self insertDetailRow];
     }
-    
-    [self insertDetailRow];
 }
 
 - (BOOL)hasSelectedDayCell
@@ -292,6 +290,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (NSUInteger)cellSelectionRow
 {
     return [self.selectionDelegate dayCellSelectionRow];
+}
+
+- (NSUInteger)cellSelectionColumn
+{
+    return [self.selectionDelegate dayCellSelectionColumn];
 }
 
 - (void)deselectDayCell

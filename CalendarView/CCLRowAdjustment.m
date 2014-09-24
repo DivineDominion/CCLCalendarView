@@ -64,6 +64,11 @@
     return self.dayCellSelection.row;
 }
 
+- (NSUInteger)dayCellSelectionColumn
+{
+    return self.dayCellSelection.column;
+}
+
 - (CCLDayCellView *)dayCellSelectionView
 {
     return self.dayCellSelection.selectedView;
@@ -117,8 +122,8 @@
 {
     if ([self hasSelection])
     {
-        NSUInteger selectionRow = self.dayCellSelection.row;
-        if (row >= selectionRow)
+        NSUInteger dayDetailRow = [self dayDetailRow];
+        if (row >= dayDetailRow)
         {
             return row - 1;
         }
@@ -139,8 +144,13 @@
         return NO;
     }
     
-    NSUInteger dayDetailRow = [self dayCellSelectionRow] + 1;
+    NSUInteger dayDetailRow = [self dayDetailRow];
     return row == dayDetailRow;
+}
+
+- (NSUInteger)dayDetailRow
+{
+    return [self dayCellSelectionRow] + 1;
 }
 
 @end
