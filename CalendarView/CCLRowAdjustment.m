@@ -41,30 +41,30 @@
 #pragma mark -
 #pragma mark Cell Selection
 
-- (void)controllerDidSelectCell:(CCLDayCellSelection *)selection
+- (void)controllerDidSelectDayCell:(CCLDayCellSelection *)selection
 {
     NSParameterAssert(selection);
     
     self.dayCellSelection = selection;
 }
 
-- (void)controllerDidDeselectCell
+- (void)controllerDidDeselectDayCell
 {
     [self.dayCellSelection deselectCell];
     self.dayCellSelection = nil;
 }
 
-- (BOOL)hasCellSelection
+- (BOOL)hasDayCellSelection
 {
     return self.dayCellSelection != nil;
 }
 
-- (NSUInteger)cellSelectionRow
+- (NSUInteger)dayCellSelectionRow
 {
     return self.dayCellSelection.row;
 }
 
-- (CCLDayCellView *)cellSelectionView
+- (CCLDayCellView *)dayCellSelectionView
 {
     return self.dayCellSelection.selectedView;
 }
@@ -139,7 +139,7 @@
         return NO;
     }
     
-    NSUInteger dayDetailRow = [self cellSelectionRow] + 1;
+    NSUInteger dayDetailRow = [self dayCellSelectionRow] + 1;
     return row == dayDetailRow;
 }
 

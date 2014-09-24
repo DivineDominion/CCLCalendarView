@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "CCLProvidesTableData.h"
-#import "CCLHandlesCellSelection.h"
+#import "CCLHandlesDayCellSelection.h"
 
 @class CCLDayCellSelection;
 
-@interface CCLRowAdjustment : NSObject <CCLProvidesTableData, CCLHandlesCellSelection>
+@interface CCLRowAdjustment : NSObject <CCLProvidesTableData, CCLHandlesDayCellSelection>
 @property (strong, readonly) CCLDayCellSelection *dayCellSelection;
 @property (strong, readonly) id<CCLProvidesTableData> delegate;
 

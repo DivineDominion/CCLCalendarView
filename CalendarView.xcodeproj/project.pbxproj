@@ -118,7 +118,7 @@
 		6017336D19B5B8F000FDE187 /* CCLMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonth.m; sourceTree = "<group>"; };
 		6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthTest.m; sourceTree = "<group>"; };
 		6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLMonthsTest.m; sourceTree = "<group>"; };
-		6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesCellSelection.h; sourceTree = "<group>"; };
+		6019962E19CAD09C00EED575 /* CCLHandlesDayCellSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesDayCellSelection.h; sourceTree = "<group>"; };
 		60BEC0F019D06420000B5DE0 /* CCLRowAdjustmentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLRowAdjustmentTest.m; sourceTree = "<group>"; };
 		60BEC0F319D0644A000B5DE0 /* CCLRowAdjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLRowAdjustment.h; sourceTree = "<group>"; };
 		60BEC0F419D0644A000B5DE0 /* CCLRowAdjustment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLRowAdjustment.m; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 				60BEC0F419D0644A000B5DE0 /* CCLRowAdjustment.m */,
 				60035BAD19B0D2D6009CADE0 /* CCLDayCellSelection.h */,
 				60035BAE19B0D2D6009CADE0 /* CCLDayCellSelection.m */,
-				6019962E19CAD09C00EED575 /* CCLHandlesCellSelection.h */,
+				6019962E19CAD09C00EED575 /* CCLHandlesDayCellSelection.h */,
 				60BEC0F919D065EB000B5DE0 /* CCLProvidesTableData.h */,
 				60BEC0FA19D06810000B5DE0 /* CCLTableDataTypes.h */,
 				600BA9CC19B45EC000A9ED9B /* CCLCalendarViewModel.h */,

@@ -19,6 +19,5 @@
 - (instancetype)initWithMonth:(CCLMonth *)month week:(NSUInteger)week weekday:(NSUInteger)weekday;
 
 - (BOOL)isOutsideDayRange;
-- (BOOL)nextDayIsOutsideDayRange;
 - (BOOL)isWeekend;
 @end

@@ -123,12 +123,7 @@
     
     if ([dayLocator isOutsideDayRange])
     {
-        if ([dayLocator nextDayIsOutsideDayRange])
-        {
-            return CCLCellTypeBlank;
-        }
-        
-        return CCLCellTypeBlankLast;
+        return CCLCellTypeBlank;
     }
     
     if ([dayLocator isWeekend])

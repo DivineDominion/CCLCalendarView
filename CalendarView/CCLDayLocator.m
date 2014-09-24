@@ -61,10 +61,4 @@
     return NO;
 }
 
-- (BOOL)nextDayIsOutsideDayRange
-{
-#warning stub -- should maybe be presentation concern only
-    return YES;
-}
-
 @end

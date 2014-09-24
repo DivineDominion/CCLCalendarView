@@ -65,7 +65,7 @@
 - (CCLRowAdjustment *)rowAdjustment_IncludingSelection
 {
     CCLRowAdjustment *rowAdjustment = [CCLRowAdjustment rowAdjustmentForDelegate:testProvider];
-    [rowAdjustment controllerDidSelectCell:selection];
+    [rowAdjustment controllerDidSelectDayCell:selection];
     
     return rowAdjustment;
 }

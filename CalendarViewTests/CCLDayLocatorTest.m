@@ -17,13 +17,14 @@
 
 @implementation CCLDayLocatorTest
 {
+    NSCalendar *referenceCalendar;
 }
 
 - (void)setUp
 {
     [super setUp];
     TestCalendarSupplier *testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    NSCalendar *referenceCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    referenceCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     referenceCalendar.firstWeekday = 2;
     testCalendarSupplier.testCalender = referenceCalendar;
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
@@ -54,7 +55,6 @@
     CCLDayLocator *locator = [self augustLocatorForWeek:0 weekday:2];
     
     XCTAssertTrue([locator isOutsideDayRange], @"first 4 days of the first week of August should be outside of August");
-    XCTAssertTrue([locator nextDayIsOutsideDayRange], @"first 4 days of the first week of August should be outside of August");
 }
 
 - (void)testFirstWeekOfAugust_Thursday_IsLastDayOutside
@@ -62,7 +62,6 @@
     CCLDayLocator *locator = [self augustLocatorForWeek:0 weekday:5];
     
     XCTAssertTrue([locator isOutsideDayRange], @"first 4 days of the first week of August should be outside of August");
-    XCTAssertFalse([locator nextDayIsOutsideDayRange], @"first 4 days of the first week of August should be outside of August");
 }
 
 - (void)testFirstWeekOfAugust_Friday_IsADay
@@ -87,7 +86,6 @@
     CCLDayLocator *locator = [self septemberLocatorForWeek:4 weekday:3];
     
     XCTAssertFalse([locator isOutsideDayRange], @"Tuesday of the last week of September should be the last day of September");
-    XCTAssertTrue([locator nextDayIsOutsideDayRange], @"the day after Tuesday 30th should be outside");
 }
 
 - (void)testLastWeekOfSeptember_Wednesday_IsOutside
@@ -95,6 +93,16 @@
     CCLDayLocator *locator = [self septemberLocatorForWeek:4 weekday:4];
     
     XCTAssertTrue([locator isOutsideDayRange], @"Wednesday of last week of September should be Oct 1st, outside");
-    XCTAssertTrue([locator nextDayIsOutsideDayRange], @"following day should be outside, too");
+}
+
+- (void)testLastWeekOfSeptember_Sunday_ReportsDifferentlyDependingOnStartOfWeek
+{
+    referenceCalendar.firstWeekday = 2; // Start Monday, so Sunday is Oct. 5th
+    CCLDayLocator *gerLocator = [self septemberLocatorForWeek:4 weekday:1];
+    XCTAssertTrue([gerLocator isOutsideDayRange], @"Sunday of last week of September should be Oct 5th, outside");
+    
+    referenceCalendar.firstWeekday = 1; // Start Monday, so Sunday is Oct. 5th
+    CCLDayLocator *usLocator = [self septemberLocatorForWeek:4 weekday:1];
+    XCTAssertFalse([usLocator isOutsideDayRange], @"Sunday of last week of September should be Sep. 28th, inside");
 }
 @end

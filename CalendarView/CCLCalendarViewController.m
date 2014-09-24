@@ -198,12 +198,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return nil;
     }
     
-    if (cellType == CCLCellTypeBlankLast)
-    {
-#warning stub
-        return nil;
-    }
-    
     if (cellType != CCLCellTypeWeekend && cellType != CCLCellTypeDay)
     {
         return nil;
@@ -291,17 +285,17 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (BOOL)hasSelectedDayCell
 {
-    return [self.selectionDelegate hasCellSelection];
+    return [self.selectionDelegate hasDayCellSelection];
 }
 
 - (NSUInteger)cellSelectionRow
 {
-    return [self.selectionDelegate cellSelectionRow];
+    return [self.selectionDelegate dayCellSelectionRow];
 }
 
 - (void)deselectDayCell
 {
-    [self.selectionDelegate controllerDidDeselectCell];
+    [self.selectionDelegate controllerDidDeselectDayCell];
 }
 
 - (void)removeDetailRow
@@ -319,7 +313,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSUInteger)row column:(NSUInteger)column
 {
     CCLDayCellSelection *selection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
-    [self.selectionDelegate controllerDidSelectCell:selection];
+    [self.selectionDelegate controllerDidSelectDayCell:selection];
     
     id objectValue = selectedView.objectValue;
     [self.eventHandler calendarViewController:self

@@ -29,10 +29,7 @@ typedef NS_ENUM(NSInteger, CCLCellType) {
     CCLCellTypeDayDetail,
     
     /// Used when a weekday in a week is out of the calendar bounds.
-    CCLCellTypeBlank,
-    /// Same as @p CCLCellTypeBlank, only this denotes it's coming before the first,
-    /// so you can draw it differently, i.e. with a right border.
-    CCLCellTypeBlankLast
+    CCLCellTypeBlank
 };
 
 #endif
