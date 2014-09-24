@@ -134,7 +134,7 @@
 {
     NSUInteger maximum = [self rowLimit];
     
-    if (row <= maximum)
+    if (row < maximum)
     {
         return;
     }
@@ -147,9 +147,10 @@
 {
     NSUInteger lastMonthRow = [self lastRow];
     NSUInteger lastWeekCount = self.lastMonthBounds;
-    NSUInteger maximumRows = lastMonthRow + lastWeekCount;
+    NSUInteger lastRow = lastMonthRow + lastWeekCount;
+    NSUInteger rowCount = lastRow + 1;
     
-    return maximumRows;
+    return rowCount;
 }
 
 - (NSUInteger)lastRow

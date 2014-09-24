@@ -21,5 +21,5 @@ typedef void (^CCLMonthEnumerationBlock)(NSDate *);
 - (NSDateComponents *)startDateCalendarComponents;
 - (NSDateComponents *)endDateCalendarComponents;
 - (NSUInteger)monthSpan;
-- (void)enumerateMonthsUsingBlock:(CCLMonthEnumerationBlock)blockName;
+- (void)enumerateMonthsUsingBlock:(CCLMonthEnumerationBlock)block;
 @end

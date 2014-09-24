@@ -63,7 +63,7 @@
     
     CCLDayLocator *locator = [translator dayLocatorForColumn:0 row:1];
     
-    XCTAssertEqual(locator.week, 0, @"should compute first week");
+    XCTAssertEqual(locator.week, 1, @"should compute first week");
     XCTAssertEqual(locator.weekday, 1, @"should compute first weekday");
 }
 
@@ -73,7 +73,7 @@
     
     CCLDayLocator *locator = [translator dayLocatorForColumn:0 row:1];
     
-    XCTAssertEqual(locator.week, 0, @"should compute first week");
+    XCTAssertEqual(locator.week, 1, @"should compute first week");
     XCTAssertEqual(locator.weekday, 3, @"should compute first weekday");
 }
 

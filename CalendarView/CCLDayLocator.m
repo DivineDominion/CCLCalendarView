@@ -8,6 +8,7 @@
 
 #import "CCLDayLocator.h"
 #import "CCLMonth.h"
+#import "CTWCalendarSupplier.h"
 
 @implementation CCLDayLocator
 + (instancetype)dayLocatorInMonth:(CCLMonth *)month week:(NSUInteger)week weekday:(NSUInteger)weekday
@@ -29,30 +30,130 @@
     return self;
 }
 
+- (NSCalendar *)calendar
+{
+    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+}
+
+
+#pragma mark -
+#pragma mark Weekday in Range of Month
+
 - (BOOL)isOutsideDayRange
 {
-    CCLMonth *month = self.month;
-    NSUInteger week = self.week;
-    NSUInteger weekday = self.weekday;
-    
-    if (week == 0)
+    if ([self isDuringFirstWeekOfMonth])
     {
-        return month.firstWeekday > weekday;
+        return [self isBeforeBeginningOfMonth];
     }
     
-    if (week == month.weekCount - 1)
+    if ([self isDuringLastWeekOfMonth])
     {
-        return weekday > month.lastWeekday;
+        return [self isAfterEndOfMonth];
     }
     
     return NO;
 }
 
+- (BOOL)isDuringFirstWeekOfMonth
+{
+    NSUInteger week = self.week;
+    
+    return week == 1;
+}
+
+- (BOOL)isBeforeBeginningOfMonth
+{
+    NSDate *day = [self day];
+    NSDate *firstDay = [self firstDayOfMonth];
+    
+    if ([firstDay isEqualToDate:day])
+    {
+        return NO;
+    }
+    
+    return [firstDay earlierDate:day] == day;
+}
+
+- (BOOL)isDuringLastWeekOfMonth
+{
+    CCLMonth *month = self.month;
+    NSUInteger week = self.week;
+    
+    return week == month.weekCount;
+}
+
+- (BOOL)isAfterEndOfMonth
+{
+    NSDate *day = [self day];
+    NSDate *lastDay = [self lastDayOfMonth];
+    
+    if ([lastDay isEqualToDate:day])
+    {
+        return NO;
+    }
+    
+    return [day laterDate:lastDay] == day;
+}
+
+- (NSDate *)day
+{
+    CCLMonth *month = self.month;
+    NSUInteger week = self.week;
+    NSUInteger weekday = self.weekday;
+    
+    return [self dateForWeek:week weekday:weekday month:month];
+}
+
+- (NSDate *)firstDayOfMonth
+{
+    CCLMonth *month = self.month;
+    NSUInteger week = 1;
+    NSUInteger weekday = month.firstWeekday;
+    
+    return [self dateForWeek:week weekday:weekday month:month];
+}
+
+- (NSDate *)lastDayOfMonth
+{
+    CCLMonth *month = self.month;
+    NSUInteger week = month.weekCount;
+    NSUInteger weekday = month.lastWeekday;
+    
+    return [self dateForWeek:week weekday:weekday month:month];
+}
+
+- (NSDate *)dateForWeek:(NSUInteger)week weekday:(NSUInteger)weekday month:(CCLMonth *)month
+{
+    NSCalendar *calendar = [self calendar];
+    
+    NSDateComponents *dayComponents = [[NSDateComponents alloc] init];
+    dayComponents.year = month.year;
+    dayComponents.month = month.month;
+    dayComponents.weekOfMonth = week;
+    dayComponents.weekday = weekday;
+    
+    return [calendar dateFromComponents:dayComponents];
+}
+
+
+#pragma mark Weekend
+
 - (BOOL)isWeekend
+{
+    NSCalendar *calendar = self.calendar;
+    
+    if (![[calendar calendarIdentifier] isEqualTo:NSGregorianCalendar])
+    {
+        return NO;
+    }
+    
+    return [self isWeekendInGregorianCalendar];
+}
+
+- (BOOL)isWeekendInGregorianCalendar
 {
     NSUInteger weekday = self.weekday;
     
-#warning assumes gregorian calendar only
     if (weekday == 1 || weekday == 7)
     {
         return YES;

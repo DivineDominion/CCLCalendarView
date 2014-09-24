@@ -87,7 +87,7 @@
     return monthSpan;
 }
 
-- (void)enumerateMonthsUsingBlock:(CCLMonthEnumerationBlock)blockName
+- (void)enumerateMonthsUsingBlock:(CCLMonthEnumerationBlock)block
 {
     NSDate *startDate = [self normalizedStartDate];
     NSDate *endDate = [self normalizedEndDate];
@@ -100,7 +100,7 @@
          [nextDate earlierDate:endDate] == nextDate;
          nextDate = [calendar dateByAddingComponents:monthIncrement toDate:nextDate options:0])
     {
-        blockName(nextDate);
+        block(nextDate);
     }
 }
 

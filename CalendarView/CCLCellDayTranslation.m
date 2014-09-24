@@ -60,7 +60,7 @@
     CCLMonth *month = [calendarData monthForRow:row];
     NSUInteger monthTitleRow = [calendarData.titleRows previousMonthRowOfRow:row];
     NSUInteger firstWeekRow = monthTitleRow + 1;
-    NSUInteger week = row - firstWeekRow;
+    NSUInteger week = row - firstWeekRow + 1; // weeks are 1-based
     NSUInteger weekday = [self weekdayForColumn:column];
     CCLDayLocator *dayLocator = [CCLDayLocator dayLocatorInMonth:month week:week weekday:weekday];
     
