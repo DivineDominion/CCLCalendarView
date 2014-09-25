@@ -9,6 +9,16 @@
 #import "TestCalendarSupplier.h"
 
 @implementation TestCalendarSupplier
++ (instancetype)unifiedGregorianCalendarSupplier
+{
+    TestCalendarSupplier *supplier = [[TestCalendarSupplier alloc] init];
+    NSCalendar *unifiedCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    unifiedCalendar.firstWeekday = 2; // Start on Monday to unify week calculation expectations
+    supplier.testCalender = unifiedCalendar;
+    
+    return supplier;
+}
+
 - (NSCalendar *)autoupdatingCalendar
 {
     if (self.testCalender)

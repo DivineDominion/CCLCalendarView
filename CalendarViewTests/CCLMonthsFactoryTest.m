@@ -20,23 +20,21 @@
 @implementation CCLMonthsFactoryTest
 {
     CCLMonthsFactory *factory;
-    TestCalendarSupplier *testCalendarSupplier;
 }
 
 - (void)setUp
 {
     [super setUp];
-    factory = [CCLMonthsFactory monthsFactory];
     
-    testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
+    
+    factory = [CCLMonthsFactory monthsFactory];
 }
 
 - (void)tearDown
 {
     [CTWCalendarSupplier resetSharedInstance];
-    testCalendarSupplier = nil;
     factory = nil;
     [super tearDown];
 }

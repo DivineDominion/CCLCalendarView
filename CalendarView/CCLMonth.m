@@ -80,10 +80,15 @@
 - (NSUInteger)firstWeekday
 {
     NSCalendar *calendar = [self calendar];
-    NSDate *firstOfMonth = [self firstOfMonth:self.date];
+    NSDate *firstOfMonth = [self firstOfMonth];
     NSInteger component = [calendar component:NSWeekdayCalendarUnit fromDate:firstOfMonth];
     
     return component;
+}
+
+- (NSDate *)firstOfMonth
+{
+    return [self firstOfMonth:self.date];
 }
 
 - (NSDate *)firstOfMonth:(NSDate *)date
@@ -100,10 +105,15 @@
 - (NSUInteger)lastWeekday
 {
     NSCalendar *calendar = [self calendar];
-    NSDate *lastOfMonth = [self lastOfMonth:self.date];
+    NSDate *lastOfMonth = [self lastOfMonth];
     NSInteger component = [calendar component:NSWeekdayCalendarUnit fromDate:lastOfMonth];
     
     return component;
+}
+
+- (NSDate *)lastOfMonth
+{
+    return [self lastOfMonth:self.date];
 }
 
 - (NSDate *)lastOfMonth:(NSDate *)date

@@ -15,7 +15,9 @@
 - (instancetype)initWithDate:(NSDate *)date;
 
 - (NSString *)name;
+- (NSDate *)firstOfMonth;
 - (NSUInteger)firstWeekday;
+- (NSDate *)lastOfMonth;
 - (NSUInteger)lastWeekday;
 - (NSUInteger)year;
 - (NSUInteger)month;

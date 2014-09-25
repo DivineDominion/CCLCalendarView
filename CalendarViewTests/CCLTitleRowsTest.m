@@ -19,24 +19,17 @@
 @end
 
 @implementation CCLTitleRowsTest
-{
-    TestCalendarSupplier *testCalendarSupplier;
-}
 
 - (void)setUp
 {
     [super setUp];
-    testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    // Unify test results across platforms
-    testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    [testCalendarSupplier.testCalender setFirstWeekday:2];
+    TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 
 - (void)tearDown
 {
     [CTWCalendarSupplier resetSharedInstance];
-    testCalendarSupplier = nil;
     [super tearDown];
 }
 

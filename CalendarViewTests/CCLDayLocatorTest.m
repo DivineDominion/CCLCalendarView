@@ -23,10 +23,9 @@
 - (void)setUp
 {
     [super setUp];
-    TestCalendarSupplier *testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    referenceCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    referenceCalendar.firstWeekday = 2;
-    testCalendarSupplier.testCalender = referenceCalendar;
+    
+    TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
+    referenceCalendar = testCalendarSupplier.testCalender;
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 
@@ -47,6 +46,13 @@
     CCLMonth *september = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-22 12:12:00 +0000"]];
     return [CCLDayLocator dayLocatorInMonth:september week:week weekday:weekday];
 }
+
+- (CCLDayLocator *)decemberLocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
+{
+    CCLMonth *december = [CCLMonth monthFromDate:[NSDate dateWithString:@"2012-12-12 12:12:00 +0000"]];
+    return [CCLDayLocator dayLocatorInMonth:december week:week weekday:weekday];
+}
+
 
 #pragma mark First Week
 
@@ -79,6 +85,7 @@
     XCTAssertTrue([locator isWeekend], @"Saturday should be on a weekend");
 }
 
+
 #pragma mark Last Week
 
 - (void)testLastWeekOfSeptember_Tuesday_IsADay
@@ -105,4 +112,29 @@
     CCLDayLocator *usLocator = [self septemberLocatorForWeek:5 weekday:1];
     XCTAssertFalse([usLocator isOutsideDayRange], @"Sunday of last week of September should be Sep. 28th, inside");
 }
+
+
+#pragma mark Last Week of the Year, Wrapping Weeks
+
+- (void)testLastWeekOfDecember2012_Monday_IsInside
+{
+    CCLDayLocator *locator = [self decemberLocatorForWeek:6 weekday:2];
+    
+    XCTAssertFalse([locator isOutsideDayRange], @"Monday of the last week of December 2012 should be the last day of December");
+}
+
+- (void)testLastWeekOfDecember2012_Tuesday_IsOutside
+{
+    CCLDayLocator *locator = [self decemberLocatorForWeek:6 weekday:3];
+    
+    // Dec 1st is on week of year 48 -- reports 49 instead
+    // When week of year count > 52, wrap year
+    XCTAssertTrue([locator isOutsideDayRange], @"Tuesday of the last week of December 2012 should be Jan 1st 2013");
+    NSDateComponents *components = [locator dateComponents];
+    XCTAssertEqual(components.year, 2013, @"should be in 2013");
+    XCTAssertEqual(components.month, 1, @"should be Jan");
+    XCTAssertEqual(components.day, 1, @"should be the 1st");
+}
+
+
 @end

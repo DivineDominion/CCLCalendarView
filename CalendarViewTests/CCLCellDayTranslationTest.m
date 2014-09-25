@@ -21,45 +21,50 @@
 
 @implementation CCLCellDayTranslationTest
 {
-    CCLCellDayTranslation *translator;
-    CCLCalendarData *data;
-    
     NSCalendar *referenceCalendar;
 }
 
 - (void)setUp
 {
     [super setUp];
-    
-    CCLMonth *aug2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-08-02 12:12:00 +0000"]];
-    CCLMonth *sep2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-13 12:12:00 +0000"]];
-    CCLMonths *months = [CCLMonths monthsFromArray:@[aug2014, sep2014]];
-    data = [CCLCalendarData calendarDataForMonths:months];
-    
-    translator = [CCLCellDayTranslation cellDayTranslationFor:data];
-    
-    TestCalendarSupplier *testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    referenceCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    testCalendarSupplier.testCalender = referenceCalendar;
+
+    TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
+    referenceCalendar = testCalendarSupplier.testCalender;
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 
 - (void)tearDown
 {
     [CTWCalendarSupplier resetSharedInstance];
-    data = nil;
-    translator = nil;
+    referenceCalendar = nil;
     [super tearDown];
+}
+
+- (CCLCellDayTranslation *)cellDayTranslation
+{
+    CCLCalendarData *data = [self calendarData];
+    return [CCLCellDayTranslation cellDayTranslationFor:data];
+}
+
+- (CCLCalendarData *)calendarData
+{
+    // Generate data fresh to take calendar settings into account upon Month initialization
+    CCLMonth *aug2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-08-02 12:12:00 +0000"]];
+    CCLMonth *sep2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-13 12:12:00 +0000"]];
+    CCLMonths *months = [CCLMonths monthsFromArray:@[aug2014, sep2014]];
+    return [CCLCalendarData calendarDataForMonths:months];
 }
 
 - (void)testDayLocator_ForFirstMonthRow_Throws
 {
+    CCLCellDayTranslation *translator = [self cellDayTranslation];
     XCTAssertThrows([translator dayLocatorForColumn:3 row:0], @"should throw for August title row");
 }
 
 - (void)testDayLocator_ForFirstWeek_FirstColumn_WeekStartingSunday_ReturnsSunday
 {
     referenceCalendar.firstWeekday = 1; // Starts on Sunday
+    CCLCellDayTranslation *translator = [self cellDayTranslation];
     
     CCLDayLocator *locator = [translator dayLocatorForColumn:0 row:1];
     
@@ -69,7 +74,8 @@
 
 - (void)testDayLocator_ForFirstWeek_FirstColumn_WeekStartingTuesday_ReturnsTuesday
 {
-    referenceCalendar.firstWeekday = 3; // Starts on Sunday
+    referenceCalendar.firstWeekday = 3; // Starts on Tuesday
+    CCLCellDayTranslation *translator = [self cellDayTranslation];
     
     CCLDayLocator *locator = [translator dayLocatorForColumn:0 row:1];
     
@@ -79,6 +85,7 @@
 
 - (void)testDayLocator_ForSecondMonthRow_Throws
 {
+    CCLCellDayTranslation *translator = [self cellDayTranslation];
     XCTAssertThrows([translator dayLocatorForColumn:3 row:6], @"should throw for August title row");
 }
 @end

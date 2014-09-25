@@ -22,8 +22,7 @@
 - (void)setUp
 {
     [super setUp];
-    testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 

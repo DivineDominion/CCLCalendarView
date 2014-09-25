@@ -18,7 +18,6 @@
 
 @implementation CCLCalendarDataTest
 {
-    TestCalendarSupplier *testCalendarSupplier;
     CCLCalendarData *data;
 }
 
@@ -26,10 +25,8 @@
 {
     [super setUp];
     
-    testCalendarSupplier = [[TestCalendarSupplier alloc] init];
-    // Unify test results across platforms
-    testCalendarSupplier.testCalender = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    [testCalendarSupplier.testCalender setFirstWeekday:2];    [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
+    TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
+    [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
     
     CCLMonth *aug2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-08-02 12:12:00 +0000"]];
     CCLMonth *sep2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-13 12:12:00 +0000"]];
@@ -40,7 +37,6 @@
 - (void)tearDown
 {
     [CTWCalendarSupplier resetSharedInstance];
-    testCalendarSupplier = nil;
     data = nil;
     [super tearDown];
 }

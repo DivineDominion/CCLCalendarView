@@ -106,30 +106,24 @@
 
 - (NSDate *)firstDayOfMonth
 {
-    CCLMonth *month = self.month;
-    NSUInteger week = 1;
-    NSUInteger weekday = month.firstWeekday;
-    
-    return [self dateForWeek:week weekday:weekday month:month];
+    return self.month.firstOfMonth;
 }
 
 - (NSDate *)lastDayOfMonth
 {
-    CCLMonth *month = self.month;
-    NSUInteger week = month.weekCount;
-    NSUInteger weekday = month.lastWeekday;
-    
-    return [self dateForWeek:week weekday:weekday month:month];
+    return self.month.lastOfMonth;
 }
 
 - (NSDate *)dateForWeek:(NSUInteger)week weekday:(NSUInteger)weekday month:(CCLMonth *)month
 {
     NSCalendar *calendar = [self calendar];
-    
-    NSDateComponents *dayComponents = [[NSDateComponents alloc] init];
-    dayComponents.year = month.year;
-    dayComponents.month = month.month;
-    dayComponents.weekOfMonth = week;
+    NSDate *firstOfMonth = month.firstOfMonth;
+
+    NSDateComponents *weeksToAdd = [[NSDateComponents alloc] init];
+    weeksToAdd.week = week - 1;
+
+    NSDate *date = [calendar dateByAddingComponents:weeksToAdd toDate:firstOfMonth options:0];
+    NSDateComponents *dayComponents = [calendar components:NSYearForWeekOfYearCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekdayCalendarUnit fromDate:date];
     dayComponents.weekday = weekday;
     
     return [calendar dateFromComponents:dayComponents];

@@ -12,4 +12,6 @@
 @interface TestCalendarSupplier : CTWCalendarSupplier
 @property (strong) NSCalendar *testCalender;
 @property (strong) NSLocale *testLocale;
+
++ (instancetype)unifiedGregorianCalendarSupplier;
 @end
