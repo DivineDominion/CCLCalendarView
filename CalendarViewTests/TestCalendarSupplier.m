@@ -14,16 +14,16 @@
     TestCalendarSupplier *supplier = [[TestCalendarSupplier alloc] init];
     NSCalendar *unifiedCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     unifiedCalendar.firstWeekday = 2; // Start on Monday to unify week calculation expectations
-    supplier.testCalender = unifiedCalendar;
+    supplier.testCalendar = unifiedCalendar;
     
     return supplier;
 }
 
 - (NSCalendar *)autoupdatingCalendar
 {
-    if (self.testCalender)
+    if (self.testCalendar)
     {
-        return self.testCalender;
+        return self.testCalendar;
     }
     
     return [super autoupdatingCalendar];

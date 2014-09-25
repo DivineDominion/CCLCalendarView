@@ -22,5 +22,5 @@
 - (NSUInteger)year;
 - (NSUInteger)month;
 - (NSUInteger)weekCount;
-- (NSUInteger)firstCalenderWeek;
+- (NSUInteger)firstCalendarWeek;
 @end

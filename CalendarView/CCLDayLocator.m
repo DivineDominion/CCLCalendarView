@@ -118,7 +118,7 @@
 {
     NSCalendar *calendar = [self calendar];
     NSUInteger weeksToAdd = week - 1;
-    NSUInteger weekOfYear = month.firstCalenderWeek + weeksToAdd;
+    NSUInteger weekOfYear = month.firstCalendarWeek + weeksToAdd;
     
     NSDateComponents *dayComponents = [[NSDateComponents alloc] init];
     dayComponents.yearForWeekOfYear = month.year;
@@ -133,14 +133,18 @@
 
 - (BOOL)isWeekend
 {
-    NSCalendar *calendar = self.calendar;
-    
-    if (![[calendar calendarIdentifier] isEqualTo:NSGregorianCalendar])
+    if ([self calendarDoesNotSupportWeekends])
     {
         return NO;
     }
     
     return [self isWeekendInGregorianCalendar];
+}
+
+- (BOOL)calendarDoesNotSupportWeekends
+{
+    NSCalendar *calendar = [self calendar];
+    return ![[calendar calendarIdentifier] isEqualTo:NSGregorianCalendar];
 }
 
 - (BOOL)isWeekendInGregorianCalendar

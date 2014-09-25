@@ -82,7 +82,7 @@
 
 - (void)testNumberOfWeeks_OfJun2014InGermany_Returns6
 {
-    [testCalendarSupplier.testCalender setFirstWeekday:2]; // Start on Monday so it gets longer
+    [testCalendarSupplier.testCalendar setFirstWeekday:2]; // Start on Monday so it gets longer
     NSDate *date = [NSDate dateWithString:@"2014-06-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
@@ -93,7 +93,7 @@
 
 - (void)testNumberOfWeeks_OfFeb2010_Returns4
 {
-    [testCalendarSupplier.testCalender setFirstWeekday:2]; // Start on Monday so Feb 2014 is more compact
+    [testCalendarSupplier.testCalendar setFirstWeekday:2]; // Start on Monday so Feb 2014 is more compact
     NSDate *date = [NSDate dateWithString:@"2010-02-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
@@ -107,7 +107,7 @@
     NSDate *date = [NSDate dateWithString:@"2014-08-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
-    NSUInteger week = [month firstCalenderWeek];
+    NSUInteger week = [month firstCalendarWeek];
     
     XCTAssertEqual(week, 31, @"Aug. 2014 should start in the #31 week of the year");
 }

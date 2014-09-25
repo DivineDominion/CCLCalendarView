@@ -136,7 +136,7 @@
     return weekCount;
 }
 
-- (NSUInteger)firstCalenderWeek
+- (NSUInteger)firstCalendarWeek
 {
     NSCalendar *calendar = [self calendar];
     NSDate *firstOfMonth = [self firstOfMonth:self.date];

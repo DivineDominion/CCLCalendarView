@@ -29,7 +29,7 @@
     [super setUp];
 
     TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
-    referenceCalendar = testCalendarSupplier.testCalender;
+    referenceCalendar = testCalendarSupplier.testCalendar;
     [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 

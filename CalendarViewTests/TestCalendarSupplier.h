@@ -10,7 +10,7 @@
 #import "CTWCalendarSupplier.h"
 
 @interface TestCalendarSupplier : CTWCalendarSupplier
-@property (strong) NSCalendar *testCalender;
+@property (strong) NSCalendar *testCalendar;
 @property (strong) NSLocale *testLocale;
 
 + (instancetype)unifiedGregorianCalendarSupplier;
