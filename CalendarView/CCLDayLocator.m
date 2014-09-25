@@ -117,13 +117,12 @@
 - (NSDate *)dateForWeek:(NSUInteger)week weekday:(NSUInteger)weekday month:(CCLMonth *)month
 {
     NSCalendar *calendar = [self calendar];
-    NSDate *firstOfMonth = month.firstOfMonth;
-
-    NSDateComponents *weeksToAdd = [[NSDateComponents alloc] init];
-    weeksToAdd.week = week - 1;
-
-    NSDate *date = [calendar dateByAddingComponents:weeksToAdd toDate:firstOfMonth options:0];
-    NSDateComponents *dayComponents = [calendar components:NSYearForWeekOfYearCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekdayCalendarUnit fromDate:date];
+    NSUInteger weeksToAdd = week - 1;
+    NSUInteger weekOfYear = month.firstCalenderWeek + weeksToAdd;
+    
+    NSDateComponents *dayComponents = [[NSDateComponents alloc] init];
+    dayComponents.yearForWeekOfYear = month.year;
+    dayComponents.weekOfYear = weekOfYear;
     dayComponents.weekday = weekday;
     
     return [calendar dateFromComponents:dayComponents];
