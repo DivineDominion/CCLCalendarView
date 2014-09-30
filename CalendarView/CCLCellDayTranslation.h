@@ -17,5 +17,6 @@
 + (instancetype)cellDayTranslationFor:(CCLCalendarData *)calendarData;
 - (instancetype)initWithCalendarData:(CCLCalendarData *)calendarData;
 
+- (CCLDayLocator *)weekLocatorForRow:(NSUInteger)row;
 - (CCLDayLocator *)dayLocatorForColumn:(NSUInteger)column row:(NSUInteger)row;
 @end

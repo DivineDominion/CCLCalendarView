@@ -124,33 +124,35 @@
     return CCLCellTypeDay;
 }
 
-- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
+- (id)objectValueForColumn:(NSInteger)column row:(NSInteger)row
 {
-    NSInteger lastColumnIndex = tableView.tableColumns.count - 1;
-    BOOL isLastColumn = (column == lastColumnIndex);
     id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
     CCLCellDayTranslation *translation = self.cellDayTranslation;
     CCLDayLocator *dayLocator = [translation dayLocatorForColumn:column row:row];
     NSDateComponents *dateComponents = [dayLocator dateComponents];
     NSUInteger year = dateComponents.year;
-    
-    if (isLastColumn)
-    {
-        if (![objectProvider respondsToSelector:@selector(objectValueForYear:week:)])
-        {
-            return nil;
-        }
-        
-        NSUInteger week = dateComponents.weekOfYear;
-        return [objectProvider objectValueForYear:year week:week];
-    }
-    
     NSUInteger month = dateComponents.month;
     NSUInteger day = dateComponents.day;
     
     return [objectProvider objectValueForYear:year month:month day:day];
 }
 
+- (id)objectValueForRow:(NSInteger)row
+{
+    id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
+    if (![objectProvider respondsToSelector:@selector(objectValueForYear:week:)])
+    {
+        return nil;
+    }
+
+    CCLCellDayTranslation *translation = self.cellDayTranslation;
+    CCLDayLocator *dayLocator = [translation weekLocatorForRow:row];
+    NSDateComponents *dateComponents = [dayLocator dateComponents];
+    NSUInteger year = dateComponents.yearForWeekOfYear;
+    NSUInteger week = dateComponents.weekOfYear;
+    return [objectProvider objectValueForYear:year week:week];
+    
+}
 - (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
 {
     CCLMonth *month = [self.calendarData monthForRow:row];

@@ -31,11 +31,18 @@
     return CCLRowViewTypeUndefined;
 }
 
-- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
+- (id)objectValueForColumn:(NSInteger)column row:(NSInteger)row
 {
     self.lastRowIndex = row;
     return nil;
 }
+
+- (id)objectValueForRow:(NSInteger)row
+{
+    self.lastRowIndex = row;
+    return nil;
+}
+
 
 - (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
 {
@@ -195,17 +202,17 @@
 }
 
 
-#pragma mark Wrapping Object Value
+#pragma mark Wrapping Object Value For Day
 
 - (void)testObjectValue_WithSelection_BeforeSelectedRow_ForwardsRow
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     
-    [adjustment objectValueForTableView:nil column:4 row:0];
+    [adjustment objectValueForColumn:4 row:0];
     XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index before selected row");
     
     NSUInteger row = selection.row - 1;
-    [adjustment objectValueForTableView:nil column:14 row:row];
+    [adjustment objectValueForColumn:14 row:row];
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
 }
 
@@ -214,7 +221,7 @@
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row;
     
-    [adjustment objectValueForTableView:nil column:8 row:row];
+    [adjustment objectValueForColumn:8 row:row];
     XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
 }
 
@@ -223,7 +230,7 @@
     CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
     NSUInteger row = selection.row + 10;
     
-    [adjustment objectValueForTableView:nil column:9 row:row];
+    [adjustment objectValueForColumn:9 row:row];
     XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index after selected row");
 }
 
@@ -231,13 +238,60 @@
 {
     CCLRowAdjustment *adjustment = [self rowAdjustment_NoSelection];
     
-    [adjustment objectValueForTableView:nil column:4 row:0];
+    [adjustment objectValueForColumn:4 row:0];
     XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index");
     
-    [adjustment objectValueForTableView:nil column:22 row:10];
+    [adjustment objectValueForColumn:22 row:10];
     XCTAssertEqual(testProvider.lastRowIndex, 10, @"shouldn't modify index");
     
-    [adjustment objectValueForTableView:nil column:7 row:100];
+    [adjustment objectValueForColumn:7 row:100];
+    XCTAssertEqual(testProvider.lastRowIndex, 100, @"shouldn't modify index");
+}
+
+
+#pragma mark Wrapping Object Value For Week
+
+- (void)testObjectValueRow_WithSelection_BeforeSelectedRow_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    
+    [adjustment objectValueForRow:0];
+    XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index before selected row");
+    
+    NSUInteger row = selection.row - 1;
+    [adjustment objectValueForRow:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index before selected row");
+}
+
+- (void)testObjectValueRow_WithSelection_AtSelectedRow_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row;
+    
+    [adjustment objectValueForRow:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row, @"shouldn't modify index at the selected row");
+}
+
+- (void)testObjectValueRow_WithSelection_AfterSelectedRow_AdjustsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_IncludingSelection];
+    NSUInteger row = selection.row + 10;
+    
+    [adjustment objectValueForRow:row];
+    XCTAssertEqual(testProvider.lastRowIndex, row - 1, @"modify index after selected row");
+}
+
+- (void)testObjectValueRow_WithoutAnySelection_ForwardsRow
+{
+    CCLRowAdjustment *adjustment = [self rowAdjustment_NoSelection];
+    
+    [adjustment objectValueForRow:0];
+    XCTAssertEqual(testProvider.lastRowIndex, 0, @"shouldn't modify index");
+    
+    [adjustment objectValueForRow:10];
+    XCTAssertEqual(testProvider.lastRowIndex, 10, @"shouldn't modify index");
+    
+    [adjustment objectValueForRow:100];
     XCTAssertEqual(testProvider.lastRowIndex, 100, @"shouldn't modify index");
 }
 

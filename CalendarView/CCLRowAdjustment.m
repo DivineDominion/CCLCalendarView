@@ -100,7 +100,7 @@
     return [self.delegate cellTypeForColumn:column row:row];;
 }
 
-- (id)objectValueForTableView:(NSTableView *)tableView column:(NSInteger)column row:(NSInteger)row
+- (id)objectValueForColumn:(NSInteger)column row:(NSInteger)row
 {
     if ([self isDayDetailRow:row])
     {
@@ -108,7 +108,18 @@
     }
     
     row = [self rowAdjustedToSelectionWithRow:row];
-    return [self.delegate objectValueForTableView:tableView column:column row:row];
+    return [self.delegate objectValueForColumn:column row:row];
+}
+
+- (id)objectValueForRow:(NSInteger)row
+{
+    if ([self isDayDetailRow:row])
+    {
+        return nil;
+    }
+    
+    row = [self rowAdjustedToSelectionWithRow:row];
+    return [self.delegate objectValueForRow:row];
 }
 
 - (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row

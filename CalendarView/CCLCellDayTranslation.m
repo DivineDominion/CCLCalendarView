@@ -46,6 +46,7 @@
 
 
 #pragma mark -
+#pragma mark Day Locator
 
 - (CCLDayLocator *)dayLocatorForColumn:(NSUInteger)column row:(NSUInteger)row
 {
@@ -84,5 +85,15 @@
     NSUInteger weekdayRollover = firstWeekday - 1;
     
     return weekdayRollover;
+}
+
+
+#pragma mark Week Locator
+
+- (CCLDayLocator *)weekLocatorForRow:(NSUInteger)row
+{
+#warning stub
+    NSUInteger column = 0;
+    return [self dayLocatorForColumn:column row:row];
 }
 @end

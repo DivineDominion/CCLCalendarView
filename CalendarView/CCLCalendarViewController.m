@@ -13,6 +13,7 @@
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLCalendarViewModel.h"
 #import "CCLRowAdjustment.h"
+#import "CTWCalendarSupplier.h"
 
 // Components
 #import "CCLDayCellSelection.h"
@@ -25,7 +26,12 @@
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
 
 @interface CCLCalendarViewController ()
+{
+    dispatch_once_t initializationToken;
+}
+
 @property (nonatomic, strong, readwrite) id<CCLProvidesTableData> tableDataProvider;
+@property (assign, readwrite) BOOL showsAllWeekColumn;
 @end
 
 @implementation CCLCalendarViewController
@@ -45,7 +51,52 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     _objectProvider = objectProvider;
     
+    [self updateAllWeekColumn];
     [self updateTableModelTranslator];
+}
+
+- (void)updateAllWeekColumn
+{
+    id<CCLProvidesCalendarObjects> objectProvider = self.objectProvider;
+    NSTableView *tableView = self.calendarTableView;
+    
+    if (tableView == nil)
+    {
+        return;
+    }
+    
+    if (objectProvider == nil || ![objectProvider respondsToSelector:@selector(objectValueForYear:week:)])
+    {
+        [self hideWeekColumnInTableView:tableView];
+        return;
+    }
+    
+    [self showWeekColumnInTableView:tableView];
+}
+
+- (void)hideWeekColumnInTableView:(NSTableView *)tableView;
+{
+    NSTableColumn *allWeekColumn = [tableView tableColumnWithIdentifier:@"AllWeekColumn"];
+    if (allWeekColumn == nil)
+    {
+        return;
+    }
+    
+    [tableView removeTableColumn:allWeekColumn];
+    self.showsAllWeekColumn = NO;
+}
+
+- (void)showWeekColumnInTableView:(NSTableView *)tableView;
+{
+    NSTableColumn *existingAllWeekColumn = [tableView tableColumnWithIdentifier:@"AllWeekColumn"];
+    if (existingAllWeekColumn != nil)
+    {
+        return;
+    }
+    
+    NSTableColumn *allWeekColumn = [[NSTableColumn alloc] initWithIdentifier:@"AllWeekColumn"];
+    [tableView addTableColumn:allWeekColumn];
+    self.showsAllWeekColumn = YES;
 }
 
 - (void)updateTableModelTranslator
@@ -69,7 +120,44 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)awakeFromNib
 {
-    [self.calendarTableView setIntercellSpacing:NSMakeSize(0, 0)];
+    dispatch_once(&initializationToken, ^{
+        NSTableView *tableView = self.calendarTableView;
+        [tableView setIntercellSpacing:NSMakeSize(0, 0)];
+        
+        [self addWeekdayColumns];
+        [self updateAllWeekColumn];
+    });
+}
+
+- (void)addWeekdayColumns
+{
+    NSUInteger weekdays = [self weekdays];
+    NSTableView *tableView = self.calendarTableView;
+    
+    [tableView removeTableColumn:[tableView tableColumnWithIdentifier:@"Templates"]];
+    
+    for (int i = 0; i < weekdays; i++)
+    {
+        [self addWeekdayColumnInTableView:tableView];
+    }
+}
+
+- (void)addWeekdayColumnInTableView:(NSTableView *)tableView
+{
+    NSTableColumn *tableColumn = [[NSTableColumn alloc] initWithIdentifier:@"WeekdayColumn"];
+    [tableView addTableColumn:tableColumn];
+}
+
+- (NSUInteger)weekdays
+{
+    NSCalendar *calendar = [self calendar];
+    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSWeekdayCalendarUnit];
+    return weekdayRange.length;
+}
+
+- (NSCalendar *)calendar
+{
+    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -156,20 +244,40 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 #pragma mark Cell Views
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
-    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
-    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:rowIndex];
     
-    if (isLastColumn && rowViewType != CCLRowViewTypeDayDetail)
+    if (self.showsAllWeekColumn && rowViewType != CCLRowViewTypeDayDetail)
     {
-        NSTableRowView *cell = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
-        cell.backgroundColor = [NSColor grayColor];
-        return cell;
+        BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+        if (isLastColumn)
+        {
+            [self.tableDataProvider objectValueForRow:rowIndex];
+        }
     }
+    
+    return [self.tableDataProvider objectValueForColumn:columnIndex row:rowIndex];
+}
 
-    CCLCellType cellType = [self.tableDataProvider cellTypeForColumn:columnIndex row:row];
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
+{
+    NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:rowIndex];
+    
+    if (self.showsAllWeekColumn && rowViewType != CCLRowViewTypeDayDetail)
+    {
+        BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
+        if (isLastColumn)
+        {
+            NSTableRowView *cell = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
+            cell.backgroundColor = [NSColor grayColor];
+            return cell;
+        }
+    }
+    
+    CCLCellType cellType = [self.tableDataProvider cellTypeForColumn:columnIndex row:rowIndex];
     NSView *cellView = [self tableView:tableView viewForCellType:cellType];
     
     return cellView;
@@ -195,13 +303,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     return view;
 }
-
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
-{
-    NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
-    return [self.tableDataProvider objectValueForTableView:self.calendarTableView column:columnIndex row:rowIndex];
-}
-
 
 #pragma mark Table Change Callbacks
 

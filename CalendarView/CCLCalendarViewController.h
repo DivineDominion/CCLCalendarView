@@ -28,6 +28,7 @@ extern NSString * const kCCLCalendarViewControllerNibName;
 
 @property (weak) IBOutlet NSTableView *calendarTableView;
 @property (weak) CCLDayDetailRowView *dayDetailRowView;
+@property (assign, readonly) BOOL showsAllWeekColumn;
 
 + (instancetype)calendarViewController;
 @end
