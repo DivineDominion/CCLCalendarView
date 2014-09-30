@@ -18,6 +18,9 @@
 
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
+    NSParameterAssert(objectProvider);
+    NSParameterAssert(selectionHandler);
+    
     self = [super init];
     
     if (self)

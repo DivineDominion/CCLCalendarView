@@ -425,6 +425,17 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [self.selectionDelegate controllerDidSelectDayCell:selection];
     
     id objectValue = selectedView.objectValue;
+    [self notifyEventHandlerOfObjectSelection:objectValue];
+}
+
+- (void)notifyEventHandlerOfObjectSelection:(id)objectValue
+{
+    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
+    if (![eventHandler respondsToSelector:@selector(calendarViewController:didSelectCellWithObjectValue:)])
+    {
+        return;
+    }
+    
     [self.eventHandler calendarViewController:self
                  didSelectCellWithObjectValue:objectValue];
 }
