@@ -17,7 +17,7 @@
 #import "CCLCellDayTranslation.h"
 #import "CCLDayLocator.h"
 
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 @interface CCLCalendarViewModel ()
 @end
@@ -83,7 +83,7 @@
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 #pragma mark -

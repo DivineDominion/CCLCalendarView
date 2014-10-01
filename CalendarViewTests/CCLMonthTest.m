@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "CCLMonth.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 #import "TestCalendarSupplier.h"
 
 @interface CCLMonthTest : XCTestCase
@@ -23,12 +23,12 @@
 {
     [super setUp];
     testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
-    [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
+    [CTKCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 
 - (void)tearDown
 {
-    [CTWCalendarSupplier resetSharedInstance];
+    [CTKCalendarSupplier resetSharedInstance];
     testCalendarSupplier = nil;
     [super tearDown];
 }

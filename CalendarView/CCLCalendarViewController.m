@@ -13,7 +13,7 @@
 #import "CCLProvidesCalendarObjects.h"
 #import "CCLCalendarViewModel.h"
 #import "CCLRowAdjustment.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 // Components
 #import "CCLDayCellSelection.h"
@@ -157,7 +157,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView

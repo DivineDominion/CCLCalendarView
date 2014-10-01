@@ -27,14 +27,14 @@
     [super setUp];
     
     TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
-    [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
+    [CTKCalendarSupplier setSharedInstance:testCalendarSupplier];
     
     factory = [CCLMonthsFactory monthsFactory];
 }
 
 - (void)tearDown
 {
-    [CTWCalendarSupplier resetSharedInstance];
+    [CTKCalendarSupplier resetSharedInstance];
     factory = nil;
     [super tearDown];
 }

@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
-@interface TestCalendarSupplier : CTWCalendarSupplier
+@interface TestCalendarSupplier : CTKCalendarSupplier
 @property (strong) NSCalendar *testCalendar;
 @property (strong) NSLocale *testLocale;
 

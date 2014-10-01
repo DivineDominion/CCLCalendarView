@@ -8,7 +8,7 @@
 
 #import "CCLMonths.h"
 
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 #import "CCLMonth.h"
 
@@ -59,7 +59,7 @@
 
 + (void)guardMonthConsecutivity:(NSArray *)array
 {
-    NSCalendar *calendar = [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    NSCalendar *calendar = [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
     NSDateComponents *monthInterval = [[NSDateComponents alloc] init];
     monthInterval.month = 1;
     

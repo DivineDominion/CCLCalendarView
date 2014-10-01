@@ -7,7 +7,7 @@
 //
 
 #import "CCLMonth.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 @implementation CCLMonth
 
@@ -37,12 +37,12 @@
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 - (NSLocale *)locale
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingLocale];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingLocale];
 }
 
 #pragma mark -

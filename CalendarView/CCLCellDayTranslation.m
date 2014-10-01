@@ -9,7 +9,7 @@
 #import "CCLCellDayTranslation.h"
 #import "CCLCalendarData.h"
 #import "CCLDayLocator.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 #import "CCLTitleRows.h"
 
@@ -41,7 +41,7 @@
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 

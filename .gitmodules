@@ -1,0 +1,3 @@
+[submodule "External/TestingToolkit"]
+	path = External/TestingToolkit
+	url = git@github.com:DivineDominion/TestingToolkit.git

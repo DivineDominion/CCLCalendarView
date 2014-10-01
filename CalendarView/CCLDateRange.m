@@ -7,7 +7,7 @@
 //
 
 #import "CCLDateRange.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 @implementation CCLDateRange
 + (instancetype)dateRangeFrom:(NSDate *)startDate until:(NSDate *)endDate
@@ -72,7 +72,7 @@
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 #pragma mark Calendar Calculations

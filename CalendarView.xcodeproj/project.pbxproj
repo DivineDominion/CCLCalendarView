@@ -27,7 +27,6 @@
 		6009D6A119ACDAC0006F568F /* CCLDayDetailRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */; };
 		600BA9CE19B45EC000A9ED9B /* CCLCalendarViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9CD19B45EC000A9ED9B /* CCLCalendarViewModel.m */; };
 		600BA9D219B4669F00A9ED9B /* CCLCalendarViewModelTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9D119B4669F00A9ED9B /* CCLCalendarViewModelTest.m */; };
-		600BA9D619B46D1500A9ED9B /* CTWCalendarSupplier.m in Sources */ = {isa = PBXBuildFile; fileRef = 600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */; };
 		601627EB19BEED21006B7505 /* CCLCalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627EA19BEED21006B7505 /* CCLCalendarData.m */; };
 		601627ED19BEF7E0006B7505 /* CCLCalendarDataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627EC19BEF7E0006B7505 /* CCLCalendarDataTest.m */; };
 		601627F119BEFED1006B7505 /* TestObjectProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 601627F019BEFED1006B7505 /* TestObjectProvider.m */; };
@@ -52,6 +51,7 @@
 		60C3550419BDA13D000C14E8 /* CCLTitleRowsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C3550319BDA13D000C14E8 /* CCLTitleRowsTest.m */; };
 		60C3550719BDFA5D000C14E8 /* XCTest+MonthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C3550619BDFA5D000C14E8 /* XCTest+MonthHelper.m */; };
 		60ECAA0919DAEA940036EE81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60ECAA0819DAEA940036EE81 /* InfoPlist.strings */; };
+		60ECAB4A19DC5ED00036EE81 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +61,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6009D65919AC77D3006F568F;
 			remoteInfo = CalendarView;
+		};
+		60ECAB4619DC56510036EE81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 60ECAB0219DC543B0036EE81;
+			remoteInfo = TestingToolkit;
+		};
+		60ECAB4819DC56510036EE81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 60ECAB1519DC543B0036EE81;
+			remoteInfo = TestingToolkitTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -105,8 +119,6 @@
 		600BA9CC19B45EC000A9ED9B /* CCLCalendarViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarViewModel.h; sourceTree = "<group>"; };
 		600BA9CD19B45EC000A9ED9B /* CCLCalendarViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarViewModel.m; sourceTree = "<group>"; };
 		600BA9D119B4669F00A9ED9B /* CCLCalendarViewModelTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarViewModelTest.m; sourceTree = "<group>"; };
-		600BA9D419B46D1500A9ED9B /* CTWCalendarSupplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTWCalendarSupplier.h; sourceTree = "<group>"; };
-		600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTWCalendarSupplier.m; sourceTree = "<group>"; };
 		601627E919BEED21006B7505 /* CCLCalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLCalendarData.h; sourceTree = "<group>"; };
 		601627EA19BEED21006B7505 /* CCLCalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarData.m; sourceTree = "<group>"; };
 		601627EC19BEF7E0006B7505 /* CCLCalendarDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLCalendarDataTest.m; sourceTree = "<group>"; };
@@ -147,6 +159,7 @@
 		60C3550519BDFA5D000C14E8 /* XCTest+MonthHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTest+MonthHelper.h"; sourceTree = "<group>"; };
 		60C3550619BDFA5D000C14E8 /* XCTest+MonthHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTest+MonthHelper.m"; sourceTree = "<group>"; };
 		60ECAA0819DAEA940036EE81 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../CalendarViewExample/InfoPlist.strings; sourceTree = "<group>"; };
+		60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestingToolkit.xcodeproj; path = External/TestingToolkit/TestingToolkit.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6009D65E19AC77D3006F568F /* Cocoa.framework in Frameworks */,
+				60ECAB4A19DC5ED00036EE81 /* libTestingToolkit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +234,7 @@
 				6009D68119AC77D4006F568F /* CalendarViewTests */,
 				6009D65C19AC77D3006F568F /* Frameworks */,
 				6009D65B19AC77D3006F568F /* Products */,
+				60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -257,7 +272,6 @@
 			children = (
 				60C354F019B84142000C14E8 /* Calendar Model */,
 				60035BAB19B0D243009CADE0 /* Calendar Application */,
-				600BA9D319B46CDD00A9ED9B /* Utility */,
 			);
 			path = CalendarView;
 			sourceTree = "<group>";
@@ -312,15 +326,6 @@
 			);
 			name = Resources;
 			path = ../CalendarView;
-			sourceTree = "<group>";
-		};
-		600BA9D319B46CDD00A9ED9B /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				600BA9D419B46D1500A9ED9B /* CTWCalendarSupplier.h */,
-				600BA9D519B46D1500A9ED9B /* CTWCalendarSupplier.m */,
-			);
-			name = Utility;
 			sourceTree = "<group>";
 		};
 		60BEC0F219D06433000B5DE0 /* Table Model */ = {
@@ -404,6 +409,15 @@
 			name = "Static Table Data";
 			sourceTree = "<group>";
 		};
+		60ECAB4219DC56510036EE81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				60ECAB4719DC56510036EE81 /* libTestingToolkit.a */,
+				60ECAB4919DC56510036EE81 /* TestingToolkitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -468,6 +482,12 @@
 			mainGroup = 6009D65119AC77D3006F568F;
 			productRefGroup = 6009D65B19AC77D3006F568F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 60ECAB4219DC56510036EE81 /* Products */;
+					ProjectRef = 60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6009D65919AC77D3006F568F /* CalendarViewExample */,
@@ -475,6 +495,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		60ECAB4719DC56510036EE81 /* libTestingToolkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTestingToolkit.a;
+			remoteRef = 60ECAB4619DC56510036EE81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		60ECAB4919DC56510036EE81 /* TestingToolkitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TestingToolkitTests.xctest;
+			remoteRef = 60ECAB4819DC56510036EE81 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6009D65819AC77D3006F568F /* Resources */ = {
@@ -525,7 +562,6 @@
 				6009D69A19ACC0CC006F568F /* CCLCalendarView.m in Sources */,
 				60C354FF19BB6467000C14E8 /* CCLDateRange.m in Sources */,
 				60C3550219BD9F86000C14E8 /* CCLTitleRows.m in Sources */,
-				600BA9D619B46D1500A9ED9B /* CTWCalendarSupplier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +661,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "External/TestingToolkit/**";
 			};
 			name = Debug;
 		};
@@ -657,6 +694,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "External/TestingToolkit/**";
 			};
 			name = Release;
 		};

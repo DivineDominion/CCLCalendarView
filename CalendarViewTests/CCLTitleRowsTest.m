@@ -24,12 +24,12 @@
 {
     [super setUp];
     TestCalendarSupplier *testCalendarSupplier = [TestCalendarSupplier unifiedGregorianCalendarSupplier];
-    [CTWCalendarSupplier setSharedInstance:testCalendarSupplier];
+    [CTKCalendarSupplier setSharedInstance:testCalendarSupplier];
 }
 
 - (void)tearDown
 {
-    [CTWCalendarSupplier resetSharedInstance];
+    [CTKCalendarSupplier resetSharedInstance];
     [super tearDown];
 }
 

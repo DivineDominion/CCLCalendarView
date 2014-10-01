@@ -8,7 +8,7 @@
 
 #import "CCLDayLocator.h"
 #import "CCLMonth.h"
-#import "CTWCalendarSupplier.h"
+#import "CTKCalendarSupplier.h"
 
 @implementation CCLDayLocator
 + (instancetype)dayLocatorInMonth:(CCLMonth *)month week:(NSUInteger)week weekday:(NSUInteger)weekday
@@ -32,7 +32,7 @@
 
 - (NSCalendar *)calendar
 {
-    return [[CTWCalendarSupplier calendarSupplier] autoupdatingCalendar];
+    return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
 
