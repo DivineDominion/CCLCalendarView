@@ -11,6 +11,7 @@
 // Collaborators
 #import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
+#import "CCLProvidesDetailView.h"
 #import "CCLCalendarViewModel.h"
 #import "CCLRowAdjustment.h"
 #import "CTKCalendarSupplier.h"
@@ -230,10 +231,22 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     if (rowViewType == CCLRowViewTypeDayDetail)
     {
-        return 140.;
+        return [self heightOfDetailView];
     }
     
-    return 80.;
+    return 70.;
+}
+
+- (NSUInteger)heightOfDetailView
+{
+    id<CCLProvidesDetailView> detailViewProvider = self.detailViewProvider;
+    
+    if ([detailViewProvider respondsToSelector:@selector(heightOfDetailView)])
+    {
+        return [self.detailViewProvider heightOfDetailView];
+    }
+    
+    return 140.;
 }
 
 - (void)guardRowViewTypeValidity:(CCLRowViewType)rowViewType
@@ -316,12 +329,16 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return;
     }
     
+    CGFloat zPosition = 100;
     if ([rowView.identifier isEqualToString:@"DayDetailRow"])
     {
         // Set subview values in -displayDayDetail manually b/c the row may stay
         // in place but the selection changes, so this method won't be called.
         self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
+        zPosition = -100;
     }
+    
+    [rowView.layer setZPosition:zPosition];
 }
 
 
@@ -416,28 +433,18 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
-    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
+    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+    
+    [self fireWillRemoveDetailView];
 }
 
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSUInteger)row column:(NSUInteger)column
 {
     CCLDayCellSelection *selection = [CCLDayCellSelection dayCellSelection:selectedView atRow:row column:column];
-    [self.selectionDelegate controllerDidSelectDayCell:selection];
-    
     id objectValue = selectedView.objectValue;
-    [self notifyEventHandlerOfObjectSelection:objectValue];
-}
-
-- (void)notifyEventHandlerOfObjectSelection:(id)objectValue
-{
-    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
-    if (![eventHandler respondsToSelector:@selector(calendarViewController:didSelectCellWithObjectValue:)])
-    {
-        return;
-    }
     
-    [self.eventHandler calendarViewController:self
-                 didSelectCellWithObjectValue:objectValue];
+    [self.selectionDelegate controllerDidSelectDayCell:selection];
+    [self fireDidSelectCellWithObjectValue:objectValue];
 }
 
 - (void)insertDetailRow
@@ -445,15 +452,72 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     NSUInteger selectionRow = [self cellSelectionRow];
     NSInteger rowBelow = selectionRow + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
-    [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+    [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
+    
+    const double delayInSeconds = 0.4;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (![eventHandler respondsToSelector:@selector(calendarViewControllerDidAddDetailView:)])
+        {
+            return;
+        }
+        
+        [eventHandler calendarViewControllerDidAddDetailView:self];
+    });
 }
 
 - (void)displayDayDetail
 {
     id objectValue = [self.selectionDelegate dayCellSelectionObjectValue];
-    NSView *detailView = [self.eventHandler detailViewForObjectValue:objectValue];
+    NSView *detailView = [self.detailViewProvider detailViewForObjectValue:objectValue];
     CCLDayDetailRowView *rowView = self.dayDetailRowView;
     [rowView displayDetailView:detailView];
+}
+
+- (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+    [self fireDidRemoveDetailView];
+}
+
+
+#pragma mark -
+#pragma mark Delegate Notifications
+
+- (void)fireDidSelectCellWithObjectValue:(id)objectValue
+{
+    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
+    
+    if (![eventHandler respondsToSelector:@selector(calendarViewController:didSelectCellWithObjectValue:)])
+    {
+        return;
+    }
+    
+    [eventHandler calendarViewController:self didSelectCellWithObjectValue:objectValue];
+}
+
+- (void)fireWillRemoveDetailView
+{
+    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
+
+    if (![eventHandler respondsToSelector:@selector(calendarViewControllerWillRemoveDetailView:)])
+    {
+        return;
+    }
+    
+    [eventHandler calendarViewControllerWillRemoveDetailView:self];
+}
+
+- (void)fireDidRemoveDetailView
+{
+    id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
+    
+    if (![eventHandler respondsToSelector:@selector(calendarViewControllerDidRemoveDetailView:)])
+    {
+        return;
+    }
+    
+    [eventHandler calendarViewControllerDidRemoveDetailView:self];
 }
 
 @end

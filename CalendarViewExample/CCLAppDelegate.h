@@ -11,11 +11,12 @@
 @class CCLDisplayCalendar;
 @protocol CCLHandlesDaySelection;
 @protocol CCLProvidesCalendarObjects;
+@protocol CCLProvidesDetailView;
 
 @interface CCLAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-@property (strong) id<CCLHandlesDaySelection, CCLProvidesCalendarObjects> calendarDelegate;
+@property (strong) id<CCLHandlesDaySelection, CCLProvidesCalendarObjects, CCLProvidesDetailView> calendarDelegate;
 @property (strong) CCLDisplayCalendar *displayCalendar;
 
 @end

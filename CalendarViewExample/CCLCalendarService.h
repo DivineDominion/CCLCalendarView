@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CCLHandlesDaySelection.h"
 #import "CCLProvidesCalendarObjects.h"
+#import "CCLProvidesDetailView.h"
 
-@interface CCLCalendarService : NSObject <CCLHandlesDaySelection, CCLProvidesCalendarObjects>
+@interface CCLCalendarService : NSObject <CCLHandlesDaySelection, CCLProvidesCalendarObjects, CCLProvidesDetailView>
 
 @end

@@ -11,15 +11,19 @@
 
 @implementation CCLDisplayCalendar
 
-+ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
++ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
-    return [[self alloc] initWithObjectProvider:objectProvider selectionHandler:selectionHandler];
+    return [[self alloc] initWithObjectProvider:objectProvider detailViewProvider:detailViewProvider selectionHandler:selectionHandler];
 }
 
-- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
+- (instancetype)init
+{
+    return [self initWithObjectProvider:nil detailViewProvider:nil selectionHandler:nil];
+}
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
     NSParameterAssert(objectProvider);
-    NSParameterAssert(selectionHandler);
+    NSParameterAssert(detailViewProvider);
     
     self = [super init];
     
@@ -27,6 +31,7 @@
     {
         _calendarViewController = [CCLCalendarViewController calendarViewController];
         _calendarViewController.objectProvider = objectProvider;
+        _calendarViewController.detailViewProvider = detailViewProvider;
         _calendarViewController.eventHandler = selectionHandler;
     }
     

@@ -11,9 +11,10 @@
 @class CCLCalendarViewController;
 
 @protocol CCLHandlesDaySelection <NSObject>
-@required
-- (NSView *)detailViewForObjectValue:(id)objectValue;
-
 @optional
 - (void)calendarViewController:(CCLCalendarViewController *)calendarViewController didSelectCellWithObjectValue:(id)objectValue;
+
+- (void)calendarViewControllerDidAddDetailView:(CCLCalendarViewController *)calendarViewController;
+- (void)calendarViewControllerWillRemoveDetailView:(CCLCalendarViewController *)calendarViewController;
+- (void)calendarViewControllerDidRemoveDetailView:(CCLCalendarViewController *)calendarViewController;
 @end

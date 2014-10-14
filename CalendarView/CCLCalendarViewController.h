@@ -17,11 +17,13 @@
 
 @protocol CCLProvidesTableData;
 @protocol CCLHandlesDayCellSelection;
+@protocol CCLProvidesDetailView;
 
 extern NSString * const kCCLCalendarViewControllerNibName;
 
 @interface CCLCalendarViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, CCLCalendarViewDelegate>
 @property (weak) id<CCLHandlesDaySelection> eventHandler;
+@property (weak) id<CCLProvidesDetailView> detailViewProvider;
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
 @property (nonatomic, strong, readonly) id<CCLProvidesTableData> tableDataProvider;
 @property (strong) id<CCLHandlesDayCellSelection> selectionDelegate;

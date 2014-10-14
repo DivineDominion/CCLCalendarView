@@ -11,12 +11,13 @@
 @class CCLCalendarViewController;
 @protocol CCLHandlesDaySelection;
 @protocol CCLProvidesCalendarObjects;
+@protocol CCLProvidesDetailView;
 
 @interface CCLDisplayCalendar : NSObject
 @property (strong, readonly) CCLCalendarViewController *calendarViewController;
 
-+ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
-- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
++ (instancetype)displayCalendarWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
+- (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
 
 - (void)displayInView:(NSView *)containerView;
 @end

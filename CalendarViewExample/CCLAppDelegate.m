@@ -15,7 +15,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.calendarDelegate = [[CCLCalendarService alloc] init];
-    self.displayCalendar = [CCLDisplayCalendar displayCalendarWithObjectProvider:self.calendarDelegate selectionHandler:self.calendarDelegate];
+    self.displayCalendar = [CCLDisplayCalendar displayCalendarWithObjectProvider:self.calendarDelegate detailViewProvider:self.calendarDelegate selectionHandler:self.calendarDelegate];
     [self.displayCalendar displayInView:self.window.contentView];
 }
 
