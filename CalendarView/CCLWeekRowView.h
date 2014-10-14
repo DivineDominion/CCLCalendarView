@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CCLBorderedRowView.h"
 
-@interface CCLWeekRowView : NSTableRowView
-@property (nonatomic, copy) NSColor *gridColor;
+@interface CCLWeekRowView : CCLBorderedRowView
+
 @end

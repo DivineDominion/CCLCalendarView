@@ -10,20 +10,9 @@
 
 @implementation CCLMonthRowView
 
-- (id)initWithFrame:(NSRect)frame
+- (void)drawSeparatorInRect:(NSRect)dirtyRect
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
+    // do not draw a separator
 }
 
 - (NSString *)monthName

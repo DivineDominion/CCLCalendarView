@@ -10,22 +10,6 @@
 
 @implementation CCLDayDetailRowView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-}
-
 - (void)displayDetailView:(NSView *)subview
 {
     [self.subviews enumerateObjectsUsingBlock:^(NSView *subview, NSUInteger idx, BOOL *stop) {
@@ -55,4 +39,5 @@
                                                              multiplier:1.0
                                                                constant:0]];
 }
+
 @end

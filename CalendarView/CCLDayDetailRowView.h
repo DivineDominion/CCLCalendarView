@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CCLBorderedRowView.h"
 
-@interface CCLDayDetailRowView : NSTableRowView
+@interface CCLDayDetailRowView : CCLBorderedRowView
 - (void)displayDetailView:(NSView *)view;
 @end
