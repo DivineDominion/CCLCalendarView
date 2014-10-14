@@ -92,7 +92,7 @@
 
 - (CCLDayLocator *)weekLocatorForRow:(NSUInteger)row
 {
-#warning stub
+#warning stub: add locator for Week Total
     NSUInteger column = 0;
     return [self dayLocatorForColumn:column row:row];
 }

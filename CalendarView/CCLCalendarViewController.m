@@ -343,9 +343,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)tableView:(NSTableView *)tableView didSelectCellViewAtRow:(NSInteger)row column:(NSInteger)column
 {
-    CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:row];
-    if (rowViewType != CCLRowViewTypeWeek)
+    if (row < 0 || [self.tableDataProvider rowViewTypeForRow:row] != CCLRowViewTypeWeek)
     {
+        [self collapseDetailView];
         return;
     }
     
@@ -367,11 +367,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     // Deselect on a second click into the same cell
-    if (([self cellSelectionRow] == row && [self cellSelectionColumn] == column)
-        || isUnselectableCell)
+    if ([self isSelectionInRow:row column:column] || isUnselectableCell)
     {
-        [self removeDetailRow];
-        [self deselectDayCell];
+        [self collapseDetailView];
         return;
     }
     
@@ -398,6 +396,22 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     [self displayDayDetail];
+}
+
+- (void)collapseDetailView
+{
+    [self removeDetailRow];
+    [self deselectDayCell];
+}
+
+- (BOOL)isSelectionInRow:(NSInteger)row column:(NSInteger)column
+{
+    if (![self hasSelectedDayCell])
+    {
+        return NO;
+    }
+    
+    return [self cellSelectionRow] == row && [self cellSelectionColumn] == column;
 }
 
 - (BOOL)hasSelectedDayCell
