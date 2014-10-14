@@ -337,6 +337,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [rowView.layer setZPosition:zPosition];
 }
 
+- (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+    [self fireDidRemoveDetailView];
+}
+
 
 #pragma mark -
 #pragma mark Cell Selection
@@ -398,10 +403,40 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [self displayDayDetail];
 }
 
+#pragma mark Collapse Detail View
+
 - (void)collapseDetailView
 {
     [self removeDetailRow];
     [self deselectDayCell];
+}
+
+- (void)removeDetailRow
+{
+    if (![self hasSelectedDayCell])
+    {
+        return;
+    }
+    
+    NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
+    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
+    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+    self.dayDetailRowView = nil;
+    
+    [self fireWillRemoveDetailView];
+}
+
+- (void)deselectDayCell
+{
+    [self.selectionDelegate controllerDidDeselectDayCell];
+}
+
+
+#pragma mark Poll Detail View state
+
+- (BOOL)hasSelectedDayCell
+{
+    return [self.selectionDelegate hasDayCellSelection];
 }
 
 - (BOOL)isSelectionInRow:(NSInteger)row column:(NSInteger)column
@@ -414,11 +449,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [self cellSelectionRow] == row && [self cellSelectionColumn] == column;
 }
 
-- (BOOL)hasSelectedDayCell
-{
-    return [self.selectionDelegate hasDayCellSelection];
-}
-
 - (NSUInteger)cellSelectionRow
 {
     return [self.selectionDelegate dayCellSelectionRow];
@@ -429,24 +459,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [self.selectionDelegate dayCellSelectionColumn];
 }
 
-- (void)deselectDayCell
-{
-    [self.selectionDelegate controllerDidDeselectDayCell];
-}
-
-- (void)removeDetailRow
-{
-    if (self.dayDetailRowView == nil)
-    {
-        return;
-    }
-    
-    NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
-    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
-    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
-    
-    [self fireWillRemoveDetailView];
-}
+#pragma mark Set new selection
 
 - (void)selectDayCell:(CCLDayCellView *)selectedView row:(NSUInteger)row column:(NSUInteger)column
 {
@@ -485,11 +498,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     [rowView displayDetailView:detailView];
 }
 
-- (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-    [self fireDidRemoveDetailView];
-}
-
 
 #pragma mark -
 #pragma mark Delegate Notifications
@@ -509,7 +517,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (void)fireWillRemoveDetailView
 {
     id<CCLHandlesDaySelection> eventHandler = self.eventHandler;
-
+    
     if (![eventHandler respondsToSelector:@selector(calendarViewControllerWillRemoveDetailView:)])
     {
         return;
