@@ -14,9 +14,6 @@
 {
     [super drawRect:dirtyRect];
     
-    [self drawBackground];
-    [self drawBorder];
-    
     if (self.isSelected)
     {
         [self drawTriangle];
@@ -25,19 +22,18 @@
 
 - (void)drawBackground
 {
+    [self.backgroundColor set];
+    
+    if (self.isWeekend)
+    {
+        [self.weekendColor set];
+    }
+    
     if (self.isSelected)
     {
         [self.selectionColor set];
-        NSRectFill([self innerBounds]);
-        return;
     }
     
-    if (!self.isWeekend)
-    {
-        return;
-    }
-    
-    [self.weekendColor set];
     NSRectFill([self innerBounds]);
 }
 
@@ -48,15 +44,6 @@
     innerBounds.size.height = NSMaxY(innerBounds) - 1;
     innerBounds.origin.y = 1;
     return innerBounds;
-}
-
-- (void)drawBorder
-{
-    NSRect border = self.bounds;
-    border.origin.x = NSMaxX(border) - 1;
-    border.size.width = 1;
-    [self.gridColor set];
-    NSRectFill(border);
 }
 
 - (void)drawTriangle
@@ -100,7 +87,7 @@
 {
     if (!_weekendColor)
     {
-        _weekendColor = [NSColor colorWithWhite:.8 alpha:1.];
+        _weekendColor = [NSColor colorWithWhite:.9 alpha:1.];
     }
     
     return _weekendColor;
@@ -114,16 +101,6 @@
     }
     
     return _selectionColor;
-}
-
-- (NSColor *)gridColor
-{
-    if (!_gridColor)
-    {
-        _gridColor = [NSColor gridColor];
-    }
-    
-    return _gridColor;
 }
 
 @end

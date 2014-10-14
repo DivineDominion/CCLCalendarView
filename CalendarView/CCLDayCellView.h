@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CCLBorderedCellView.h"
 
-@interface CCLDayCellView : NSTableCellView
+@interface CCLDayCellView : CCLBorderedCellView
 @property (assign) BOOL isSelected;
 @property (assign) BOOL isWeekend;
 @property (nonatomic, copy) NSColor *selectionColor;
 @property (nonatomic, copy) NSColor *weekendColor;
-@property (nonatomic, copy) NSColor *gridColor;
 @property (readonly) NSTableView *tableView;
 
 - (void)select;

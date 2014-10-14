@@ -25,7 +25,7 @@
                         <size key="intercellSpacing" width="3" height="2"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
-                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                        <color key="gridColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <tableColumns>
                             <tableColumn identifier="Templates" editable="NO" width="156" minWidth="10" maxWidth="1000" id="wzw-w2-aPh" userLabel="Templates (Hidden)">
                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Template Cells">
@@ -109,9 +109,12 @@
                                             <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
                                                 <color key="value" red="0.63787260270000001" green="0.70294417310000001" blue="0.92810921719999995" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </tableCellView>
-                                    <tableCellView identifier="WeekTotalCell" id="Yn3-bL-dRV" userLabel="Week Total Cell View">
+                                    <tableCellView identifier="WeekTotalCell" id="Yn3-bL-dRV" userLabel="Week Total Cell View" customClass="CCLBorderedCellView">
                                         <rect key="frame" x="1" y="116" width="156" height="67"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
@@ -134,6 +137,11 @@
                                                 </textFieldCell>
                                             </textField>
                                         </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" red="0.71372550729999995" green="0.78431373829999995" blue="0.15686275059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="textField" destination="r1T-cS-cO7" id="ySK-0X-T0N"/>
                                         </connections>

@@ -10,6 +10,10 @@
 
 @protocol CCLProvidesDetailView <NSObject>
 @required
+/// Changes the behavior of the calendar: if the receiver returns
+/// @p NO, cells without object value won't be selectable.
+- (BOOL)allowsEmptyCellSelection;
+
 - (NSView *)detailViewForObjectValue:(id)objectValue;
 
 @optional

@@ -277,31 +277,28 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)rowIndex
 {
     NSInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+    BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
     CCLRowViewType rowViewType = [self.tableDataProvider rowViewTypeForRow:rowIndex];
     
-    if (self.showsAllWeekColumn && rowViewType != CCLRowViewTypeDayDetail)
+    if (self.showsAllWeekColumn && isLastColumn && rowViewType != CCLRowViewTypeDayDetail)
     {
-        BOOL isLastColumn = (columnIndex == tableView.tableColumns.count - 1);
-        if (isLastColumn)
-        {
-            NSTableRowView *cell = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
-            cell.backgroundColor = [NSColor grayColor];
-            return cell;
-        }
+#warning stub: add Week Total Cell
+        CCLBorderedCellView *cellView = [tableView makeViewWithIdentifier:@"WeekTotalCell" owner:self];
+        return cellView;
     }
     
     CCLCellType cellType = [self.tableDataProvider cellTypeForColumn:columnIndex row:rowIndex];
-    NSView *cellView = [self tableView:tableView viewForCellType:cellType];
     
-    return cellView;
-}
-
-- (NSView *)tableView:(NSTableView *)tableView viewForCellType:(CCLCellType)cellType
-{
-    if (cellType == CCLCellTypeBlank)
+    if (cellType == CCLCellTypeBlank && !isLastColumn)
     {
-#warning stub
-        return nil;
+        NSUInteger nextColumnIndex = columnIndex + 1;
+        CCLCellType nextCellType = [self.tableDataProvider cellTypeForColumn:nextColumnIndex row:rowIndex];
+        if (nextCellType != CCLCellTypeBlank)
+        {
+            CCLBorderedCellView *cellView = [[CCLBorderedCellView alloc] init];
+            //[tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+            return cellView;
+        }
     }
     
     if (cellType != CCLCellTypeWeekend && cellType != CCLCellTypeDay)
@@ -309,13 +306,12 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         return nil;
     }
     
-    CCLDayCellView *view = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
-    view.isWeekend = (cellType == CCLCellTypeWeekend);
-//    id object;
-//    view.objectValue = object;
+    CCLDayCellView *cellView = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
+    cellView.isWeekend = (cellType == CCLCellTypeWeekend);
     
-    return view;
+    return cellView;
 }
+
 
 #pragma mark Table Change Callbacks
 
@@ -354,7 +350,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     NSTableCellView *selectedCell = [tableView viewAtColumn:column row:row makeIfNecessary:YES];
-    BOOL isUnselectableCell = (selectedCell == nil || [selectedCell.identifier isEqualToString:@"WeekTotalCell"]);
+    BOOL isUnselectableCell = (selectedCell == nil || ![selectedCell.identifier isEqualToString:@"WeekdayCell"]);
     
     if (![self hasSelectedDayCell])
     {

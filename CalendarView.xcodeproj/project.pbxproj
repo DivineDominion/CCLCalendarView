@@ -35,6 +35,7 @@
 		6017337019B5B8FB00FDE187 /* CCLMonthTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017336F19B5B8FB00FDE187 /* CCLMonthTest.m */; };
 		6017337619B5BAAF00FDE187 /* CCLMonthsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6017337519B5BAAF00FDE187 /* CCLMonthsTest.m */; };
 		6056510A19ED5C8E007A2A17 /* CCLBorderedRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6056510919ED5C8E007A2A17 /* CCLBorderedRowView.m */; };
+		6056511119ED6123007A2A17 /* CCLBorderedCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6056511019ED6123007A2A17 /* CCLBorderedCellView.m */; };
 		60BEC0F119D06420000B5DE0 /* CCLRowAdjustmentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC0F019D06420000B5DE0 /* CCLRowAdjustmentTest.m */; };
 		60BEC0F519D0644A000B5DE0 /* CCLRowAdjustment.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC0F419D0644A000B5DE0 /* CCLRowAdjustment.m */; };
 		60BEC0FD19D176A6000B5DE0 /* CCLCellDayTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BEC0FC19D176A6000B5DE0 /* CCLCellDayTranslation.m */; };
@@ -133,6 +134,8 @@
 		6019962E19CAD09C00EED575 /* CCLHandlesDayCellSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesDayCellSelection.h; sourceTree = "<group>"; };
 		6056510819ED5C8E007A2A17 /* CCLBorderedRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLBorderedRowView.h; sourceTree = "<group>"; };
 		6056510919ED5C8E007A2A17 /* CCLBorderedRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLBorderedRowView.m; sourceTree = "<group>"; };
+		6056510F19ED6123007A2A17 /* CCLBorderedCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLBorderedCellView.h; sourceTree = "<group>"; };
+		6056511019ED6123007A2A17 /* CCLBorderedCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLBorderedCellView.m; sourceTree = "<group>"; };
 		6075AE3919ED3FC100152909 /* CCLProvidesDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLProvidesDetailView.h; sourceTree = "<group>"; };
 		60BEC0F019D06420000B5DE0 /* CCLRowAdjustmentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLRowAdjustmentTest.m; sourceTree = "<group>"; };
 		60BEC0F319D0644A000B5DE0 /* CCLRowAdjustment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLRowAdjustment.h; sourceTree = "<group>"; };
@@ -219,16 +222,8 @@
 				6009D69819ACC0CB006F568F /* CCLCalendarView.h */,
 				6009D69919ACC0CC006F568F /* CCLCalendarView.m */,
 				6009D69E19ACC868006F568F /* CCLCalendarViewDelegate.h */,
-				60BEC10519D2F793000B5DE0 /* CCLMonthRowView.h */,
-				60BEC10619D2F793000B5DE0 /* CCLMonthRowView.m */,
-				6056510819ED5C8E007A2A17 /* CCLBorderedRowView.h */,
-				6056510919ED5C8E007A2A17 /* CCLBorderedRowView.m */,
-				6009D69B19ACC4CE006F568F /* CCLWeekRowView.h */,
-				6009D69C19ACC4CE006F568F /* CCLWeekRowView.m */,
-				6009D69F19ACDAC0006F568F /* CCLDayDetailRowView.h */,
-				6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */,
-				6009D69519AC8107006F568F /* CCLDayCellView.h */,
-				6009D69619AC8107006F568F /* CCLDayCellView.m */,
+				6056510D19ED6106007A2A17 /* Row Views */,
+				6056510E19ED610C007A2A17 /* Cell Views */,
 			);
 			name = "Calendar Table View";
 			sourceTree = "<group>";
@@ -333,6 +328,32 @@
 			);
 			name = Resources;
 			path = ../CalendarView;
+			sourceTree = "<group>";
+		};
+		6056510D19ED6106007A2A17 /* Row Views */ = {
+			isa = PBXGroup;
+			children = (
+				60BEC10519D2F793000B5DE0 /* CCLMonthRowView.h */,
+				60BEC10619D2F793000B5DE0 /* CCLMonthRowView.m */,
+				6056510819ED5C8E007A2A17 /* CCLBorderedRowView.h */,
+				6056510919ED5C8E007A2A17 /* CCLBorderedRowView.m */,
+				6009D69B19ACC4CE006F568F /* CCLWeekRowView.h */,
+				6009D69C19ACC4CE006F568F /* CCLWeekRowView.m */,
+				6009D69F19ACDAC0006F568F /* CCLDayDetailRowView.h */,
+				6009D6A019ACDAC0006F568F /* CCLDayDetailRowView.m */,
+			);
+			name = "Row Views";
+			sourceTree = "<group>";
+		};
+		6056510E19ED610C007A2A17 /* Cell Views */ = {
+			isa = PBXGroup;
+			children = (
+				6056510F19ED6123007A2A17 /* CCLBorderedCellView.h */,
+				6056511019ED6123007A2A17 /* CCLBorderedCellView.m */,
+				6009D69519AC8107006F568F /* CCLDayCellView.h */,
+				6009D69619AC8107006F568F /* CCLDayCellView.m */,
+			);
+			name = "Cell Views";
 			sourceTree = "<group>";
 		};
 		60BEC0F219D06433000B5DE0 /* Table Model */ = {
@@ -552,6 +573,7 @@
 				60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */,
 				600BA9CE19B45EC000A9ED9B /* CCLCalendarViewModel.m in Sources */,
 				6009D69419AC7D5A006F568F /* CCLCalendarViewController.m in Sources */,
+				6056511119ED6123007A2A17 /* CCLBorderedCellView.m in Sources */,
 				601627EB19BEED21006B7505 /* CCLCalendarData.m in Sources */,
 				60035BAF19B0D2D6009CADE0 /* CCLDayCellSelection.m in Sources */,
 				60BEC10019D176FC000B5DE0 /* CCLDayLocator.m in Sources */,

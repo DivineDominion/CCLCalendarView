@@ -25,8 +25,6 @@
 }
 @end
 
-
-
 @implementation CCLCalendarService
 - (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
 {
@@ -36,14 +34,9 @@
 - (CCLDateRange *)dateRange
 {
     NSDate *startDate = [NSDate dateWithString:@"2014-07-04 14:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-09-12 23:00:00 +0200"];
+    NSDate *endDate = [NSDate dateWithString:@"2014-07-12 23:00:00 +0200"];
 
     return [CCLDateRange dateRangeFrom:startDate until:endDate];
-}
-
-- (void)calendarViewController:(CCLCalendarViewController *)calendarViewController didSelectCellWithObjectValue:(id)objectValue
-{
-#warning stub: did select cell
 }
 
 - (NSView *)detailViewForObjectValue:(id)objectValue
@@ -52,5 +45,10 @@
     label.stringValue = @"test";
     
     return label;
+}
+
+- (BOOL)allowsEmptyCellSelection
+{
+    return NO;
 }
 @end

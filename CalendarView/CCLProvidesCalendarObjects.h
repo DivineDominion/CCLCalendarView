@@ -13,8 +13,13 @@
 @protocol CCLProvidesCalendarObjects <NSObject>
 @required
 - (CCLDateRange *)dateRange;
+
+/// The calendar view will treat @p nil values differently. Depending on your
+/// configuration, the cell may not be selectable.
+/// @return An object with @p -day and @p -number properties; @p nil if no value is known.
 - (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day;
 
 @optional
+/// If this method is implemented, the calendar view will show a week's summary column.
 - (id)objectValueForYear:(NSUInteger)year week:(NSUInteger)week;
 @end
