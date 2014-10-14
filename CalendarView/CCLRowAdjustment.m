@@ -50,7 +50,14 @@
 
 - (void)controllerDidDeselectDayCell
 {
-    [self.dayCellSelection deselectCell];
+    CCLDayCellSelection *currentSelection = self.dayCellSelection;
+    
+    if (currentSelection == nil)
+    {
+        return;
+    }
+    
+    [currentSelection deselectCell];
     self.dayCellSelection = nil;
 }
 
