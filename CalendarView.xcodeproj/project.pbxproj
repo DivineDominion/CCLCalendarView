@@ -757,14 +757,14 @@
 		6009D68F19AC77D4006F568F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarView.app/Contents/MacOS/CalendarView";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarViewExample.app/Contents/MacOS/CalendarViewExample";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CalendarView/CalendarView-Prefix.pch";
+				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -779,14 +779,14 @@
 		6009D69019AC77D4006F568F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarView.app/Contents/MacOS/CalendarView";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarViewExample.app/Contents/MacOS/CalendarViewExample";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CalendarView/CalendarView-Prefix.pch";
+				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
 				INFOPLIST_FILE = "CalendarViewTests/CalendarViewTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
