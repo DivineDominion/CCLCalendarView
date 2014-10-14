@@ -17,5 +17,5 @@
 - (NSView *)detailViewForObjectValue:(id)objectValue;
 
 @optional
-- (NSUInteger)heightOfDetailView;
+- (CGFloat)heightOfDetailView;
 @end
