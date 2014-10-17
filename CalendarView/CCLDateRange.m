@@ -22,6 +22,9 @@
 
 - (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate
 {
+    NSParameterAssert(startDate);
+    NSParameterAssert(endDate);
+    
     self = [super init];
     
     [[self class] guardStartDate:startDate endDate:endDate];
