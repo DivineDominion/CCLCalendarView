@@ -12,7 +12,6 @@
 
 @interface CCLCalendarView : NSTableView
 @property (assign) NSInteger selectedRowIndex;
-@property (assign) NSTableColumn *selectedColumn;
 
 @property (weak) IBOutlet id<CCLCalendarViewDelegate> calendarViewDelegate;
 @end
