@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Christian Tietze. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @protocol CCLProvidesDetailView <NSObject>
 @required
