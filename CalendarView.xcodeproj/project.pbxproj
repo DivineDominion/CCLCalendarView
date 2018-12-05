@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5050CB6021B7FE7E00528988 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
+		5050CB6121B7FE7E00528988 /* libTestingToolkit.a in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5050CB6521B7FF2E00528988 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
 		60035BA019B0D214009CADE0 /* CCLCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */; };
 		60035BA819B0D235009CADE0 /* CCLCalendarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA519B0D235009CADE0 /* CCLCalendarService.m */; };
 		60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA719B0D235009CADE0 /* CCLDisplayCalendar.m */; };
@@ -53,10 +56,16 @@
 		60C3550419BDA13D000C14E8 /* CCLTitleRowsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C3550319BDA13D000C14E8 /* CCLTitleRowsTest.m */; };
 		60C3550719BDFA5D000C14E8 /* XCTest+MonthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 60C3550619BDFA5D000C14E8 /* XCTest+MonthHelper.m */; };
 		60ECAA0919DAEA940036EE81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60ECAA0819DAEA940036EE81 /* InfoPlist.strings */; };
-		60ECAB4A19DC5ED00036EE81 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5050CB6221B7FE7E00528988 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 50F3BC3A2143D590000D7DB0;
+			remoteInfo = TestingToolkit;
+		};
 		6009D67F19AC77D4006F568F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6009D65219AC77D3006F568F /* Project object */;
@@ -71,14 +80,21 @@
 			remoteGlobalIDString = 60ECAB0219DC543B0036EE81;
 			remoteInfo = TestingToolkit;
 		};
-		60ECAB4819DC56510036EE81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 60ECAB4119DC56510036EE81 /* TestingToolkit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 60ECAB1519DC543B0036EE81;
-			remoteInfo = TestingToolkitTests;
-		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5050CB6421B7FE7E00528988 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5050CB6121B7FE7E00528988 /* libTestingToolkit.a in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CCLCalendarViewController.xib; sourceTree = "<group>"; };
@@ -174,8 +190,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5050CB6021B7FE7E00528988 /* libTestingToolkit.a in Frameworks */,
 				6009D65E19AC77D3006F568F /* Cocoa.framework in Frameworks */,
-				60ECAB4A19DC5ED00036EE81 /* libTestingToolkit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5050CB6521B7FF2E00528988 /* libTestingToolkit.a in Frameworks */,
 				6009D67E19AC77D4006F568F /* Cocoa.framework in Frameworks */,
 				6009D67D19AC77D4006F568F /* XCTest.framework in Frameworks */,
 			);
@@ -441,7 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				60ECAB4719DC56510036EE81 /* libTestingToolkit.a */,
-				60ECAB4919DC56510036EE81 /* TestingToolkitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -456,10 +472,12 @@
 				6009D65619AC77D3006F568F /* Sources */,
 				6009D65719AC77D3006F568F /* Frameworks */,
 				6009D65819AC77D3006F568F /* Resources */,
+				5050CB6421B7FE7E00528988 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5050CB6321B7FE7E00528988 /* PBXTargetDependency */,
 			);
 			name = CalendarViewExample;
 			productName = CalendarView;
@@ -530,13 +548,6 @@
 			fileType = archive.ar;
 			path = libTestingToolkit.a;
 			remoteRef = 60ECAB4619DC56510036EE81 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		60ECAB4919DC56510036EE81 /* TestingToolkitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = TestingToolkitTests.xctest;
-			remoteRef = 60ECAB4819DC56510036EE81 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -619,6 +630,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5050CB6321B7FE7E00528988 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TestingToolkit;
+			targetProxy = 5050CB6221B7FE7E00528988 /* PBXContainerItemProxy */;
+		};
 		6009D68019AC77D4006F568F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6009D65919AC77D3006F568F /* CalendarViewExample */;
@@ -763,6 +779,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/CalendarViewExample/CalendarViewExample-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.christiantietze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -777,6 +794,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/CalendarViewExample/CalendarViewExample-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.christiantietze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
