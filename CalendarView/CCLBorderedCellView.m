@@ -55,7 +55,7 @@
 {
     if (_backgroundColor)
     {
-        _backgroundColor = [NSColor whiteColor];
+        _backgroundColor = [NSColor controlBackgroundColor];
     }
     
     return _backgroundColor;

@@ -59,7 +59,7 @@
     [path lineToPoint:NSMakePoint(middleX + triangleBounds.size.width / 2, NSMaxY(triangleBounds) - triangleBounds.size.height)];
     [path lineToPoint:NSMakePoint(NSMaxX(triangleBounds) - triangleBounds.size.width / 2, NSMaxY(triangleBounds) - triangleBounds.size.height)];
     
-    [[NSColor whiteColor] set];
+    [[NSColor controlBackgroundColor] set];
     [path fill];
 }
 
@@ -87,7 +87,7 @@
 {
     if (!_weekendColor)
     {
-        _weekendColor = [NSColor colorWithWhite:.9 alpha:1.];
+        _weekendColor = [NSColor controlAlternatingRowBackgroundColors][1];
     }
     
     return _weekendColor;
@@ -97,7 +97,7 @@
 {
     if (!_selectionColor)
     {
-        _selectionColor = [NSColor selectedControlColor];
+        _selectionColor = [NSColor controlAccentColor];
     }
     
     return _selectionColor;
