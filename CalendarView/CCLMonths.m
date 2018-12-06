@@ -83,8 +83,8 @@
             return;
         }
         
-        NSDateComponents *thisComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:thisDate];
-        NSDateComponents *expectedComponents = [calendar components:NSMonthCalendarUnit | NSYearCalendarUnit fromDate:expectedMonthDate];
+        NSDateComponents *thisComponents = [calendar components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:thisDate];
+        NSDateComponents *expectedComponents = [calendar components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:expectedMonthDate];
         
         if ([thisComponents isEqualTo:expectedComponents])
         {

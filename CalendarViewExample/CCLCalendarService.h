@@ -12,5 +12,5 @@
 #import "CCLProvidesDetailView.h"
 
 @interface CCLCalendarService : NSObject <CCLHandlesDaySelection, CCLProvidesCalendarObjects, CCLProvidesDetailView>
-
+@property (nonatomic, strong, readwrite, nonnull) NSDateFormatter *formatter;
 @end

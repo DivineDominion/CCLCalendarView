@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5050CB6021B7FE7E00528988 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
-		5050CB6121B7FE7E00528988 /* libTestingToolkit.a in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5050CB6521B7FF2E00528988 /* libTestingToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* libTestingToolkit.a */; };
+		5050CB6021B7FE7E00528988 /* TestingToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; };
+		5050CB6121B7FE7E00528988 /* TestingToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5050CB6521B7FF2E00528988 /* TestingToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; };
 		60035BA019B0D214009CADE0 /* CCLCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */; };
 		60035BA819B0D235009CADE0 /* CCLCalendarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA519B0D235009CADE0 /* CCLCalendarService.m */; };
 		60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA719B0D235009CADE0 /* CCLDisplayCalendar.m */; };
@@ -89,7 +89,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5050CB6121B7FE7E00528988 /* libTestingToolkit.a in Embed Frameworks */,
+				5050CB6121B7FE7E00528988 /* TestingToolkit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,7 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5050CB6021B7FE7E00528988 /* libTestingToolkit.a in Frameworks */,
+				5050CB6021B7FE7E00528988 /* TestingToolkit.framework in Frameworks */,
 				6009D65E19AC77D3006F568F /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5050CB6521B7FF2E00528988 /* libTestingToolkit.a in Frameworks */,
+				5050CB6521B7FF2E00528988 /* TestingToolkit.framework in Frameworks */,
 				6009D67E19AC77D4006F568F /* Cocoa.framework in Frameworks */,
 				6009D67D19AC77D4006F568F /* XCTest.framework in Frameworks */,
 			);
@@ -457,7 +457,7 @@
 		60ECAB4219DC56510036EE81 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60ECAB4719DC56510036EE81 /* libTestingToolkit.a */,
+				60ECAB4719DC56510036EE81 /* TestingToolkit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -543,10 +543,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		60ECAB4719DC56510036EE81 /* libTestingToolkit.a */ = {
+		60ECAB4719DC56510036EE81 /* TestingToolkit.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libTestingToolkit.a;
+			fileType = wrapper.framework;
+			path = TestingToolkit.framework;
 			remoteRef = 60ECAB4619DC56510036EE81 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -718,7 +718,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/External/TestingToolkit/**";
@@ -765,7 +765,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/External/TestingToolkit/**";
 			};

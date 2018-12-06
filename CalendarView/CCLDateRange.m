@@ -58,7 +58,7 @@
 - (NSDateComponents *)startDateCalendarComponents
 {
     NSCalendar *calendar = [self calendar];
-    NSUInteger calendarComponents = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSUInteger calendarComponents = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSDateComponents *components = [calendar components:calendarComponents fromDate:self.startDate];
     
     return components;
@@ -67,7 +67,7 @@
 - (NSDateComponents *)endDateCalendarComponents
 {
     NSCalendar *calendar = [self calendar];
-    NSUInteger calendarComponents = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSUInteger calendarComponents = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
     NSDateComponents *components = [calendar components:calendarComponents fromDate:self.endDate];
     
     return components;
@@ -83,7 +83,7 @@
 - (NSUInteger)monthSpan
 {
     NSCalendar *calendar = [self calendar];
-    NSDateComponents *components = [calendar components:NSMonthCalendarUnit fromDate:self.startDate toDate:self.endDate options:0];
+    NSDateComponents *components = [calendar components:NSCalendarUnitMonth fromDate:self.startDate toDate:self.endDate options:0];
     NSUInteger monthCount = ABS(components.month);
     NSUInteger monthSpan = monthCount + 1;
     
@@ -122,7 +122,7 @@
 - (NSDate *)normalizedDate:(NSDate *)date
 {
     NSCalendar *calendar = [self calendar];
-    NSUInteger yearAndMonth = NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSUInteger yearAndMonth = NSCalendarUnitMonth | NSCalendarUnitYear;
     NSDateComponents *dateComponents = [calendar components:yearAndMonth fromDate:date];
     NSDate *normalizedDate = [calendar dateFromComponents:dateComponents];
     

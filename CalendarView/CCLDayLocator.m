@@ -144,7 +144,7 @@
 - (BOOL)calendarDoesNotSupportWeekends
 {
     NSCalendar *calendar = [self calendar];
-    return ![[calendar calendarIdentifier] isEqualTo:NSGregorianCalendar];
+    return ![[calendar calendarIdentifier] isEqualTo:NSCalendarIdentifierGregorian];
 }
 
 - (BOOL)isWeekendInGregorianCalendar
@@ -172,7 +172,7 @@
 {
     NSDate *day = [self day];
     NSCalendar *calendar = [self calendar];
-    NSCalendarUnit components = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekOfYearCalendarUnit;
+    NSCalendarUnit components = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfYear;
     
     return [calendar components:components fromDate:day];
 }

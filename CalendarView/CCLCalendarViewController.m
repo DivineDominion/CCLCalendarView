@@ -152,7 +152,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (NSUInteger)weekdays
 {
     NSCalendar *calendar = [self calendar];
-    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSWeekdayCalendarUnit];
+    NSRange weekdayRange = [calendar maximumRangeOfUnit:NSCalendarUnitWeekday];
     return weekdayRange.length;
 }
 

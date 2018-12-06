@@ -33,10 +33,21 @@
 
 - (CCLDateRange *)dateRange
 {
-    NSDate *startDate = [NSDate dateWithString:@"2014-07-04 14:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-07-12 23:00:00 +0200"];
+    NSDate *startDate = [self.formatter dateFromString:@"2014-07-04 14:00:00 +0200"];
+    NSDate *endDate = [self.formatter dateFromString:@"2014-07-12 23:00:00 +0200"];
 
     return [CCLDateRange dateRangeFrom:startDate until:endDate];
+}
+
+- (NSDateFormatter *)formatter
+{
+    if (_formatter == nil) {
+        _formatter = [[NSDateFormatter alloc] init];
+        _formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+        _formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss ZZZZZ";
+    }
+
+    return _formatter;
 }
 
 - (NSView *)detailViewForObjectValue:(id)objectValue
