@@ -97,7 +97,7 @@
 {
     if (!_selectionColor)
     {
-        _selectionColor = [NSColor controlAccentColor];
+        _selectionColor = [NSColor selectedControlColor];
     }
     
     return _selectionColor;
