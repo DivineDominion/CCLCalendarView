@@ -1,0 +1,12 @@
+//
+//  Prefix.pch
+//  CalendarView
+//
+//  Created by Christian on 11.06.19.
+//  Copyright © 2019 Christian Tietze. All rights reserved.
+//
+
+
+#ifdef __OBJC__
+#import "Helpers.h"
+#endif

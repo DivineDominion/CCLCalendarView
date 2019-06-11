@@ -49,8 +49,8 @@
 - (CCLCalendarData *)calendarData
 {
     // Generate data fresh to take calendar settings into account upon Month initialization
-    CCLMonth *aug2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-08-02 12:12:00 +0000"]];
-    CCLMonth *sep2014 = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-13 12:12:00 +0000"]];
+    CCLMonth *aug2014 = [CCLMonth monthFromDate:[Helper dateWithString:@"2014-08-02 12:12:00 +0000"]];
+    CCLMonth *sep2014 = [CCLMonth monthFromDate:[Helper dateWithString:@"2014-09-13 12:12:00 +0000"]];
     CCLMonths *months = [CCLMonths monthsFromArray:@[aug2014, sep2014]];
     return [CCLCalendarData calendarDataForMonths:months];
 }

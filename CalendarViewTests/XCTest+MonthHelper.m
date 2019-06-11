@@ -19,8 +19,13 @@
 - (CCLMonth *)monthWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
 {
     NSString *irrelevantTime = @"12:13:14 +0000";
-    NSString *dateString =[NSString stringWithFormat:@"%lu-%02lu-%02lu %@", (unsigned long)year, (unsigned long)month, (unsigned long)day, irrelevantTime];
-    NSDate *date = [NSDate dateWithString:dateString];
+    NSString *dateString = [NSString stringWithFormat:@"%lu-%02lu-%02lu %@", (unsigned long)year, (unsigned long)month, (unsigned long)day, irrelevantTime];
+
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss ZZZZ";
+
+    NSDate *date = [formatter dateFromString:dateString];
     NSAssert(date, @"date components invalid");
     return [CCLMonth monthFromDate:date];
 }

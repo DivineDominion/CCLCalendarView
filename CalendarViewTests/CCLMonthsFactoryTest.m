@@ -46,7 +46,7 @@
 
 - (void)testMonthsFromDateRange_ForTwoDaysInSeptember_ReturnsCollectionWithSeptember
 {
-    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[NSDate dateWithString:@"2014-09-05 09:50:00 +0000"] until:[NSDate dateWithString:@"2014-09-15 13:30:00 +0000"]];
+    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[Helper dateWithString:@"2014-09-05 09:50:00 +0000"] until:[Helper dateWithString:@"2014-09-15 13:30:00 +0000"]];
     
     CCLMonths *returnedMonths = [factory monthsInDateRange:dateRange];
     
@@ -57,7 +57,7 @@
 
 - (void)testMonthsFromDateRange_ForADayInSeptemberAndOctober_ReturnsCollectionWithBothMonths
 {
-    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[NSDate dateWithString:@"2012-09-05 09:50:00 +0000"] until:[NSDate dateWithString:@"2012-10-15 13:30:00 +0000"]];
+    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[Helper dateWithString:@"2012-09-05 09:50:00 +0000"] until:[Helper dateWithString:@"2012-10-15 13:30:00 +0000"]];
     
     CCLMonths *returnedMonths = [factory monthsInDateRange:dateRange];
     
@@ -68,7 +68,7 @@
 
 - (void)testMonthsFromDateRange_FromAugustToMarch_ReturnsCollectionWithAllMonths
 {
-    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[NSDate dateWithString:@"2012-08-05 09:50:00 +0000"] until:[NSDate dateWithString:@"2013-03-15 13:30:00 +0000"]];
+    CCLDateRange *dateRange = [CCLDateRange dateRangeFrom:[Helper dateWithString:@"2012-08-05 09:50:00 +0000"] until:[Helper dateWithString:@"2013-03-15 13:30:00 +0000"]];
     
     CCLMonths *returnedMonths = [factory monthsInDateRange:dateRange];
     

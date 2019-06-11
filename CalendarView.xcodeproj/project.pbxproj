@@ -10,6 +10,7 @@
 		5050CB6021B7FE7E00528988 /* TestingToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; };
 		5050CB6121B7FE7E00528988 /* TestingToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5050CB6521B7FF2E00528988 /* TestingToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; };
+		506EF23822AFA04100E1C924 /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 506EF23722AFA04100E1C924 /* Helpers.m */; };
 		60035BA019B0D214009CADE0 /* CCLCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */; };
 		60035BA819B0D235009CADE0 /* CCLCalendarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA519B0D235009CADE0 /* CCLCalendarService.m */; };
 		60035BA919B0D235009CADE0 /* CCLDisplayCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA719B0D235009CADE0 /* CCLDisplayCalendar.m */; };
@@ -97,6 +98,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		506EF23622AFA04100E1C924 /* Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpers.h; sourceTree = "<group>"; };
+		506EF23722AFA04100E1C924 /* Helpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Helpers.m; sourceTree = "<group>"; };
+		506EF23922AFA06E00E1C924 /* CalendarViewTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarViewTests-Prefix.pch"; sourceTree = "<group>"; };
 		60035B9F19B0D214009CADE0 /* CCLCalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CCLCalendarViewController.xib; sourceTree = "<group>"; };
 		60035BA219B0D226009CADE0 /* CCLHandlesDaySelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLHandlesDaySelection.h; sourceTree = "<group>"; };
 		60035BA319B0D226009CADE0 /* CCLProvidesCalendarObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLProvidesCalendarObjects.h; sourceTree = "<group>"; };
@@ -402,6 +406,9 @@
 		60C354F919B9A42C000C14E8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				506EF23922AFA06E00E1C924 /* CalendarViewTests-Prefix.pch */,
+				506EF23622AFA04100E1C924 /* Helpers.h */,
+				506EF23722AFA04100E1C924 /* Helpers.m */,
 				60C3550519BDFA5D000C14E8 /* XCTest+MonthHelper.h */,
 				60C3550619BDFA5D000C14E8 /* XCTest+MonthHelper.m */,
 				60C354FA19B9A43D000C14E8 /* TestCalendarSupplier.h */,
@@ -622,6 +629,7 @@
 				60BEC10419D1C91E000B5DE0 /* CCLCellDayTranslationTest.m in Sources */,
 				60C3550419BDA13D000C14E8 /* CCLTitleRowsTest.m in Sources */,
 				6017337019B5B8FB00FDE187 /* CCLMonthTest.m in Sources */,
+				506EF23822AFA04100E1C924 /* Helpers.m in Sources */,
 				600BA9D219B4669F00A9ED9B /* CCLCalendarViewModelTest.m in Sources */,
 				60C354F319B843B2000C14E8 /* CCLCalendarViewControllerTest.m in Sources */,
 			);
@@ -813,7 +821,7 @@
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
+				GCC_PREFIX_HEADER = "CalendarViewTests/CalendarViewTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -836,7 +844,7 @@
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CalendarViewExample/CalendarViewExample-Prefix.pch";
+				GCC_PREFIX_HEADER = "CalendarViewTests/CalendarViewTests-Prefix.pch";
 				INFOPLIST_FILE = "CalendarViewTests/CalendarViewTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.christiantietze.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

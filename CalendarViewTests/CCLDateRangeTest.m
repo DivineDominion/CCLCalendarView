@@ -45,8 +45,8 @@
 
 - (void)testMonthsSpanning_OneHourOnTheSameDay_Returns1
 {
-    NSDate *startDate = [NSDate dateWithString:@"2014-07-04 14:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-07-04 15:00:00 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2014-07-04 14:00:00 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2014-07-04 15:00:00 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     NSUInteger months = [dateRange monthSpan];
@@ -56,8 +56,8 @@
 
 - (void)testMonthsSpanning_MidJulyToMidSeptember_Returns3
 {
-    NSDate *startDate = [NSDate dateWithString:@"2014-07-04 14:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-09-12 23:00:00 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2014-07-04 14:00:00 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2014-09-12 23:00:00 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     NSUInteger months = [dateRange monthSpan];
@@ -71,8 +71,8 @@
 - (void)testMonthEnumeration_ForThreeMonthsInTwoYears_CallsBlockThreeTimesWithEachMonthsDate
 {
     // Given
-    NSDate *startDate = [NSDate dateWithString:@"2014-11-04 09:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2015-01-23 12:00:00 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2014-11-04 09:00:00 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2015-01-23 12:00:00 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     __block NSMutableArray *calls = [NSMutableArray array];
@@ -102,8 +102,8 @@
 - (void)testMonthEnumeration_ForTwoMonths_CallsBlockTwiceWithEachMonthsDate
 {
     // Given
-    NSDate *startDate = [NSDate dateWithString:@"2014-01-04 09:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-02-23 12:00:00 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2014-01-04 09:00:00 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2014-02-23 12:00:00 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     __block NSMutableArray *calls = [NSMutableArray array];
@@ -130,8 +130,8 @@
 - (void)testMonthEnumeration_For20DaysSpanningTwoMonths_CallsBlockTwice
 {
     // Given
-    NSDate *startDate = [NSDate dateWithString:@"2014-01-15 09:00:00 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2014-02-05 12:00:00 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2014-01-15 09:00:00 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2014-02-05 12:00:00 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     __block NSMutableArray *calls = [NSMutableArray array];
@@ -158,8 +158,8 @@
 - (void)testMonthEnumeration_ForASecond_CallsBlockOnceWithTheDate
 {
     // Given
-    NSDate *startDate = [NSDate dateWithString:@"2012-01-04 09:11:22 +0200"];
-    NSDate *endDate = [NSDate dateWithString:@"2012-01-04 09:11:23 +0200"];
+    NSDate *startDate = [Helper dateWithString:@"2012-01-04 09:11:22 +0200"];
+    NSDate *endDate = [Helper dateWithString:@"2012-01-04 09:11:23 +0200"];
     dateRange = [CCLDateRange dateRangeFrom:startDate until:endDate];
     
     __block NSMutableArray *calls = [NSMutableArray array];

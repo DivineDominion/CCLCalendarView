@@ -37,19 +37,19 @@
 
 - (CCLDayLocator *)augustLocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
 {
-    CCLMonth *august = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-08-02 12:12:00 +0000"]];
+    CCLMonth *august = [CCLMonth monthFromDate:[Helper dateWithString:@"2014-08-02 12:12:00 +0000"]];
     return [CCLDayLocator dayLocatorInMonth:august week:week weekday:weekday];
 }
 
 - (CCLDayLocator *)septemberLocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
 {
-    CCLMonth *september = [CCLMonth monthFromDate:[NSDate dateWithString:@"2014-09-22 12:12:00 +0000"]];
+    CCLMonth *september = [CCLMonth monthFromDate:[Helper dateWithString:@"2014-09-22 12:12:00 +0000"]];
     return [CCLDayLocator dayLocatorInMonth:september week:week weekday:weekday];
 }
 
 - (CCLDayLocator *)decemberLocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
 {
-    CCLMonth *december = [CCLMonth monthFromDate:[NSDate dateWithString:@"2012-12-12 12:12:00 +0000"]];
+    CCLMonth *december = [CCLMonth monthFromDate:[Helper dateWithString:@"2012-12-12 12:12:00 +0000"]];
     return [CCLDayLocator dayLocatorInMonth:december week:week weekday:weekday];
 }
 

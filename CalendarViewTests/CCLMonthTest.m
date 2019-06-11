@@ -35,7 +35,7 @@
 
 - (void)testYear_ReturnsTheYear
 {
-    NSDate *date = [NSDate dateWithString:@"1997-08-12 16:08:34 +0200"];
+    NSDate *date = [Helper dateWithString:@"1997-08-12 16:08:34 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     XCTAssertEqual(month.year, 1997, @"should expose year of date");
@@ -43,7 +43,7 @@
 
 - (void)testMonth_ReturnsTheMonth
 {
-    NSDate *date = [NSDate dateWithString:@"1951-07-04 02:33:05 +0100"];
+    NSDate *date = [Helper dateWithString:@"1951-07-04 02:33:05 +0100"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     XCTAssertEqual(month.month, 7, @"should expose month of date");
@@ -52,7 +52,7 @@
 - (void)testName_ForFrenchLocale_ReturnsFrenchName
 {
     testCalendarSupplier.testLocale = [NSLocale localeWithLocaleIdentifier:@"fr_FR"];
-    NSDate *date = [NSDate dateWithString:@"1951-01-04 02:33:05 +0100"];
+    NSDate *date = [Helper dateWithString:@"1951-01-04 02:33:05 +0100"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSString *name = month.name;
@@ -62,7 +62,7 @@
 
 - (void)testFirstWeekday_OfMay2014_ReturnsThursday
 {
-    NSDate *date = [NSDate dateWithString:@"2014-05-24 12:33:05 +0100"];
+    NSDate *date = [Helper dateWithString:@"2014-05-24 12:33:05 +0100"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSUInteger weekday = [month firstWeekday];
@@ -72,7 +72,7 @@
 
 - (void)testLastWeekday_OfOct2012_ReturnsWednesday
 {
-    NSDate *date = [NSDate dateWithString:@"2012-10-07 19:13:05 +0200"];
+    NSDate *date = [Helper dateWithString:@"2012-10-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSUInteger weekday = [month lastWeekday];
@@ -83,7 +83,7 @@
 - (void)testNumberOfWeeks_OfJun2014InGermany_Returns6
 {
     [testCalendarSupplier.testCalendar setFirstWeekday:2]; // Start on Monday so it gets longer
-    NSDate *date = [NSDate dateWithString:@"2014-06-07 19:13:05 +0200"];
+    NSDate *date = [Helper dateWithString:@"2014-06-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSUInteger weeks = [month weekCount];
@@ -94,7 +94,7 @@
 - (void)testNumberOfWeeks_OfFeb2010_Returns4
 {
     [testCalendarSupplier.testCalendar setFirstWeekday:2]; // Start on Monday so Feb 2014 is more compact
-    NSDate *date = [NSDate dateWithString:@"2010-02-07 19:13:05 +0200"];
+    NSDate *date = [Helper dateWithString:@"2010-02-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSUInteger weeks = [month weekCount];
@@ -104,7 +104,7 @@
 
 - (void)testCalendarWeekOfFirstWeek_OfAug2014_Returns31
 {
-    NSDate *date = [NSDate dateWithString:@"2014-08-07 19:13:05 +0200"];
+    NSDate *date = [Helper dateWithString:@"2014-08-07 19:13:05 +0200"];
     CCLMonth *month = [CCLMonth monthFromDate:date];
     
     NSUInteger week = [month firstCalendarWeek];
