@@ -40,7 +40,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 + (instancetype)calendarViewController
 {
     return [[self alloc] initWithNibName:kCCLCalendarViewControllerNibName
-                                  bundle:[NSBundle mainBundle]];
+                                  bundle:[NSBundle bundleForClass:[CCLCalendarViewController class]]];
 }
 
 - (void)setObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider
