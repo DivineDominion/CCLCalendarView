@@ -14,13 +14,9 @@ FOUNDATION_EXPORT double CalendarViewVersionNumber;
 //! Project version string for CalendarView.
 FOUNDATION_EXPORT const unsigned char CalendarViewVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <CalendarView/PublicHeader.h>
+#import <CalendarView/CCLDateRange.h>
 
-//#import <CalendarView/CCLDateRange.h>
-//
-//#import <CalendarView/CCLMonths.h>
-//#import <CalendarView/CCLMonth.h>
-//#import <CalendarView/CCLMonthsFactory.h>
-//
-//#import <CalendarView/CCLDisplayCalendar.h>
-//#import <CalendarView/CCLProvidesCalendarObject.h>
+#import <CalendarView/CCLProvidesCalendarObjects.h>
+#import <CalendarView/CCLHandlesDaySelection.h>
+#import <CalendarView/CCLProvidesDetailView.h>
+#import <CalendarView/CCLDisplayCalendar.h>
