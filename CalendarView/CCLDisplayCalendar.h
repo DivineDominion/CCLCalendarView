@@ -20,4 +20,5 @@
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler;
 
 - (void)displayInView:(NSView *)containerView;
+- (void)reloadCalendarData;
 @end

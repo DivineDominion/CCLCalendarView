@@ -20,6 +20,7 @@
 {
     return [self initWithObjectProvider:nil detailViewProvider:nil selectionHandler:nil];
 }
+
 - (instancetype)initWithObjectProvider:(id<CCLProvidesCalendarObjects>)objectProvider detailViewProvider:(id<CCLProvidesDetailView>)detailViewProvider selectionHandler:(id<CCLHandlesDaySelection>)selectionHandler
 {
     NSParameterAssert(objectProvider);
@@ -66,6 +67,11 @@
                                                               attribute:NSLayoutAttributeHeight
                                                              multiplier:1.0
                                                                constant:0]];
+}
+
+- (void)reloadCalendarData
+{
+    [self.calendarViewController reload];
 }
 
 @end

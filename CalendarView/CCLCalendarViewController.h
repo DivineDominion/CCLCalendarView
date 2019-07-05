@@ -33,4 +33,6 @@ extern NSString * const kCCLCalendarViewControllerNibName;
 @property (assign, readonly) BOOL showsAllWeekColumn;
 
 + (instancetype)calendarViewController;
+
+- (void)reload;
 @end

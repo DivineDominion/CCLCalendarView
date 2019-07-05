@@ -161,6 +161,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return [[CTKCalendarSupplier calendarSupplier] autoupdatingCalendar];
 }
 
+- (void)reload
+{
+    [self.calendarTableView reloadData];
+}
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     return [self.tableDataProvider numberOfRows];
