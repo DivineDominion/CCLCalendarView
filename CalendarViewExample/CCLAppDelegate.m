@@ -23,4 +23,11 @@
 {
     [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
 }
+
+- (IBAction)refreshCalendar:(id)sender
+{
+    [(CCLCalendarService *)self.calendarDelegate incrementDayCountToTestRefresh];
+    [self.displayCalendar reloadCalendarData];
+}
+
 @end

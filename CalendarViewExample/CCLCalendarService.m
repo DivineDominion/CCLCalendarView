@@ -25,10 +25,18 @@
 }
 @end
 
+NSInteger refreshIncrement = 0;
+
 @implementation CCLCalendarService
+
+- (void)incrementDayCountToTestRefresh
+{
+    refreshIncrement++;
+}
+
 - (id)objectValueForYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day
 {
-    return [CellObject cellObjectForDay:day total:1234];
+    return [CellObject cellObjectForDay:day total:1234 + refreshIncrement];
 }
 
 - (CCLDateRange *)dateRange

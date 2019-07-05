@@ -13,4 +13,6 @@
 
 @interface CCLCalendarService : NSObject <CCLHandlesDaySelection, CCLProvidesCalendarObjects, CCLProvidesDetailView>
 @property (nonatomic, strong, readwrite, nonnull) NSDateFormatter *formatter;
+
+- (void)incrementDayCountToTestRefresh;
 @end
