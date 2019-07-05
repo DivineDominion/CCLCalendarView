@@ -20,3 +20,5 @@ FOUNDATION_EXPORT const unsigned char CalendarViewVersionString[];
 #import <CalendarView/CCLHandlesDaySelection.h>
 #import <CalendarView/CCLProvidesDetailView.h>
 #import <CalendarView/CCLDisplayCalendar.h>
+#import <CalendarView/CCLDayDetailRowView.h>
+#import <CalendarView/CCLBorderedRowView.h>

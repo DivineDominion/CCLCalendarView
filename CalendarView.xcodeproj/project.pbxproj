@@ -56,6 +56,7 @@
 		502176B922B120EF00E217E2 /* CCLDisplayCalendar.h in Headers */ = {isa = PBXBuildFile; fileRef = 60035BA619B0D235009CADE0 /* CCLDisplayCalendar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		502176BA22B1214900E217E2 /* CalendarView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5021769D22B11D4000E217E2 /* CalendarView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		502176D822B1379500E217E2 /* CCLDayDetailRowView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6009D69F19ACDAC0006F568F /* CCLDayDetailRowView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5025125B22CF37D8002276D4 /* CCLBorderedRowView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6056510819ED5C8E007A2A17 /* CCLBorderedRowView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5050CB6021B7FE7E00528988 /* TestingToolkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; };
 		5050CB6121B7FE7E00528988 /* TestingToolkit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60ECAB4719DC56510036EE81 /* TestingToolkit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		60035BA819B0D235009CADE0 /* CCLCalendarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 60035BA519B0D235009CADE0 /* CCLCalendarService.m */; };
@@ -516,6 +517,7 @@
 				502176B622B120E400E217E2 /* CCLProvidesDetailView.h in Headers */,
 				502176B822B120EA00E217E2 /* CCLHandlesDaySelection.h in Headers */,
 				502176B922B120EF00E217E2 /* CCLDisplayCalendar.h in Headers */,
+				5025125B22CF37D8002276D4 /* CCLBorderedRowView.h in Headers */,
 				502176BA22B1214900E217E2 /* CalendarView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
