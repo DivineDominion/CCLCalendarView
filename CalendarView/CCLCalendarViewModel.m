@@ -43,6 +43,8 @@
     {
         _objectProvider = objectProvider;
 
+        // TODO: make template localizable
+        //   [NSDateFormatter dateFormatFromTemplate:@"MMMyyyy" options:0 locale:locale];
         _monthFormatter = [[NSDateFormatter alloc] init];
         _monthFormatter.dateFormat = @"MMM yyyy";
 
