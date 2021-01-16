@@ -33,7 +33,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 @property (nonatomic, strong, readwrite) id<CCLProvidesTableData> tableDataProvider;
 @property (assign, readwrite) BOOL showsAllWeekColumn;
-@property (assign, readwrite) NSInteger detailRow;
 @end
 
 @implementation CCLCalendarViewController
@@ -123,8 +122,6 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (void)awakeFromNib
 {
     dispatch_once(&initializationToken, ^{
-        self.detailRow = NSNotFound;
-
         NSTableView *tableView = self.calendarTableView;
         [tableView setIntercellSpacing:NSMakeSize(0, 0)];
 
@@ -228,7 +225,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     return height;
 }
 
-- (CGFloat)tableView:(NSTableView *)tableview heightOfRowViewType:(CCLRowViewType)rowViewType
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRowViewType:(CCLRowViewType)rowViewType
 {
     [self guardRowViewTypeValidity:rowViewType];
     
@@ -316,6 +313,8 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     CCLDayCellView *cellView = [tableView makeViewWithIdentifier:@"WeekdayCell" owner:self];
     cellView.isWeekend = (cellType == CCLCellTypeWeekend);
+    // Update selection state according to selection source of truth, so that reused cells have a clean state
+    [self.selectionDelegate configureDayCellView:cellView row:rowIndex column:columnIndex];
     
     return cellView;
 }
@@ -340,20 +339,10 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         // in place but the selection changes, so this method won't be called.
         self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
         zPosition = -100;
-        self.detailRow = row;
     }
     
     [rowView.layer setZPosition:zPosition];
 }
-
-- (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-    if ([rowView.identifier isEqualToString:@"DayDetailRow"]) {
-        self.detailRow = NSNotFound;
-        [self fireDidRemoveDetailView];
-    }
-}
-
 
 #pragma mark -
 #pragma mark Cell Selection
@@ -397,21 +386,25 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     {
         row--;
     }
-    
-    if (!newSelectionIsOnSameRow)
+
+    [tableView beginUpdates];
     {
-        [self removeDetailRow];
+        if (!newSelectionIsOnSameRow)
+        {
+            [self removeDetailRow];
+        }
+
+        [self deselectDayCell];
+        CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
+        [self selectDayCell:dayCellView row:row column:column];
+
+        if (!newSelectionIsOnSameRow)
+        {
+            [self insertDetailRow];
+        }
     }
-    
-    [self deselectDayCell];
-    CCLDayCellView *dayCellView = (CCLDayCellView *)selectedCell;
-    [self selectDayCell:dayCellView row:row column:column];
-    
-    if (!newSelectionIsOnSameRow)
-    {
-        [self insertDetailRow];
-    }
-    
+    [tableView endUpdates];
+
     [self displayDayDetail];
 }
 
@@ -429,22 +422,30 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     {
         return;
     }
-    if (self.detailRow < 0)
-    {
-        // not found
-        return;
-    }
-    
-    [self fireWillRemoveDetailView]; // didRemove fired in table removal callback
 
-    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:self.detailRow];
-    self.detailRow = NSNotFound;
-    [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
+    NSInteger selectedRow = [self cellSelectionRow];
+    NSInteger detailRow = selectedRow + 1;
+
+    [self fireWillRemoveDetailView];
+
+    NSIndexSet *detailRowIndexSet = [NSIndexSet indexSetWithIndex:detailRow];
+    [self.calendarTableView removeRowsAtIndexes:detailRowIndexSet withAnimation:NSTableViewAnimationSlideDown];
     self.dayDetailRowView = nil;
+
+    [self fireDidRemoveDetailView];
 }
 
 - (void)deselectDayCell
 {
+    if (![self.selectionDelegate hasDayCellSelection]) { return; }
+
+    id cellView = [self.calendarTableView viewAtColumn:self.selectionDelegate.dayCellSelectionColumn
+                                                   row:self.selectionDelegate.dayCellSelectionRow
+                                       makeIfNecessary:false];
+    if ([cellView respondsToSelector:@selector(deselect)]) {
+        [cellView deselect];
+    }
+
     [self.selectionDelegate controllerDidDeselectDayCell];
 }
 
@@ -492,7 +493,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     NSUInteger selectionRow = [self cellSelectionRow];
     NSInteger rowBelow = selectionRow + 1;
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
+//    [self.calendarTableView beginUpdates];
     [self.calendarTableView insertRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideUp];
+//    [self.calendarTableView endUpdates];
     
     const double delayInSeconds = 0.4;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));

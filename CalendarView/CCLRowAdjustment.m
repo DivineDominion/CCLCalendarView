@@ -8,6 +8,7 @@
 
 #import "CCLRowAdjustment.h"
 #import "CCLDayCellSelection.h"
+#import "CCLDayCellView.h"
 
 @interface CCLRowAdjustment ()
 @property (strong, readwrite) CCLDayCellSelection *dayCellSelection;
@@ -50,14 +51,6 @@
 
 - (void)controllerDidDeselectDayCell
 {
-    CCLDayCellSelection *currentSelection = self.dayCellSelection;
-    
-    if (currentSelection == nil)
-    {
-        return;
-    }
-    
-    [currentSelection deselectCell];
     self.dayCellSelection = nil;
 }
 
@@ -99,6 +92,18 @@
     return self.dayCellSelection.objectValue;
 }
 
+- (void)configureDayCellView:(CCLDayCellView *)dayCellView row:(NSUInteger)row column:(NSUInteger)column
+{
+    if (self.dayCellSelection == nil
+        || self.dayCellSelectionRow != row
+        || self.dayCellSelectionColumn != column)
+    {
+        [dayCellView deselect];
+        return;
+    }
+
+    [dayCellView select];
+}
 
 #pragma mark -
 #pragma mark Adapting the data source

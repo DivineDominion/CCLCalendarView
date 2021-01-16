@@ -17,7 +17,10 @@
 
 - (CCLDayCellSelection *)dayCellSelection;
 - (id)dayCellSelectionObjectValue;
+
 - (BOOL)hasDayCellSelection;
 - (NSUInteger)dayCellSelectionRow;
 - (NSUInteger)dayCellSelectionColumn;
+
+- (void)configureDayCellView:(CCLDayCellView *)dayCellView row:(NSUInteger)row column:(NSUInteger)column;
 @end

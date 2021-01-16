@@ -10,6 +10,7 @@
 #import "CCLTableDataTypes.h"
 
 @protocol CCLProvidesTableData <NSObject>
+/// Number of rows, with +1 for active selection.
 - (NSUInteger)numberOfRows;
 - (CCLRowViewType)rowViewTypeForRow:(NSUInteger)row;
 - (CCLCellType)cellTypeForColumn:(NSUInteger)column row:(NSUInteger)row;

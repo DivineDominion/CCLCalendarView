@@ -11,13 +11,10 @@
 @class CCLDayCellView;
 
 @interface CCLDayCellSelection : NSObject
-@property (strong, readonly) CCLDayCellView *selectedView;
 @property (assign, readonly) NSInteger row;
 @property (assign, readonly) NSInteger column;
+@property (nonatomic, strong, readonly) id objectValue;
 
 + (instancetype)dayCellSelection:(CCLDayCellView *)selectedView atRow:(NSInteger)row column:(NSInteger)column;
 - (instancetype)initWithDayCellView:(CCLDayCellView *)selectedView row:(NSInteger)row column:(NSInteger)column;
-
-- (void)deselectCell;
-- (id)objectValue;
 @end

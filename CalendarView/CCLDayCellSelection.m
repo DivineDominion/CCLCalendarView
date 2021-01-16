@@ -9,6 +9,10 @@
 #import "CCLDayCellSelection.h"
 #import "CCLDayCellView.h"
 
+@interface CCLDayCellSelection ()
+@property (nonatomic, strong, readwrite) id objectValue;
+@end
+
 @implementation CCLDayCellSelection
 + (instancetype)dayCellSelection:(CCLDayCellView *)selectedView atRow:(NSInteger)row column:(NSInteger)column;
 {
@@ -29,23 +33,14 @@
     
     if (self)
     {
-        _selectedView = selectedView;
-        [_selectedView select];
+        _objectValue = selectedView.objectValue;
+        // Make sure to mark the view as selected as a side effect
+        [selectedView select];
         
         _row = row;
         _column = column;
     }
     
     return self;
-}
-
-- (void)deselectCell
-{
-    [self.selectedView deselect];
-}
-
-- (id)objectValue
-{
-    return self.selectedView.objectValue;
 }
 @end
