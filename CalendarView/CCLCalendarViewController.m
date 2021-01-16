@@ -424,6 +424,9 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     }
     
     NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
+
+    if (rowBelow == -1) { return; } // not found
+
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
     self.dayDetailRowView = nil;
