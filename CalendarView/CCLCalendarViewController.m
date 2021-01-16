@@ -425,13 +425,18 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     
     NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
 
-    if (rowBelow == -1) { return; } // not found
+    [self fireWillRemoveDetailView];
+
+    if (rowBelow == -1) {
+        // not found
+        self.dayDetailRowView = nil;
+        [self fireDidRemoveDetailView];
+        return;
+    }
 
     NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
     [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
     self.dayDetailRowView = nil;
-    
-    [self fireWillRemoveDetailView];
 }
 
 - (void)deselectDayCell
