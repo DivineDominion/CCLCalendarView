@@ -7,13 +7,14 @@
 //
 
 #import "Helpers.h"
+#import "CTKCalendarSupplier.h"
 
 @implementation Helper
 
 + (NSDate *)dateWithString:(NSString *)string
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    formatter.calendar = [[CTKCalendarSupplier sharedInstance] autoupdatingCalendar];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss ZZZZ";
     return [formatter dateFromString:string];
 }
