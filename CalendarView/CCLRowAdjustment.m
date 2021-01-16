@@ -68,16 +68,34 @@
 
 - (NSUInteger)dayCellSelectionRow
 {
+    if (self.dayCellSelection == nil)
+    {
+        NSAssert(false, @"dayCellSelection is nil; check hasDayCellSelection first");
+        return 0;
+    }
+
     return self.dayCellSelection.row;
 }
 
 - (NSUInteger)dayCellSelectionColumn
 {
+    if (self.dayCellSelection == nil)
+    {
+        NSAssert(false, @"dayCellSelection is nil; check hasDayCellSelection first");
+        return 0;
+    }
+
     return self.dayCellSelection.column;
 }
 
 - (id)dayCellSelectionObjectValue
 {
+    if (self.dayCellSelection == nil)
+    {
+        NSAssert(false, @"dayCellSelection is nil; check hasDayCellSelection first");
+        return nil;
+    }
+
     return self.dayCellSelection.objectValue;
 }
 
