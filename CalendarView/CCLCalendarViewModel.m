@@ -42,6 +42,10 @@
     if (self)
     {
         _objectProvider = objectProvider;
+
+        _monthFormatter = [[NSDateFormatter alloc] init];
+        _monthFormatter.dateFormat = @"MMM yyyy";
+
         [self updateMonths];
     }
     
@@ -153,10 +157,11 @@
     return [objectProvider objectValueForYear:year week:week];
     
 }
+
 - (NSString *)monthNameForTableView:(NSTableView *)tableView row:(NSInteger)row
 {
     CCLMonth *month = [self.calendarData monthForRow:row];
-    return month.name;
+    return [self.monthFormatter stringFromDate:month.date];
 }
 
 @end

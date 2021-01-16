@@ -20,6 +20,7 @@
 
 @interface CCLCalendarViewModel : NSObject <CCLProvidesTableData>
 @property (nonatomic, strong) id<CCLProvidesCalendarObjects> objectProvider;
+@property (nonatomic, strong) NSDateFormatter *monthFormatter;
 
 @property (strong) CCLCellDayTranslation *cellDayTranslation;
 
