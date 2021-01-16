@@ -14,6 +14,7 @@
     TestCalendarSupplier *supplier = [[TestCalendarSupplier alloc] init];
     NSCalendar *unifiedCalendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     unifiedCalendar.firstWeekday = 2; // Start on Monday to unify week calculation expectations
+    unifiedCalendar.locale = [NSLocale localeWithLocaleIdentifier:@"en_DE"];
     supplier.testCalendar = unifiedCalendar;
     
     return supplier;
