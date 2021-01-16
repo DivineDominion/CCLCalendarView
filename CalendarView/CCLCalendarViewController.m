@@ -33,6 +33,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 @property (nonatomic, strong, readwrite) id<CCLProvidesTableData> tableDataProvider;
 @property (assign, readwrite) BOOL showsAllWeekColumn;
+@property (assign, readwrite) NSInteger detailRow;
 @end
 
 @implementation CCLCalendarViewController
@@ -122,9 +123,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 - (void)awakeFromNib
 {
     dispatch_once(&initializationToken, ^{
+        self.detailRow = NSNotFound;
+
         NSTableView *tableView = self.calendarTableView;
         [tableView setIntercellSpacing:NSMakeSize(0, 0)];
-        
+
         [self addWeekdayColumns];
         [self updateAllWeekColumn];
     });
@@ -337,6 +340,7 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         // in place but the selection changes, so this method won't be called.
         self.dayDetailRowView = (CCLDayDetailRowView *)rowView;
         zPosition = -100;
+        self.detailRow = row;
     }
     
     [rowView.layer setZPosition:zPosition];
@@ -344,7 +348,10 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 
 - (void)tableView:(NSTableView *)tableView didRemoveRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-    [self fireDidRemoveDetailView];
+    if ([rowView.identifier isEqualToString:@"DayDetailRow"]) {
+        self.detailRow = NSNotFound;
+        [self fireDidRemoveDetailView];
+    }
 }
 
 
@@ -422,19 +429,16 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
     {
         return;
     }
-    
-    NSInteger rowBelow = [self.calendarTableView rowForView:self.dayDetailRowView];
-
-    [self fireWillRemoveDetailView];
-
-    if (rowBelow == -1) {
+    if (self.detailRow < 0)
+    {
         // not found
-        self.dayDetailRowView = nil;
-        [self fireDidRemoveDetailView];
         return;
     }
+    
+    [self fireWillRemoveDetailView]; // didRemove fired in table removal callback
 
-    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:rowBelow];
+    NSIndexSet *rowBelowIndexSet = [NSIndexSet indexSetWithIndex:self.detailRow];
+    self.detailRow = NSNotFound;
     [self.calendarTableView removeRowsAtIndexes:rowBelowIndexSet withAnimation:NSTableViewAnimationSlideDown];
     self.dayDetailRowView = nil;
 }
