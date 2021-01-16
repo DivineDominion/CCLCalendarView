@@ -47,10 +47,17 @@
     return [CCLDayLocator dayLocatorInMonth:september week:week weekday:weekday];
 }
 
-- (CCLDayLocator *)decemberLocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
+- (CCLDayLocator *)december2012LocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
 {
     CCLMonth *december = [CCLMonth monthFromDate:[Helper dateWithString:@"2012-12-12 12:12:00 +0000"]];
     return [CCLDayLocator dayLocatorInMonth:december week:week weekday:weekday];
+}
+
+- (CCLDayLocator *)january2021LocatorForWeek:(NSUInteger)week weekday:(NSUInteger)weekday
+{
+    // TODO: assumes the calendar is at +0100 so this is midnight; use calendar to construct this date in the current locale
+    CCLMonth *january = [CCLMonth monthFromDate:[Helper dateWithString:@"2021-01-12 23:00:00 +0000"]];
+    return [CCLDayLocator dayLocatorInMonth:january week:week weekday:weekday];
 }
 
 
@@ -114,18 +121,22 @@
 }
 
 
-#pragma mark Last Week of the Year, Wrapping Weeks
+#pragma mark Last Week of the Year, Wrapping Weeks where Dec 31st is week 1 of following year
 
 - (void)testLastWeekOfDecember2012_Monday_IsInside
 {
-    CCLDayLocator *locator = [self decemberLocatorForWeek:6 weekday:2];
+    CCLDayLocator *locator = [self december2012LocatorForWeek:6 weekday:2];
     
     XCTAssertFalse([locator isOutsideDayRange], @"Monday of the last week of December 2012 should be the last day of December");
+    NSDateComponents *components = [locator dateComponents];
+    XCTAssertEqual(components.year, 2012);
+    XCTAssertEqual(components.month, 12, @"should be Dec");
+    XCTAssertEqual(components.day, 31);
 }
 
 - (void)testLastWeekOfDecember2012_Tuesday_IsOutside
 {
-    CCLDayLocator *locator = [self decemberLocatorForWeek:6 weekday:3];
+    CCLDayLocator *locator = [self december2012LocatorForWeek:6 weekday:3];
     
     // Dec 1st is on week of year 48 -- reports 49 instead
     // When week of year count > 52, wrap year
@@ -136,5 +147,32 @@
     XCTAssertEqual(components.day, 1, @"should be the 1st");
 }
 
+// week of January 2021: weekdays 1--5 are in Dec, 6--8 are in Jan
+//   kw | M   T   W   T   F   S   Sun
+//   --------------------------------
+//   53 | 28  39  30  31  01  02  03    Dec/Jan wrap
+//    1 | 04  05  06  07  08  09  10    January in full swing
+
+- (void)testFirstWeekOfJanuary2021_Monday_IsOutside
+{
+    CCLDayLocator *locator = [self january2021LocatorForWeek:1 weekday:2];
+
+    XCTAssertTrue([locator isOutsideDayRange], @"Tuesday of the first week of January 2021 is actually in December 2020");
+    NSDateComponents *components = [locator dateComponents];
+    XCTAssertEqual(components.year, 2020);
+    XCTAssertEqual(components.month, 12, @"should be Dec");
+    XCTAssertEqual(components.day, 28);
+}
+
+- (void)testFirstWeekOfJanuary2021_Saturday_IsInside
+{
+    CCLDayLocator *locator = [self january2021LocatorForWeek:1 weekday:7];
+
+    XCTAssertFalse([locator isOutsideDayRange], @"Saturday of the first week of January 2021 is inside");
+    NSDateComponents *components = [locator dateComponents];
+    XCTAssertEqual(components.year, 2021);
+    XCTAssertEqual(components.month, 1, @"should be Jan");
+    XCTAssertEqual(components.day, 2);
+}
 
 @end

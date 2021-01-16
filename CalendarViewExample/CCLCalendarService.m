@@ -42,11 +42,11 @@ NSInteger refreshIncrement = 0;
 - (CCLDateRange *)dateRange
 {
     // Date range where 1st week of January is still counted to the previous year and tripped up calculations once. (Got 2022-01 instead of 2021-01)
-//    NSDate *startDate = [self.formatter dateFromString:@"2020-11-04 14:00:00 +0200"];
-//    NSDate *endDate = [self.formatter dateFromString:@"2021-01-14 23:00:00 +0200"];
+    NSDate *startDate = [self.formatter dateFromString:@"2020-12-24 14:00:00 +0200"];
+    NSDate *endDate = [self.formatter dateFromString:@"2021-01-07 23:00:00 +0200"];
 
-    NSDate *startDate = [self.formatter dateFromString:@"2014-07-04 14:00:00 +0200"];
-    NSDate *endDate = [self.formatter dateFromString:@"2014-07-12 23:00:00 +0200"];
+//    NSDate *startDate = [self.formatter dateFromString:@"2014-07-04 14:00:00 +0200"];
+//    NSDate *endDate = [self.formatter dateFromString:@"2014-07-12 23:00:00 +0200"];
 
     return [CCLDateRange dateRangeFrom:startDate until:endDate];
 }

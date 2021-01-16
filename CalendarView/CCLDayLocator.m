@@ -124,9 +124,10 @@
     NSDate *firstOfMonth = [month firstOfMonth];
     NSDate *dateOfWeekInMonth = [calendar dateByAddingComponents:weeksToAdd toDate:firstOfMonth options:0];
 
-    NSUInteger calendarComponentsForWeekBasedOffsets = NSCalendarUnitYear | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekday;
+    NSUInteger calendarComponentsForWeekBasedOffsets = NSCalendarUnitYearForWeekOfYear | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekday;
     NSDateComponents *dateComponents = [calendar components:calendarComponentsForWeekBasedOffsets fromDate:dateOfWeekInMonth];
-    dateComponents.weekday = weekday; // pick a weekday in the week
+    dateComponents.weekday = weekday;
+
     return [calendar dateFromComponents:dateComponents];
 }
 
