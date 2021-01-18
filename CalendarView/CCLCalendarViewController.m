@@ -125,6 +125,11 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
         NSTableView *tableView = self.calendarTableView;
         [tableView setIntercellSpacing:NSMakeSize(0, 0)];
 
+        if (@available(macOS 11.0, *)) {
+            // Remove system default padding on Big Sur
+            [tableView setStyle:NSTableViewStylePlain];
+        }
+
         [self addWeekdayColumns];
         [self updateAllWeekColumn];
     });
