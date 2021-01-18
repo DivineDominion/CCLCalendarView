@@ -27,10 +27,6 @@
 NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController";
 
 @interface CCLCalendarViewController ()
-{
-    dispatch_once_t initializationToken;
-}
-
 @property (nonatomic, strong, readwrite) id<CCLProvidesTableData> tableDataProvider;
 @property (assign, readwrite) BOOL showsAllWeekColumn;
 @end
@@ -119,20 +115,20 @@ NSString * const kCCLCalendarViewControllerNibName = @"CCLCalendarViewController
 #pragma mark -
 #pragma mark View Setup
 
-- (void)awakeFromNib
+- (void)viewDidLoad
 {
-    dispatch_once(&initializationToken, ^{
-        NSTableView *tableView = self.calendarTableView;
-        [tableView setIntercellSpacing:NSMakeSize(0, 0)];
+    [super viewDidLoad];
 
-        if (@available(macOS 11.0, *)) {
-            // Remove system default padding on Big Sur
-            [tableView setStyle:NSTableViewStylePlain];
-        }
+    NSTableView *tableView = self.calendarTableView;
+    [tableView setIntercellSpacing:NSMakeSize(0, 0)];
 
-        [self addWeekdayColumns];
-        [self updateAllWeekColumn];
-    });
+    if (@available(macOS 11.0, *)) {
+        // Remove system default padding on Big Sur
+        [tableView setStyle:NSTableViewStylePlain];
+    }
+
+    [self addWeekdayColumns];
+    [self updateAllWeekColumn];
 }
 
 - (void)addWeekdayColumns
